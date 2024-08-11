@@ -1,0 +1,44 @@
+version: '3.9'
+
+networks:
+  transcendence:
+    name: transcendence
+    driver: bridge
+
+services:
+  db:
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: transcendence
+      POSTGRES_PASSWORD: password
+      POSTGRES_USER: pfister
+    ports:
+      - "5432:5432"
+    restart: always
+    shm_size: 128mb
+    networks:
+      - transcendence
+  nginx:
+    image: nginx:latest
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - backend
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./nginx/certs:/etc/nginx/certs:ro
+    networks:
+      - transcendence
+    restart: always
+  backend:
+    build:
+      context: ./backend
+    image: backend:latest
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    restart: always
+    networks:
+      - transcendence
