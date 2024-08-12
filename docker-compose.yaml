@@ -8,6 +8,7 @@ networks:
 services:
   db:
     image: postgres:latest
+    container_name: db
     environment:
       POSTGRES_DB: transcendence
       POSTGRES_PASSWORD: password
@@ -20,6 +21,7 @@ services:
       - transcendence
   nginx:
     image: nginx:latest
+    container_name: nginx
     ports:
       - "80:80"
       - "443:443"
@@ -35,6 +37,7 @@ services:
     build:
       context: ./backend
     image: backend:latest
+    container_name: backend
     ports:
       - "8000:8000"
     depends_on:

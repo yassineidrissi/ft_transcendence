@@ -1,5 +1,6 @@
 #!/bin/bash
 
+sleep 3
 cd core/
 
 python manage.py makemigrations
