@@ -13,8 +13,8 @@ services:
       POSTGRES_DB: transcendence
       POSTGRES_PASSWORD: password
       POSTGRES_USER: pfister
-    ports:
-      - "5432:5432"
+    # ports:
+    #   # - "5432:5432"
     restart: always
     shm_size: 128mb
     networks:
@@ -23,13 +23,14 @@ services:
     image: nginx:latest
     container_name: nginx
     ports:
-      - "80:80"
+      # - "80:80"
       - "443:443"
     depends_on:
       - backend
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro
       - ./nginx/certs:/etc/nginx/certs:ro
+      - ./frontend/index.html:/var/www/html/index.html
     networks:
       - transcendence
     restart: always
@@ -38,8 +39,8 @@ services:
       context: ./backend
     image: backend:latest
     container_name: backend
-    ports:
-      - "8000:8000"
+    # ports:
+      # - "8000:8000"
     depends_on:
       - db
     restart: always
