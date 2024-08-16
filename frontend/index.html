@@ -7,6 +7,7 @@
     <style>
         body {
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 100vh;
@@ -29,9 +30,23 @@
         #rightScore {
             right: 20px;
         }
+        .mode-buttons {
+            margin-bottom: 10px;
+        }
+        button {
+            margin: 0 5px;
+            padding: 10px 20px;
+            background-color: white;
+            border: none;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
+    <div class="mode-buttons">
+        <button id="multiplayerButton">Multiplayer Mode</button>
+        <button id="singleplayerButton">Single Player Mode</button>
+    </div>
     <canvas id="gameCanvas" width="800" height="600"></canvas>
     <div id="leftScore" class="score">0</div>
     <div id="rightScore" class="score">0</div>
@@ -63,6 +78,8 @@
             score: 0
         };
 
+        let isSinglePlayer = false;
+
         function drawPaddle(paddle) {
             ctx.fillStyle = 'white';
             ctx.fillRect(paddle.x, paddle.y, paddleWidth, paddleHeight);
@@ -85,11 +102,20 @@
             if (leftPaddle.moveDown && leftPaddle.y < canvas.height - paddleHeight) {
                 leftPaddle.y += leftPaddle.speed;
             }
-            if (rightPaddle.moveUp && rightPaddle.y > 0) {
-                rightPaddle.y -= rightPaddle.speed;
-            }
-            if (rightPaddle.moveDown && rightPaddle.y < canvas.height - paddleHeight) {
-                rightPaddle.y += rightPaddle.speed;
+            if (!isSinglePlayer) {
+                if (rightPaddle.moveUp && rightPaddle.y > 0) {
+                    rightPaddle.y -= rightPaddle.speed;
+                }
+                if (rightPaddle.moveDown && rightPaddle.y < canvas.height - paddleHeight) {
+                    rightPaddle.y += rightPaddle.speed;
+                }
+            } else {
+                // Simple AI for the robot
+                if (ballY > rightPaddle.y + paddleHeight / 2 && rightPaddle.y < canvas.height - paddleHeight) {
+                    rightPaddle.y += rightPaddle.speed;
+                } else if (ballY < rightPaddle.y + paddleHeight / 2 && rightPaddle.y > 0) {
+                    rightPaddle.y -= rightPaddle.speed;
+                }
             }
         }
 
@@ -140,16 +166,37 @@
         document.addEventListener('keydown', (e) => {
             if (e.key === 'w') leftPaddle.moveUp = true;
             if (e.key === 's') leftPaddle.moveDown = true;
-            if (e.key === 'ArrowUp') rightPaddle.moveUp = true;
-            if (e.key === 'ArrowDown') rightPaddle.moveDown = true;
+            if (!isSinglePlayer) {
+                if (e.key === 'ArrowUp') rightPaddle.moveUp = true;
+                if (e.key === 'ArrowDown') rightPaddle.moveDown = true;
+            }
         });
 
         document.addEventListener('keyup', (e) => {
             if (e.key === 'w') leftPaddle.moveUp = false;
             if (e.key === 's') leftPaddle.moveDown = false;
-            if (e.key === 'ArrowUp') rightPaddle.moveUp = false;
-            if (e.key === 'ArrowDown') rightPaddle.moveDown = false;
+            if (!isSinglePlayer) {
+                if (e.key === 'ArrowUp') rightPaddle.moveUp = false;
+                if (e.key === 'ArrowDown') rightPaddle.moveDown = false;
+            }
         });
+
+        document.getElementById('multiplayerButton').addEventListener('click', () => {
+            isSinglePlayer = false;
+            resetGame();
+        });
+
+        document.getElementById('singleplayerButton').addEventListener('click', () => {
+            isSinglePlayer = true;
+            resetGame();
+        });
+
+        function resetGame() {
+            leftPaddle.score = 0;
+            rightPaddle.score = 0;
+            resetBall();
+            updateScore();
+        }
 
         gameLoop();
     </script>
