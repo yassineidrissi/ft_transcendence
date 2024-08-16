@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simple Pong Game</title>
+    <title>Simple Pong Game with Score</title>
     <style>
         body {
             display: flex;
@@ -17,10 +17,24 @@
             background-color: #111;
             border: 2px solid white;
         }
+        .score {
+            position: absolute;
+            top: 20px;
+            font-size: 24px;
+            color: white;
+        }
+        #leftScore {
+            left: 20px;
+        }
+        #rightScore {
+            right: 20px;
+        }
     </style>
 </head>
 <body>
     <canvas id="gameCanvas" width="800" height="600"></canvas>
+    <div id="leftScore" class="score">0</div>
+    <div id="rightScore" class="score">0</div>
 
     <script>
         const canvas = document.getElementById('gameCanvas');
@@ -36,7 +50,8 @@
             y: (canvas.height - paddleHeight) / 2,
             speed: 5,
             moveUp: false,
-            moveDown: false
+            moveDown: false,
+            score: 0
         };
 
         const rightPaddle = {
@@ -44,7 +59,8 @@
             y: (canvas.height - paddleHeight) / 2,
             speed: 5,
             moveUp: false,
-            moveDown: false
+            moveDown: false,
+            score: 0
         };
 
         function drawPaddle(paddle) {
@@ -55,6 +71,11 @@
         function drawBall() {
             ctx.fillStyle = 'white';
             ctx.fillRect(ballX, ballY, ballSize, ballSize);
+        }
+
+        function updateScore() {
+            document.getElementById('leftScore').textContent = leftPaddle.score;
+            document.getElementById('rightScore').textContent = rightPaddle.score;
         }
 
         function movePaddles() {
@@ -87,11 +108,23 @@
                 ballSpeedX = -ballSpeedX;
             }
 
-            if (ballX < 0 || ballX > canvas.width) {
-                ballX = canvas.width / 2;
-                ballY = canvas.height / 2;
-                ballSpeedX = -ballSpeedX;
+            if (ballX < 0) {
+                rightPaddle.score++;
+                resetBall();
             }
+
+            if (ballX > canvas.width) {
+                leftPaddle.score++;
+                resetBall();
+            }
+
+            updateScore();
+        }
+
+        function resetBall() {
+            ballX = canvas.width / 2;
+            ballY = canvas.height / 2;
+            ballSpeedX = -ballSpeedX;
         }
 
         function gameLoop() {
