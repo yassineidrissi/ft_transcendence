@@ -3,19 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simple Pong Game with Score</title>
+    <title>Styled Pong Game</title>
     <style>
         body {
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
-            background-color: black;
+            background-image: url('/workspaces/ft_transcendence/frontend/imgs/background.jpeg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            color: white;
+            font-family: Arial, sans-serif;
         }
         canvas {
-            background-color: #111;
+            background-color: rgba(0, 0, 0, 0.7);
             border: 2px solid white;
         }
         .score {
@@ -31,14 +35,21 @@
             right: 20px;
         }
         .mode-buttons {
-            margin-bottom: 10px;
+            position: absolute;
+            top: 10px;
+            right: 10px;
         }
         button {
             margin: 0 5px;
             padding: 10px 20px;
-            background-color: white;
+            background-color: rgba(255, 255, 255, 0.8);
             border: none;
             cursor: pointer;
+            font-size: 16px;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: rgba(255, 255, 255, 1);
         }
     </style>
 </head>
