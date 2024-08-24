@@ -21,25 +21,28 @@ body
 
 #root {
 	margin: 0 auto;
-	max-width: 1920px;
 	height: 100%;
 	display: grid;
-	
 	grid-template-rows: 80px 1fr auto;
 }
 
 .logo-container
 {
 	width: 100%;
-	padding: 24px 0;
+	margin: 12px auto;
 }
+
+.logo {
+	margin-left: 320px;
+	width: 180px;
+}
+
 
 .signin-logo
 {
 	position: absolute;
-	bottom: 32px;
+	bottom: 0px;
 	left: 320px;
-	user-select: none;
 }
 
 .light 
@@ -229,7 +232,7 @@ input:focus
 .ping-pong {
 	position: absolute;
 	font-family: "Orbitron", sans-serif;
-	bottom: 44px;
+	bottom: 12px;
 	right: 320px;
 	font-weight: bolder;
 	font-size: 48px;
