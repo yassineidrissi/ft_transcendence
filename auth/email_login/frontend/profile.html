@@ -18,58 +18,61 @@
     </form>
 </body>
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        function refreshAccessToken() {
-            fetch('http://127.0.0.1:8000/api/refresh/',{
-                method: 'POST',
-                credentials: 'include',
-            })
-            .then(response => {
-                if (response.status === 200) 
-                    return response.json();
-                else
-                    throw new Error('your logout');
-            })
-            .then(data => {
-                console.log('New Access Token Has Been Generated:');
-            })
-            .catch(error => {
-                window.location.href = 'http://127.0.0.1:5501/frontend/signin/signin.html';
-                console.error('Error refreshing access token:', error);
-            })
-        }
-        function IsAuth()
-        {
-            fetch('http://127.0.0.1:8000/api/user/',{
-                method: 'GET',
-                credentials: 'include',
-            })
-            .then(response => {
-                if (response.status === 200) 
-                    return response.json();
-                else
-                {
-                    refreshAccessToken();
-                    throw new Error('Go Refresh Token');
-                }
-            })
-            .then(data => {
-                if (data) {
-                    console.log('User Data:', data);
-                    document.getElementById('info').innerHTML = `hello ${data.user['username']}
-                        Your email is ${data.user['email']}
-                        first name is ${data.user['first_name']}
-                        last name is ${data.user['last_name']}
-                        level is ${data.user['level']}
-                        `;
-                }
-            })
-            .catch(error => {
-                console.error('Error fetching user data:', error);
-            });
-        }
-        IsAuth();
-    });
+    // document.addEventListener('DOMContentLoaded', function() {
+    //     function refreshAccessToken() {
+    //         fetch('http://127.0.0.1:8000/api/refresh/',{
+    //             method: 'POST',
+    //             credentials: 'include',
+    //         })
+    //         .then(response => {
+    //             if (response.status === 200) 
+    //                 return response.json();
+    //             else
+    //                 throw new Error('your logout');
+    //         })
+    //         .then(data => {
+    //             console.log('New Access Token Has Been Generated:');
+    //         })
+    //         .catch(error => {
+    //             window.location.href = 'http://127.0.0.1:5501/frontend/signin/signin.html';
+    //             console.error('Error refreshing access token:', error);
+    //         })
+    //     }
+    //     function IsAuth()
+    //     {
+    //         let access_token = localStorage.getItem('access_token');
+    //         fetch('http://127.0.0.1:8000/api/user/',{
+    //             method: 'GET',
+    //             credentials: 'include',
+    //             headers: {
+    //                 'Authorization': `Bearer ${accessToken}`,}
+    //             })
+    //         .then(response => {
+    //             if (response.status === 200) 
+    //                 return response.json();
+    //             else
+    //             {
+    //                 refreshAccessToken();
+    //                 throw new Error('Go Refresh Token');
+    //             }
+    //         })
+    //         .then(data => {
+    //             if (data) {
+    //                 console.log('User Data:', data);
+    //                 document.getElementById('info').innerHTML = `hello ${data.user['username']}
+    //                     Your email is ${data.user['email']}
+    //                     first name is ${data.user['first_name']}
+    //                     last name is ${data.user['last_name']}
+    //                     level is ${data.user['level']}
+    //                     `;
+    //             }
+    //         })
+    //         .catch(error => {
+    //             console.error('Error fetching user data:', error);
+    //         });
+    //     }
+    //     // IsAuth();
+    // });
 
     document.querySelector('form').addEventListener('submit', function(event) {
         event.preventDefault(); 
@@ -79,12 +82,62 @@
         })
         .then(response => {
             if (response.ok) 
+            {
+                localStorage.removeItem('access_token');
                 window.location.href = 'http://127.0.0.1:5501/frontend/signin/signin.html';
+            }
 
         }).catch(error => {
             console.error('There was a problem with the logout operation:', error);
         });
     });
+
+    async function refresh_token()
+    {
+        let response = await fetch('http://127.0.0.1:8000/api/refresh/',{
+                    method: 'POST',
+                    credentials: 'include',
+        });
+        console.log(response.status);
+        if(response.status === 200){
+            let data = await response.json();
+            localStorage.setItem('access_token',data.access_token);
+            check_auth();
+        }
+        else{
+            console.error('error');
+        }
+    }
+    async function check_auth()
+    {
+        let access_token = localStorage.getItem('access_token');
+        console.log(access_token);
+        let response = await fetch('http://127.0.0.1:8000/api/user/',{
+                method: 'GET',
+                credentials: 'include',
+                headers: {
+                    'Authorization': `Bearer ${access_token}`,
+                }
+        });
+        console.log(response.status);
+        if(response.status === 401)
+        {
+            localStorage.removeItem('access_token');
+            refresh_token();
+        }
+        else
+        {
+            let data = await response.json();
+            document.getElementById('info').innerHTML = `hello ${data['username']}
+                    Your email is ${data['email']}
+                    first name is ${data['first_name']}
+                    last name is ${data['last_name']}
+                    level is ${data['level']}
+                    `;
+            console.log(data);
+        }
+    }
+    check_auth();
 
 </script>
 </html>

@@ -68,13 +68,13 @@ def loginView(request):
 
 
     response = Response()
-    response.set_cookie(
-        key='access_token',
-        # value=access_token,
-        value=token['access'],
-        httponly=True, 
-        secure=True,    
-    )
+    # response.set_cookie(
+    #     key='access_token',
+    #     # value=access_token,
+    #     value=token['access'],
+    #     httponly=True, 
+    #     secure=True,    
+    # )
     response.set_cookie(
         key='refresh_token',
         # value=str(refresh),
@@ -85,7 +85,6 @@ def loginView(request):
     response.data = {
         'message': 'success',
         'access_token': token['access'],
-        'refresh_token': token['refresh'],
     }
     # print('access_token::',access_token)
     print('access_token::',str(token['access']))
@@ -95,35 +94,38 @@ def loginView(request):
 
 # check if user is authenticated
 @api_view(['GET'])
+@permission_classes([IsAuthenticated])
 def checkAuth(request):
-    access_token = request.COOKIES.get('access_token')
-    refresh_token = request.COOKIES.get('refresh_token')
-    print('access_token::',access_token)
-    print('refresh_token::',refresh_token)
-    response = Response()
-    if not access_token or not refresh_token:
-        raise AuthenticationFailed('Unauthenticated!')
-    jwt_authenticator = JWTAuthentication()
-    try:
-        validated_token = jwt_authenticator.get_validated_token(access_token)
-        user = jwt_authenticator.get_user(validated_token)
-        response.data = {
-            'message': 'Authenticated!',
-            'user': UserDataSerializer(user).data,
-        }
-        return response
-    except AuthenticationFailed as e:
-        raise AuthenticationFailed('AuthenticationFailed!')
-    except TokenError as e:
-        raise AuthenticationFailed('Token is invalid or expired!')
+    user = request.user
+    return Response(UserDataSerializer(user).data)
+# @api_view(['GET'])
+# def checkAuth(request):
+#     access_token = request.COOKIES.get('access_token')
+#     refresh_token = request.COOKIES.get('refresh_token')
+#     print('access_token::',access_token)
+#     print('refresh_token::',refresh_token)
+#     response = Response()
+#     if not access_token or not refresh_token:
+#         raise AuthenticationFailed('Unauthenticated!')
+#     jwt_authenticator = JWTAuthentication()
+#     try:
+#         validated_token = jwt_authenticator.get_validated_token(access_token)
+#         user = jwt_authenticator.get_user(validated_token)
+#         response.data = {
+#             'message': 'Authenticated!',
+#             'user': UserDataSerializer(user).data,
+#         }
+#         return response
+#     except AuthenticationFailed as e:
+#         raise AuthenticationFailed('AuthenticationFailed!')
+#     except TokenError as e:
+#         raise AuthenticationFailed('Token is invalid or expired!')
 
 
 @api_view(['POST'])
 def refresh_token(request):
     refresh_token = request.COOKIES.get('refresh_token')
     acc_tkn = request.COOKIES.get('access_token')
-    print('access_token::',acc_tkn)
-    print('refresh_token::',refresh_token)
     if not refresh_token:
         return Response({'detail': 'Refresh token not found'}, status=status.HTTP_400_BAD_REQUEST)
     try:
@@ -132,8 +134,11 @@ def refresh_token(request):
         print('\nNEW\n')
         print('access_token::',new_access_token)
         print('refresh_token::',str(refresh_token_obj))
-        response = Response({'message': 'Token refreshed'})
-        response.set_cookie('access_token', str(new_access_token), httponly=True)
+        response = Response({
+            'message': 'Token refreshed',
+            'access_token': str(new_access_token),
+        })
+        # response.set_cookie('access_token', str(new_access_token), httponly=True)
 
         return response
 
@@ -145,9 +150,9 @@ def refresh_token(request):
 @api_view(["GET"])
 def login42(request):
     redirect_uri = urlencode({"redirect_uri": settings.FORTYTWO_REDIRECT_URI})
-    print("Redirect URI:", redirect_uri)
+    # print("Redirect URI:", redirect_uri)
     authorization_url = f"https://api.intra.42.fr/oauth/authorize?client_id={settings.FORTYTWO_CLIENT_ID}&{redirect_uri}&response_type=code&scope=public"
-    print("Authorization URL:", authorization_url)
+    # print("Authorization URL:", authorization_url)
     return redirect(authorization_url)
 
 
@@ -156,11 +161,10 @@ def login42(request):
 @authentication_classes([])
 @permission_classes([AllowAny])
 def callback42(request):
-    code = request.GET.get("code")
-    print("Code:", code)    
+    code = request.GET.get("code")  
     error = request.GET.get("error")
     scope = request.GET.get("scope")
-    
+    print('lololololololol')
     if error:
         return Response({"error": error})
     
@@ -191,20 +195,12 @@ def callback42(request):
                 'img_url': user_info['image']['link'],
                 'full_name': user_info['displayname'],
             }
-            print(user_profile)
             response = HttpResponseRedirect('http://127.0.0.1:5501/frontend/profile.html')
             if User.objects.filter(email=user_profile['email']).exists():
-
+                print('User exists!!!!!!!!!!!!!!!!!!!')
                 user = User.objects.get(email=user_profile['email'])
                 refresh = RefreshToken.for_user(user)
                 access_token = str(refresh.access_token)
-                response.set_cookie(
-                    key='access_token',
-                    value=access_token,
-                    httponly=True, 
-                    secure=True,    
-                    samesite='None',
-                )
                 response.set_cookie(
                     key='refresh_token',
                     value=str(refresh),
@@ -214,8 +210,7 @@ def callback42(request):
                 )
                 response.data = {
                     'message': 'success',
-                    'access_token': access_token,
-                    'refresh_token': str(refresh),
+                    # 'access_token': access_token,
                 }
                 return response
             user = User42Login(data=user_profile)
@@ -226,13 +221,6 @@ def callback42(request):
                 access_token = str(refresh.access_token)
                 response = Response()
                 response.set_cookie(
-                    key='access_token',
-                    value=access_token,
-                    httponly=True, 
-                    secure=True,    
-                    samesite='None',
-                )
-                response.set_cookie(
                     key='refresh_token',
                     value=str(refresh),
                     httponly=True,
@@ -242,7 +230,6 @@ def callback42(request):
                 response.data = {
                     'message': 'success',
                     'access_token': access_token,
-                    'refresh_token': str(refresh),
                 }
                 return response
             else:
