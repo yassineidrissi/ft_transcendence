@@ -3,7 +3,6 @@
 	padding: 0;
 	box-sizing: border-box;
 	font-family: "Poppins", sans-serif;
-	user-select: none;
 	outline: none;
 }
 
@@ -42,7 +41,11 @@ body
 .sidebar 
 {
 	flex: 1;
-	background: #cccccc;
+	background: #E8F3EF;
+	color: #000000;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 
 .modes {
@@ -52,8 +55,8 @@ body
 	flex-direction: column;
 }
 
-.history {
-	background: #552a1a;
+#history {
+	/* background: #5ba2b4; */
 	flex: 1;
 }
 
@@ -183,27 +186,32 @@ body
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	padding: 1.5rem;
+	padding: 5rem;
 }
 
 .tournament-text {
 	margin-left: 2rem;
 	display: flex;
 	align-items: start;
+	justify-content: space-between;
+	/* background-color: #007F0C; */
+	width: 100%;
 }
 
 .tournament-text h1 {
-	font-size: 1.5rem;
+	font-size: 2rem;
 	font-family: "Poppins", sans-serif;
-	padding: 1rem 0;
+	padding: 1rem;
 }
 
 .tournament-text svg {
+	margin-top: 1rem;
 	margin-right: 1rem;
+	width: 120px;
 }
 
 .tournaments{
-	padding: 1rem 2rem;
+	padding: 2rem;
 	margin: 0.5rem 2rem;
 	flex: 1;
 	border: 1px solid #383838;
@@ -214,7 +222,8 @@ body
 
 .tournaments h1 {
 	letter-spacing: 2px;
-	font-size: 1.5rem;
+	font-size: 1.8rem;
+	margin-bottom: 2rem;
 	font-family: "Orbitron", sans-serif;
 }
 
@@ -225,14 +234,169 @@ body
 	font-size: 1.7rem;
 	letter-spacing: 2px;
 	font-weight: bold;
-	padding: 0.5rem 3rem;
+	padding: 0.5rem 4rem;
 	position: absolute;
 	bottom: 4px;
 	right: 4px;
 	cursor: pointer;
 	border-radius: 4px;
+	border: 2px solid #fff;
+	transition: 0.2s background;
 }
 
-table tr {
+.tournament-mode button:hover{
+	background: transparent;
+	color: #fff;
+}
+
+
+
+
+table {
+	width: 100%;
+}
+
+
+table th {
 	border-bottom: 1px solid #4A4A4A;
+	color: #C9C9C9;
+	font-weight: 500;
+	letter-spacing: 1px;
+	text-align: center;
+}
+
+.time, .players, .playing, .register-btn {
+	display: flex;
+	align-items: center;
+
+	/* background-color: #00B98D; */
+}
+
+.time svg, .players svg, .playing svg, .register-btn svg {
+	margin-right: 1rem;
+}
+
+.playing svg {
+	background-color: #007F0C;
+}
+
+.register-btn svg
+{
+	background-color: #00637f;
+	cursor: pointer;
+}
+
+.room-number 
+{
+	font-weight: bold;
+	margin-right: 1rem;
+	text-align: center;
+	display: inline-block;
+	background: #383838;
+	width: 64px;
+}
+
+table td {
+	text-align: start;
+}
+
+
+#history {
+	width: 100%;
+	padding: 0.5rem 2rem;
+}
+#history h1
+{
+	font-family: "Orbitron", sans-serif;
+	font-weight: 300;
+}
+
+#history h2
+{
+	font-family: "Orbitron", sans-serif;
+	color: #C5C5C5;
+	font-weight: 400;
+	letter-spacing: 2px;
+}
+
+
+.today, .today h2, .yesterday, .yesterday h2, .custom, .custom h2
+{
+	margin-bottom: 2rem;
+}
+
+#history input
+{
+	margin-bottom: 2rem;
+}
+.history-header
+{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 1rem;
+}
+
+.avatar
+{
+	height: 32px;
+	border-radius: 4px;
+	width: 32px;
+	background-color: #ffffff;
+}
+
+.result {
+	display: flex;
+	justify-content: space-between;
+	/* padding: 0.2rem 2rem; */
+	min-width: 80px;
+}
+
+.status {
+	border-right: solid 4px;
+	height: 100%;
+	padding-right: 1rem;
+}
+
+.win {
+	border-color: #007F0C;
+}
+
+.loss
+{
+	border-color: #EB063D;
+}
+
+.winning-side, .losing-side {
+	font-weight: 500;
+	font-size: 1.2rem;
+}
+
+.winning-side {
+	color: #007F0C;
+}
+
+.losing-side {
+	color: #EB063D;
+}
+
+.game-result{
+	width: 100%;
+	height: 100%;
+	display: flex;
+	align-items: center;
+	margin-bottom: 0.5rem;
+	justify-content: space-between;
+}
+
+.status
+{
+	font-size: 1.2rem;
+	height: 100%;
+}
+
+.result span {
+	margin: 0 2rem;
+	/* background-color: #00637f; */
+	text-align: center;
 }
