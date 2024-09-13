@@ -34,7 +34,7 @@ body
 
 .main {
 	display: flex;
-	flex: 5;
+	flex: 6;
 	
 }
 
@@ -43,14 +43,14 @@ body
 	flex: 1;
 	background: #E8F3EF;
 	color: #000000;
-	display: flex;
+	/* display: flex;
 	align-items: center;
-	justify-content: center;
+	justify-content: center; */
 }
 
 .modes {
 	/* background: #607565; */
-	flex: 2;
+	flex: 3;
 	display: flex;
 	flex-direction: column;
 }
@@ -58,6 +58,7 @@ body
 #history {
 	/* background: #5ba2b4; */
 	flex: 1;
+	z-index: 2;
 }
 
 .header{
@@ -118,6 +119,27 @@ body
 	border: solid 2px;
 	justify-content: center;
 	align-items: center;
+	
+	position: relative;
+}
+
+.cpu:hover {
+	background-color: #CE0025;
+}
+
+.player:hover {
+	background-color: #C1C500;
+}
+
+.ai:hover {
+	background-color: #091DC5;
+}
+
+.mode-card svg {
+	position: absolute;
+	bottom: 8px;
+	right: 8px;
+	cursor: pointer;
 }
 
 .mode-card p {
@@ -132,6 +154,9 @@ body
 {
 	color: #CD0024;
 }
+
+
+
 .cpu span {
 	font-family: "Orbitron", sans-serif;
 	font-weight: bold;
@@ -212,12 +237,12 @@ body
 
 .tournaments{
 	padding: 2rem;
+	z-index: 1;
 	margin: 0.5rem 2rem;
 	flex: 1;
 	border: 1px solid #383838;
 	background: rgba(54, 54, 54, 0.5);
 	border-radius: 12px;
-	
 }
 
 .tournaments h1 {
@@ -249,13 +274,9 @@ body
 	color: #fff;
 }
 
-
-
-
 table {
 	width: 100%;
 }
-
 
 table th {
 	border-bottom: 1px solid #4A4A4A;
@@ -263,6 +284,11 @@ table th {
 	font-weight: 500;
 	letter-spacing: 1px;
 	text-align: center;
+}
+ 
+tr.table-head {
+	min-width: 100%;
+	margin-bottom: 0.5rem;
 }
 
 .time, .players, .playing, .register-btn {
@@ -277,13 +303,21 @@ table th {
 }
 
 .playing svg {
-	background-color: #007F0C;
+	padding: 0.4rem;
+	border-radius: 4px;
+	background-color: #007f3b;
 }
 
 .register-btn svg
 {
-	background-color: #00637f;
+	padding: 0.4rem;
+	/* background-color: #00637f; */
 	cursor: pointer;
+	border-radius: 50%;
+}
+
+.register-btn svg:hover{
+	background-color: #4A4A4A;
 }
 
 .room-number 
@@ -298,6 +332,7 @@ table th {
 
 table td {
 	text-align: start;
+	margin-bottom: 0.5rem;
 }
 
 
@@ -344,6 +379,8 @@ table td {
 	width: 32px;
 	background-color: #ffffff;
 }
+
+
 
 .result {
 	display: flex;
@@ -399,4 +436,122 @@ table td {
 	margin: 0 2rem;
 	/* background-color: #00637f; */
 	text-align: center;
+}
+
+
+
+
+.sidebar-header
+{
+	width: 100%;
+	display: flex;
+	padding: 0.5rem 1rem;
+	/* background-color: #00B98D; */
+	align-items: center;
+	justify-content: space-between;
+}
+
+.user-info, .friend-info {
+	display: flex;
+	align-items: center;
+
+}
+
+.user-info {
+	padding-top: 1rem;
+	margin-bottom: 1.5rem;
+}
+
+.user-info h1 {
+	font-size: 1.5rem;
+	font-weight: 500;
+}
+
+.user-avatar
+{
+	height: 48px;
+	border-radius: 4px;
+	width: 48px;
+	/* background-color: #08594f; */
+	border: 2px solid  #08594f;
+	margin-right: 1rem;
+}
+
+.sidebar-header svg{
+	cursor: pointer;
+}
+
+.sidebar-header svg:hover {
+	background-color: #cae5e2;
+	border-radius: 4px;
+}
+
+
+.friends-header
+{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 0.5rem 1rem;
+}
+
+.friends-header p {
+	font-size: 1.2rem;
+	font-weight: 500;
+}
+
+.friends-header p span {
+	display: inline-block;
+	color: #5e5e5e;
+	font-weight: 300;
+	margin-left: 0.rem;
+}
+
+.friends-header svg {
+	transition: 0.2s;
+	cursor: pointer;
+}
+
+.friends-header svg:hover {
+	/* background-color: #c3ece7; */
+	border-radius: 4px;
+}
+
+
+.friend-avatar
+{
+	height: 32px;
+	border-radius: 4px;
+	width: 32px;
+	/* background-color: #08594f; */
+	border: 2px solid  #08594f;
+	margin-right: 1rem;
+}
+
+.friend {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	margin-bottom: 0.4rem;
+}
+
+.friend-info h1 {
+	color: #46504B;
+	font-weight: 300;
+	font-size: 1.1rem;
+}
+
+.friends-list {
+	padding: 0.5rem 1rem;
+}
+
+.friend svg {
+	background-color: #062E00;
+	border-radius: 4px;
+	padding: 4px;
+	cursor: pointer;
+}
+
+.friend svg:hover {
+	background-color: #000200;
 }
