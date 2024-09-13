@@ -119,8 +119,14 @@ body
 	border: solid 2px;
 	justify-content: center;
 	align-items: center;
-	
+	user-select: none;
 	position: relative;
+}
+
+.tournament-ico {
+	position: absolute;
+	right: 4px;
+	bottom: 4px;
 }
 
 .cpu:hover {
@@ -133,6 +139,11 @@ body
 
 .ai:hover {
 	background-color: #091DC5;
+}
+
+.mode-card
+{
+	transition: 0.3s;
 }
 
 .mode-card svg {
@@ -197,6 +208,7 @@ body
 	border-radius: 4px;
 }
 .tournament-mode-card {
+	position: relative;
 	display: flex;
 	height: 100%;
 }
@@ -370,6 +382,13 @@ table td {
 	justify-content: space-between;
 	align-items: center;
 	margin-bottom: 1rem;
+}
+
+.history-header p
+{
+	color: #9f9f9f;
+	border-bottom: 1px solid #08594f;
+	cursor: pointer;
 }
 
 .avatar
