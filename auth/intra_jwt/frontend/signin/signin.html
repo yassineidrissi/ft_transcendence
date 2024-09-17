@@ -91,6 +91,7 @@
 		.then(result => {
 			if(result['2fa'] === true)
 			{
+				localStorage.setItem('token',result.token)
 				window.location.href = 'http://127.0.0.1:5501/frontend/2fa.html';
 			}
 			else
