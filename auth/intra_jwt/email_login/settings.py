@@ -68,7 +68,7 @@ REST_FRAMEWORK = {
 }
 
 SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=10),
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=1),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
     # if user keeps using the app, the refresh token will be updated 
     "ROTATE_REFRESH_TOKENS": False,
@@ -221,7 +221,7 @@ FORTYTWO_CLIENT_ID = (
     "u-s4t2ud-e77a8458846c5717dd0ecd89e663025ce33b92511d830379eee4bbb374bd0f34"
 )
 FORTYTWO_CLIENT_SECRET = (
-    "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"
+    "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"
 )
 # FORTYTWO_REDIRECT_URI = 'https://api.intra.42.fr/oauth/authorize'
 FORTYTWO_REDIRECT_URI = "http://127.0.0.1:8000/oauth/callback/"

@@ -18,3 +18,11 @@ class User(AbstractUser):
     
     def __str__(self):
         return self.email  
+    
+
+class Friend(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="friend_list")
+    friends = models.ManyToManyField(User, related_name="friends_of", blank=True)
+
+    def __str__(self):
+        return f"{self.user.username}'s friends"

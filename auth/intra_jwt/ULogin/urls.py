@@ -24,6 +24,8 @@ urlpatterns = [
     path('deletUser/', views.deleteUser),
     path('updateUser/', views.updateUser),
     path('searchUsers/', views.search_users, name='search_users'),
+    path('addFriend/', views.addFriend),
+    # !this need to test bc i dont know how to use it like this localhost:8000/api/Profile/admin/
     path('Profile/<str:username>/', views.getProfile),
 
     path('verify2fa/', views.validate2fa),

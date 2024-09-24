@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import api_view,authentication_classes, permission_classes
 from .serializers import UserSerializer,LoginUserSerializer,User42Login,UserDataSerializer,UserUpdateSerializer
-from .models import User
+from .models import User,Friend
 from .tests import save_user42
 from django.conf import settings
 import requests
@@ -18,10 +18,16 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework_simplejwt.exceptions import TokenError
 from urllib.parse import urlencode
 import pyotp
+import jwt
 from rest_framework.permissions import AllowAny
 
 
-
+def generetToekn2fa(user):
+    payload = {
+        'email': user.email,
+    }
+    token = jwt.encode(payload, settings.SECRET_KEY, algorithm='HS256')
+    return token
 # function to regenret access token
 def get_tokens_for_user(user):
     refresh = RefreshToken.for_user(user)
@@ -50,9 +56,10 @@ def loginView(request):
     print('pass::',user.password)
     if not user.check_password(password):
         raise AuthenticationFailed('Incorrect password!')
-    
+    if user.state_2fa == True:
+        
+        return Response({'2fa': user.state_2fa, 'token': generetToekn2fa(user)})
     token = get_tokens_for_user(user)
-
 
     response = Response()
     response.set_cookie(
@@ -119,6 +126,10 @@ def callback42(request):
     error = request.GET.get("error")
     scope = request.GET.get("scope")
     
+    print("Code:", code)
+    print("Error:", error)
+    print("Scope:", scope)
+
     if error:
         return Response({"error": error})
     
@@ -134,7 +145,8 @@ def callback42(request):
         "redirect_uri": settings.FORTYTWO_REDIRECT_URI,
     }
     token_response = requests.post(token_url, data=payload)
-    
+    print("Token Response:", token_response.json())
+    print("Token Response Status Code:", token_response.status_code)
     if token_response.status_code == 200:
         access_token = token_response.json().get("access_token")
         user_info_url = "https://api.intra.42.fr/v2/me"
@@ -151,8 +163,12 @@ def callback42(request):
                 'full_name': user_info['displayname'],
             }
             if User.objects.filter(email=user_profile['email']).exists():
+                
                 user = User.objects.get(email=user_profile['email'])
+                
                 response = redirect42(user)
+                if user.state_2fa == True:
+                    return response(data={'2fa': user.state_2fa, 'token': generetToekn2fa(user)})
                 refresh = RefreshToken.for_user(user)
                 access_token = str(refresh.access_token)
                 response.set_cookie(
@@ -191,7 +207,7 @@ def callback42(request):
             return Response(user_info)
         else:
             return HttpResponse(f"An error occurred while trying to log you in. Status Code: {token_response.status_code}. Response: {token_response.text}")
-
+    return Response(token_response.json())
 
 @api_view(['POST'])
 def logoutView(request):
@@ -237,28 +253,64 @@ def updateUser(request):
     # return Response(serializer.errors)
 
 @api_view(['POST'])
-@permission_classes([IsAuthenticated])
+# @permission_classes([IsAuthenticated])
 def validate2fa(request):
-    print('request.data::',request.data)
-    user = request.user
+    print(request.data['token'])
+    email = jwt.decode(request.data['token'], settings.SECRET_KEY, algorithms=['HS256'])['email']
+    user = User.objects.get(email=email)
     totp = pyotp.TOTP(user.otp_secret)
-    print(totp.now())
+    print('correct code',totp.now())
     print('your code',request.data['code'])
     if totp.verify(request.data['code']):
-        return Response({'message': '2fa validated successfully'}, status=status.HTTP_200_OK)
+        token = get_tokens_for_user(user)
+        response = Response()
+        response.set_cookie(
+            key='refresh_token',
+            value=token['refresh'],
+            httponly=True,
+            secure=True,
+        )
+        response.data = {
+            'message': 'success',
+            'access_token': token['access'],
+        }
+        return response
     return Response({'message': 'Invalid 2fa code'}, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def search_users(request):
+    user = request.user
     query = request.GET.get('q', '')  
-    users = User.objects.filter(email__icontains=query)[:3]
+    users = User.objects.filter(username__icontains=query).exclude(id=user.id)[:3]
     response = Response()
     response.data = {
         'results': UserDataSerializer(users, many=True).data
     }
     return response
 
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def addFriend(request):
+    user = request.user
+    id = request.data.get('id')
+    if id is None:
+        return Response({'message': 'User ID is required'}, status=status.HTTP_400_BAD_REQUEST)
+    if user.id == id:
+        return Response({'message': 'You cannot add yourself as a friend'}, status=status.HTTP_400_BAD_REQUEST)
+    if User.objects.filter(id=id).exists() == False:
+        return Response({'message': 'User does not exist'}, status=status.HTTP_400_BAD_REQUEST)
+    if Friend.objects.filter(user=user, friends=id).exists():
+        return Response({'message': 'Friend already added'}, status=status.HTTP_400_BAD_REQUEST)
+    friend = Friend(user=user)
+    friend.save()
+    friend.friends.add(User.objects.get(id=id))
+    friend.save()
+    return Response({'message': 'Friend added successfully'}, status=status.HTTP_200_OK)
+
+
+# !this need to test bc i dont know how to use it like this localhost:8000/api/Profile/admin/
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def getProfile(request, username):

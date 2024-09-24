@@ -54,65 +54,89 @@
 
     <button type="button" id="update-btn">Update Profile</button>
 </body>
+<script src="./refreshToken.js"></script>
 <script>
     const searchInput = document.getElementById('search-user');
     const resultsList = document.getElementById('user-results');
 
+    async function viewUser(id){
+        let access_token = localStorage.getItem('access_token');
+        let response = await fetch(`http://127.0.0.1:8000/api/addFriend/`,{
+            method: 'POST',
+            credentials: 'include',
+            headers: {
+                'Authorization': `Bearer ${access_token}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                'id': id
+            })
+        });
+        response = await handleAuthResponse(response, viewUser);
+        if (response.ok){
+            console.log(response.status);
+            let data = await response.json();
+            console.log(data);
+        }
+    }
     searchInput.addEventListener('input', async function () {
         const query = searchInput.value.trim();  // Get the input value
-        const response = await fetch(`http://127.0.0.1:8000/api/searchUsers/?q=${query}`, {
+        let response = await fetch(`http://127.0.0.1:8000/api/searchUsers/?q=${query}`, {
             method: 'GET',
             credentials: 'include',
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem('access_token')}`
             }
         });
-        let data = await response.json();
-        document.querySelector('ul').innerHTML = '';
-        console.log(data);
-        for (let user of data['results']) {
-            document.querySelector('ul').innerHTML += `<li id=${user['id']}>
-                    ${user['username']}
-                    <button type="button" onclick="viewUser(${user['id']})">Add As Freind</button>
-                </li>`;
+        response = await handleAuthResponse(response, searchInput);
+        if (response.ok){
+            let data = await response.json();
+            document.querySelector('ul').innerHTML = '';
+            console.log(data);
+            for (let user of data['results']) {
+                document.querySelector('ul').innerHTML += `<li id=${user['id']}>
+                        ${user['username']}
+                        <button type="button" onclick="viewUser(${user['id']})">Add As Freind</button>
+                    </li>`;
+            }
         }
-            
     });
 
 
 
     async function updateUser() {
-    let access_token = localStorage.getItem('access_token');
-    const formData = new FormData();
-    formData.append('first_name', document.querySelector('#first-name').value);
-    formData.append('last_name', document.querySelector('#last-name').value);
-    formData.append('full_name', document.querySelector('#full-name').value);
-    formData.append('level', document.querySelector('#level').value);
-    formData.append('state_2fa', document.querySelector('#state_2fa').checked);
+        let access_token = localStorage.getItem('access_token');
+        const formData = new FormData();
+        formData.append('first_name', document.querySelector('#first-name').value);
+        formData.append('last_name', document.querySelector('#last-name').value);
+        formData.append('full_name', document.querySelector('#full-name').value);
+        formData.append('level', document.querySelector('#level').value);
+        formData.append('state_2fa', document.querySelector('#state_2fa').checked);
 
-    // Append file if selected
-    const imageInput = document.querySelector('#image-input').files[0];
-    if (imageInput) {
-        formData.append('img_url', imageInput);
-    }
-
-    // Send request
-    let response = await fetch('http://127.0.0.1:8000/api/updateUser/', {
-        method: 'PATCH',
-        credentials: 'include',
-        body: formData,
-        headers: {
-            'Authorization': `Bearer ${access_token}`,
-            // Note: Don't set Content-Type header; it will be automatically set to multipart/form-data by FormData
+        // Append file if selected
+        const imageInput = document.querySelector('#image-input').files[0];
+        if (imageInput) 
+            formData.append('img_url', imageInput);
+        for (var pair of formData.entries()) {
+            if (pair[1] === '')
+                formData.delete(pair[0]);
         }
-    });
-
-    if (response.status === 200) {
-        let data = await response.json();
-        console.log(data);
-    } else {
-        console.error('Error updating profile', await response.json());
-    }
+        let response = await fetch('http://127.0.0.1:8000/api/updateUser/', {
+            method: 'PATCH',
+            credentials: 'include',
+            body: formData,
+            headers: {
+                'Authorization': `Bearer ${access_token}`,
+                // Note: Don't set Content-Type header; it will be automatically set to multipart/form-data by FormData
+            }
+        });
+        response = await handleAuthResponse(response, updateUser);
+        if (response.status === 200) {
+            let data = await response.json();
+            console.log(data);
+        } else 
+            console.error('Error updating profile', await response.json());
+        
 }
 
 
@@ -120,35 +144,6 @@
         event.preventDefault();  // Ensure form submission is prevented
         updateUser();
     });
-
-    // async function updateUser(event)
-    // {
-    //     let access_token = localStorage.getItem('access_token');
-    //     const form = event.target;
-    //     const formDate = new FormData(form);
-
-    //     console.log(formDate);
-    //     for(let key of formDate.keys())
-    //         if(formDate.get(key) === '')
-    //             formDate.delete(key);
-    //     let response = await fetch('http://127.0.0.1:8000/api/updateUser/',{
-    //         method: 'PATCH',
-    //         credentials: 'include',
-    //         body: formDate,
-    //         headers: {
-    //             'Authorization': `Bearer ${access_token}`,
-    //         }
-    //     })
-    //     if(response.status === 200)
-    //     {
-    //         let data = await response.json();
-    //         console.log(data);
-    //     }
-    // }
-    // document.getElementById('update-user').addEventListener('submit', function(event) {
-    //     event.preventDefault(); 
-    //     updateUser(event);
-    // });
 
     deleteUser = async () => {
         let access_token = localStorage.getItem('access_token');
@@ -159,6 +154,7 @@
                 'Authorization': `Bearer ${access_token}`,
             }
         })
+        response = await handleAuthResponse(response, deleteUser);
         if(response.status === 200)
         {
             localStorage.removeItem('access_token');
@@ -166,46 +162,33 @@
         }
         else
             console.error('error');
+        // if(response.status === 200)
+        // {
+        //     localStorage.removeItem('access_token');
+        //     window.location.href = 'http://127.0.0.1:5501/frontend/signin/signin.html'
+        // }
+        // else
+        //     console.error('error');
     }
     document.getElementById('delete').addEventListener('submit', function(event) {
         event.preventDefault(); 
         deleteUser();
     });
-    document.querySelector('form').addEventListener('submit', function(event) {
+    document.querySelector('form').addEventListener('submit',async function logout(event) {
         event.preventDefault(); 
-        fetch('http://127.0.0.1:8000/api/logout/',{
+        let response = await fetch('http://127.0.0.1:8000/api/logout/',{
             method: 'POST',
             credentials: 'include',
         })
-        .then(response => {
-            if (response.ok) 
-            {
-                localStorage.removeItem('access_token');
-                window.location.href = 'http://127.0.0.1:5501/frontend/signin/signin.html';
-            }
-
-        }).catch(error => {
-            console.error('There was a problem with the logout operation:', error);
-        });
-    });
-
-    async function refresh_token()
-    {
-        let response = await fetch('http://127.0.0.1:8000/api/refresh/',{
-                    method: 'POST',
-                    credentials: 'include',
-        });
-        console.log(response.status);
-        if(response.status === 200){
-            let data = await response.json();
-            localStorage.setItem('access_token',data.access_token);
-            check_auth();
-        }
-        else{
-            console.error('error');
+        response = await handleAuthResponse(response, logout);
+        if(response.status === 200)
+        {
+            localStorage.removeItem('access_token');
             window.location.href = 'http://127.0.0.1:5501/frontend/signin/signin.html';
         }
-    }
+        else
+            console.error('error');
+    });
     async function check_auth()
     {
         let access_token = localStorage.getItem('access_token');
@@ -216,12 +199,8 @@
                     'Authorization': `Bearer ${access_token}`,
                 }
         });
-        if(response.status === 401)
-        {
-            localStorage.removeItem('access_token');
-            await refresh_token();
-        }
-        else
+        response = await handleAuthResponse(response, check_auth);
+        if(response.ok)
         {
             let data = await response.json();
             document.getElementById('info').innerHTML = `hello ${data['username']}
@@ -234,7 +213,7 @@
                     `;
             document.querySelector('#state_2fa').checked = data['state_2fa'];
             console.log(data);
-        }
+        }   
     }
     check_auth();
 
