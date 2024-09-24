@@ -30,7 +30,7 @@ This project is created and maintained by the following contributors:
 
 - **hamzak99** - Full-stack Developer
 - **Amine (madebyamine)** - Backend Developer
-- **Ramzy842** - Frontend Developer
+- **Ramzy842** - Fullstack Engineer
 - **Ahmed Yakoubi (YKO-01)** - DevOps Engineer
 
 ## Getting Started
