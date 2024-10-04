@@ -21,10 +21,11 @@
 		</div>
 		<form action="#">
 			<div class="light"></div>
+			<p style="color: white;" id="msg"></p>
 			<input type="text" name="username" id="username" placeholder="Username">
 			<input type="email" name="email" id="email" placeholder="Email">
 			<input type="password" name="password" id="password" placeholder="Password">
-			<input type="password" name="confirm-password" id="confirm-password" placeholder="Confirm password">
+			<input type="password" name="password1" id="confirm-password" placeholder="Confirm password">
 			<div class="submit-btn">
 				<button type="submit">
 					<p>Sign up</p>
@@ -36,4 +37,21 @@
 		</form>
 	</div>
 </body>
+<script>
+	const form = document.querySelector('form');
+	const btn = document.querySelector('button');
+	btn.addEventListener('click',async (event) => {
+		event.preventDefault();
+		let data = new FormData(form);
+		let response = await fetch('http://127.0.0.1:8000/api/register/', {
+            method: 'POST',
+            body: data
+        })
+		let result = await response.json();
+		console.log(result);
+		document.getElementById('msg').innerHTML = `${result.message}`;
+	})
+</script>
 </html>
+
+<!-- https://127.0.0.1/frontend/profile.html -->

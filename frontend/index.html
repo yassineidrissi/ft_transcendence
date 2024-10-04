@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,7 +7,6 @@
     <style>
         body {
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 100vh;
@@ -20,37 +18,29 @@
             color: white;
             font-family: Arial, sans-serif;
         }
-
         canvas {
             background-color: rgba(0, 0, 0, 0.7);
             border: 2px solid white;
         }
-
         .score {
             position: absolute;
             top: 20px;
             font-size: 24px;
             color: white;
         }
-
         #leftScore {
             left: 20px;
         }
-
         #rightScore {
             right: 20px;
         }
-
         .mode-buttons {
             position: absolute;
-            top: 10%;
-            left: 37%;
-            transform: translateY(-50%);
-            display: flex;
-            gap: 10px;
+            top: 10px;
+            right: 10px;
         }
-
         button {
+            margin: 0 5px;
             padding: 10px 20px;
             background-color: rgba(255, 255, 255, 0.8);
             border: none;
@@ -58,20 +48,11 @@
             font-size: 16px;
             border-radius: 5px;
         }
-
         button:hover {
             background-color: rgba(255, 255, 255, 1);
         }
-
-        .nav-buttons {
-            position: absolute;
-            bottom: 20px;
-            display: flex;
-            gap: 10px;
-        }
     </style>
 </head>
-
 <body>
     <div class="mode-buttons">
         <button id="multiplayerButton">Multiplayer Mode</button>
@@ -80,12 +61,6 @@
     <canvas id="gameCanvas" width="800" height="600"></canvas>
     <div id="leftScore" class="score">0</div>
     <div id="rightScore" class="score">0</div>
-
-    <!-- Navigation buttons -->
-    <div class="nav-buttons">
-        <button onclick="window.location.href='signin/signin.html'">Sign In</button>
-        <button onclick="window.location.href='signup/signup.html'">Sign Up</button>
-    </div>
 
     <script>
         const canvas = document.getElementById('gameCanvas');
@@ -237,5 +212,4 @@
         gameLoop();
     </script>
 </body>
-
 </html>
