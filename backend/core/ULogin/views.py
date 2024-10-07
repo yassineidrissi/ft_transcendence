@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import api_view,authentication_classes, permission_classes
 from .serializers import UserSerializer,LoginUserSerializer,User42Login,UserDataSerializer,UserUpdateSerializer
-from .models import User,Friend,FriendRequest
+from .models import User,Friend,FriendRequest,BlockFriend
 from .tests import save_user42
 from django.conf import settings
 import requests
@@ -79,11 +79,10 @@ def loginView(request):
     return response
 
 # check if user is authenticated
+
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def checkAuth(request):
-    print(settings.MEDIA_ROOT)
-    # print('cookies',request.COOKIES)
     user = request.user
     serializer = UserSerializer(user, context={'request': request})
     return Response(UserDataSerializer(user).data)
@@ -309,7 +308,6 @@ def getFriendRequests(request):
     for request in friend_requests:
         fromUser.append(request.from_user)
     serializer = UserSerializer(fromUser, many=True)
-    print('lololol111')
     return Response({'results': serializer.data}, status=status.HTTP_200_OK)
 # !accept friend request
 def get_or_create_friend_list(user):
@@ -403,3 +401,10 @@ def viewUser(request, username):
         'results': UserDataSerializer(user).data
     }
     return response
+# ! -------------------------------!
+# ! -------------------------------!
+# ** this for Block friend **
+
+def blockFriend(request):
+    user = request.user
+    id = request.data.get('id')

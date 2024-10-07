@@ -37,6 +37,40 @@
     const searchInput = document.getElementById('search-user');
     const FriendsList = document.getElementById('Friends-List');
     const RequestFriends = document.getElementById('Request-Friends');
+    check_auth();
+    async function userStateOnline(id){
+        console.log('id::',id);
+        let wsProtocol = window.location.protocol === "https:" ? "wss://" : "ws://";
+        let url = `ws://127.0.0.1:8000/ws/socket-server/?id=${id}`;  
+        let socket = new WebSocket(url);
+        console.log(socket);
+        socket.onmessage = function(event){
+            let data = JSON.parse(event.data);
+            console.log(data);
+        }
+    }  
+    // userStateOnline(id);
+
+    async function check_auth()
+    {
+        let access_token = localStorage.getItem('access_token');
+        let response = await fetch('http://127.0.0.1:8000/api/user/',{
+                method: 'GET',
+                credentials: 'include',
+                headers: {
+                    'Authorization': `Bearer ${access_token}`,
+                }
+        });
+        response = await handleAuthResponse(response, check_auth);
+        if(response.ok)
+        {
+            let data = await response.json();
+            console.log('user',data);
+            userStateOnline(data['id']);
+        }
+    }
+    
+
 
     // function Friend Request ALL  
     async function acceptFriendRequest(id){
@@ -145,6 +179,7 @@
                         ${friend['username']}
                         <button type="button" onclick="viewUser(${friend['id']})">View Profile</button>
                         <button type="button" onclick="unfriend(${friend['id']})">Unfriend</button>
+                        <button type="button" onclick="blockUser(${friend['id']})">Block</button>
                     </li>`;
             }
         }
@@ -188,5 +223,10 @@
             }
         }
     });
+
+
+    async function blockUser(id){
+
+    }
 </script>
 </html>

@@ -30,6 +30,8 @@ urlpatterns = [
     path('acceptFriendRequest/', views.acceptFriendRequest),
     path('rejectFriendRequest/', views.rejectFriendRequest),
     path('unfriend/', views.unfriend),
+
+    path('blockFriend/', views.blockFriend),
     # !this need to test bc i dont know how to use it like this localhost:8000/api/Profile/admin/
     path('Profile/<str:username>/', views.viewUser),
 

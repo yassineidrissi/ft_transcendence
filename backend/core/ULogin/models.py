@@ -12,7 +12,8 @@ class User(AbstractUser):
     state_2fa = models.BooleanField(default=False)
     otp_secret = models.CharField(max_length=32, blank=True, null=True)
     img_qr = models.ImageField(upload_to='qr_codes', blank=True, null=True)
-    
+    # is_online = models.BooleanField(default=False)
+    is_online = models.IntegerField(default=0)
     username = models.CharField(max_length=150, blank=True, null=True)
     USERNAME_FIELD = 'email'  # Set email as the primary identifier
     REQUIRED_FIELDS = ['username']  # Add any other fields that are required
@@ -36,3 +37,10 @@ class Friend(models.Model):
 
     def __str__(self):
         return f"{self.user.username}'s friends"
+
+class BlockFriend(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="block_friend_list")
+    block_friends = models.ManyToManyField(User, related_name="block_friends_of", blank=True)
+
+    def __str__(self):
+        return f"{self.user.username}'s block friends"
