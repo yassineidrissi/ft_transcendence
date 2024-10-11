@@ -47,34 +47,27 @@ body
 }
 
 .profile {
-	/* background: #607565; */
 	flex: 3;
 	display: flex;
 	flex-direction: column;
 	padding: 0.5rem 2rem;
 }
 
-.profile-cover {
-	width: 100%;
-	margin: 0 auto;
-	height: 12rem;
-	border: 2px solid #017a78;
-	margin-bottom: 1.5rem;
-}
 
 .profile-photo {
+	display: flex;
 	width: 96px;
 	height: 96px;
 	border-radius: 50%;
 	position: relative;
-	bottom: -50%;
-	transform: translateY(50%);
-	left: 1rem;
-	background: linear-gradient( #76cccf,  #0c6f60);
+	left: 50%;
+	transform: translateX(-50%);
+	border: #017a78 2px solid;
+	margin-bottom: 0.5rem;
+	/* background: linear-gradient( #76cccf,  #0c6f60); */
 }
 
 .profile-info{
-	/* background: #017a78; */
 	display: flex;
 	align-items: center;
 	flex-direction: column;
@@ -82,15 +75,15 @@ body
 
 .username
 {
-	font-size: 2.2rem;
+	font-size: 2rem;
 	font-weight: 500;
 }
 
 .user-stats {
 	display: flex;
 	justify-content: center;
-	gap: 4rem;
-	margin-bottom: 4rem;
+	gap: 3rem;
+	margin-bottom: 1rem;
 }
 
 .stat {
@@ -123,9 +116,10 @@ body
 {
 	display: flex;
 	justify-content: center;
+	gap: 4rem;
 	width: 100%;
-	/* gap: 5rem; */
 	/* background: #017a78; */
+
 }
 
 .general-stat .label
@@ -135,28 +129,74 @@ body
 
 .general-stat .value
 {
+	text-align: center;
 	color: #00B533;
 	font-size: 3rem;
 	font-weight: 600;
 }
 
-.total-stat{
-	padding: 2rem;
-	background: #096559;
+.high-stat .label, .low-stat .label
+{
+	text-align: center;
+	color: #fff;
+}
+
+
+.high-stat, .low-stat
+{
+	margin-top: 4rem;
+	color: #fff;
+}
+
+.general-stat .label, .stat-label
+{
+	max-width: 80%;
+	font-weight: 500;
+	font-size: 1.2rem;
 }
 
 .total-stat .label
 {
 	color: #fff;
+	text-align: center;
+	font-weight: 600;
+	font-size: 1.7rem;
+	width: 100%;
 }
 
-.high-stat, .low-stat
+.win-rates{
+	width: 100%;
+	/* background: #007F0C; */
+	display: flex;
+	flex-direction: column;
+
+}
+
+.general-win-rate
 {
-	padding: 1rem 2rem 0.5rem;
-	background: #88dde0;
-	margin-top: 4rem;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 4px;
+	margin-bottom: 4rem;
 }
 
+.stat-value {
+	color: #00B533;
+	font-size: 2rem;
+	font-weight: 600;
+}
+
+.sub-stats {
+	display: flex;
+	justify-content: space-evenly;
+}
+
+.sub-stat {
+	display: flex;
+	flex-direction: column;
+
+}
 
 #history {
 	flex: 1;
@@ -447,7 +487,7 @@ body
 }
 
 .menu-link:hover {
-	background: #76cccf;
+	background: #ffffff;
 	color: #fff;
 }
 
