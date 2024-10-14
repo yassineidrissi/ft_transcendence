@@ -172,9 +172,6 @@ input:focus
 	right: 0;
 	left: 0;
 	bottom: 0;
-	/* transition: 0.3s ease-out; */
-	
-	
 }
 
 @keyframes slidein {
