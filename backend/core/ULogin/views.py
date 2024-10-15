@@ -76,6 +76,7 @@ def loginView(request):
         'detail': 'User logged in successfully',
         'access_token': token['access'],
     }
+    print('response::',response)
     return response
 
 # check if user is authenticated
@@ -89,6 +90,7 @@ def checkAuth(request):
 
 @api_view(['POST'])
 def refresh_token(request):
+    print('request.COOKIES::',request.COOKIES)
     refresh_token = request.COOKIES.get('refresh_token')
     acc_tkn = request.COOKIES.get('access_token')
     if not refresh_token:
@@ -119,8 +121,8 @@ def login42(request):
 
 def redirect42(user):
     if user.state_2fa == False:
-        return HttpResponseRedirect('http://127.0.0.1:5501/frontend/profile.html')
-    return HttpResponseRedirect('http://127.0.0.1:5501/frontend/2fa.html')
+        return HttpResponseRedirect('https://127.0.0.1/frontend/profile.html')
+    return HttpResponseRedirect('https://127.0.0.1/frontend/2fa.html')
 @api_view(["GET"])
 @authentication_classes([])
 @permission_classes([AllowAny])
@@ -174,13 +176,14 @@ def callback42(request):
                     value=str(refresh),
                     httponly=True,
                     secure=True,
-                    # samesite='None',
+                    samesite='None',
                 )
                 response.data = {
                     'message': 'success',
                     '2fa': user.state_2fa,
                     'access_token': access_token,
                 }
+                print('response::',response)
                 return response
             user_serializer = User42Login(data=user_profile)
             if user_serializer.is_valid():

@@ -98,12 +98,15 @@ class UserUpdateSerializer(serializers.ModelSerializer):
     def update(self, instance, validated_data):
         img_file = validated_data.pop('img_url', None)
         if img_file:
-            print('base dir', settings.BASE_DIR)
-            print('instance.img_url:', instance.img_url)
-            print('full path:', os.path.join(settings.BASE_DIR, instance.img_url.lstrip('/')))
+            # print('base dir', settings.BASE_DIR)
+            # print('instance.img_url:', instance.img_url)
+            # print('full path:', os.path.join(settings.BASE_DIR, instance.img_url.lstrip('/')))
             if instance.img_url != 'https://w7.pngwing.com/pngs/178/595/png-transparent-user-profile-computer-icons-login-user-avatars-thumbnail.png':
                 if instance.img_url :
-                    os.remove(os.path.join(settings.BASE_DIR, instance.img_url.lstrip('/')))
+                    # print('media_root:', settings.MEDIA_ROOT)
+                    # print('instance.img_url:', instance.img_url)
+                    # print('deleting:', os.path.join('/app/', instance.img_url.lstrip('/')))
+                    os.remove(os.path.join('/app/', instance.img_url.lstrip('/')))
             img_url = default_storage.save(f'profile_pics/{img_file.name}', img_file)
             img_url = default_storage.url(img_url)
             instance.img_url = img_url
