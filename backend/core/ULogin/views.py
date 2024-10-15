@@ -408,6 +408,39 @@ def viewUser(request, username):
 # ! -------------------------------!
 # ** this for Block friend **
 
+def get_or_create_blockUser(user):
+    user_block = None
+    if BlockFriend.objects.filter(user=user).exists():
+        user_block = BlockFriend.objects.get(user=user)
+    else:
+        user_block = BlockFriend.objects.create(user=user)
+    return user_block
+
+
+@permission_classes([IsAuthenticated])
+@api_view(['POST'])
 def blockFriend(request):
     user = request.user
     id = request.data.get('id')
+    print('id::',id)
+    print('user::',user)
+    if id is None:
+        return Response({'message': 'User ID is required'}, status=status.HTTP_400_BAD_REQUEST)
+    if BlockFriend.objects.filter(user=user, block_friends=id).exists():
+        return Response({'message': 'Friend already blocked'}, status=status.HTTP_400_BAD_REQUEST)
+    user_block = get_or_create_blockUser(user)
+    user_block.block_friends.add(User.objects.get(id=id))
+    user_block.save()
+    return Response({'message': 'Friend blocked successfully'}, status=status.HTTP_200_OK)
+
+@permission_classes([IsAuthenticated])
+@api_view(['POST'])
+def unblockFriend(request):
+    user = request.user
+    id = request.data.get('id')
+    if id is None:
+        return Response({'message': 'User ID is required'}, status=status.HTTP_400_BAD_REQUEST)
+    if BlockFriend.objects.filter(user=user, block_friends=id).exists() == False:
+        return Response({'message': 'Friend does not exist in block list'}, status=status.HTTP_400_BAD_REQUEST)
+    BlockFriend.objects.get(user=user).block_friends.remove(User.objects.get(id=id))
+    return Response({'message': 'Friend unblocked successfully'}, status=status.HTTP_200_OK)
