@@ -59,7 +59,6 @@ class AuthMethod extends HTMLElement {
 				top: 0;
 				height: 100%;
 			}
-
 			.signin-method p {
 				font-weight: 400;
 				z-index: 1;
