@@ -8,13 +8,6 @@ class Btn extends HTMLElement {
 		const ico = document.createElement("img");
 		ico.src = "./Auth/Assets/signin-ico.svg";
 		ico.alt = this.getAttribute("alt");
-		const icoStyle = document.createElement('style');
-		icoStyle.textContent = `
-			img {
-				margin-left: 0.5rem;
-			}
-		`
-		this.shadowRoot.append(icoStyle, ico);
 		button.append(ico);
 		const style = document.createElement('style');
         style.textContent = `
@@ -24,7 +17,8 @@ class Btn extends HTMLElement {
 				border: none;
 				background: #159800;
 				border: #159800 1px solid;
-				width: 100%;
+				width: 360px;
+				max-width: 360px;
 				color: #fff;
 				font-weight: bold;
 				font-size: 1rem;
@@ -35,6 +29,14 @@ class Btn extends HTMLElement {
 				justify-content: center;
 				align-items: center;
             }
+			button:hover
+			{
+				background: #0d6300;
+				border: #0d6300 1px solid;
+			}
+			img {
+				margin-left: 0.5rem;
+			}
         `;
         this.shadowRoot.append(style, button);
     }

@@ -5,6 +5,8 @@ class Input extends HTMLElement {
         const input = document.createElement('input');
         input.type = this.getAttribute('type') || 'text';
 		input.placeholder = this.getAttribute('placeholder') || '';
+		input.id = this.getAttribute("id") || "";
+		input.name = this.getAttribute("name") || "";
 		const style = document.createElement('style');
         style.textContent = `
             input {
@@ -19,7 +21,13 @@ class Input extends HTMLElement {
 			border-color: rgb(26, 220, 26);
 			color: #ffffff;
 			padding-left: 1rem;
-            }`;
+            }
+			input::placeholder {
+				color: #eeeeee;
+				font-weight: 200;
+			}
+			`;
+			
         this.shadowRoot.append(style, input);
     }
 }

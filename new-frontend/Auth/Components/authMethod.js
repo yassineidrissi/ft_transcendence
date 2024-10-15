@@ -1,9 +1,3 @@
-{/* <div class="signin-method">
-						<div class="btn-overlay"></div>
-						<p>Sign in with Intra</p>
-						<img src="assets/42-ico.svg" alt="">
-</div> */}
-
 
 class AuthMethod extends HTMLElement {
     constructor() {
@@ -14,8 +8,8 @@ class AuthMethod extends HTMLElement {
         const overlay = document.createElement('div');
 		overlay.classList.add("btn-overlay")
 		const p = document.createElement("p")
-		p.textContent = "Sign in with" + this.getAttribute("method");
-		const img = document.createElement("img")
+		p.textContent = "Sign in with " + this.getAttribute("method");
+		const img = document.createElement("img");
 		img.src = this.getAttribute("logo-src");
 		img.alt = p.textContent;
 		// styles
@@ -30,19 +24,26 @@ class AuthMethod extends HTMLElement {
 					animation-timing-function: ease-out;
 					background: #ffffff;
 				}
+				p {
+					color: #000;
+					font-weight: 500;
+				}
 			}
 			.signin-method
 			{
+				display: flex;
+				align-items: center;
 				overflow: hidden;
 				position: relative;
 				border: 1px solid #fff;
 				margin-bottom: 1rem;
-				padding: 0.5rem 1rem;
+				
 				border-radius: 4px;
-				display : flex;
 				color: #fff;
 				cursor: pointer;
-				width:50%;
+				height: 44px;
+				width: 360px;
+				max-width: 360px;
 			}
 			.btn-overlay
 			{
@@ -60,15 +61,17 @@ class AuthMethod extends HTMLElement {
 				height: 100%;
 			}
 			.signin-method p {
+				font-size: 1rem;
 				font-weight: 400;
 				z-index: 1;
 				user-select: none;
+				margin-left: 1rem;
 			}
         `;
+        this.shadowRoot.append(style, div,overlay, p, img);
 		div.append(overlay);
 		div.append(p);
 		div.append(img)
-        this.shadowRoot.append(style, div,overlay, p, img);
     }
 }
 
