@@ -42,7 +42,6 @@ import threading
 
 
 
-
 from django.contrib.auth import get_user_model
 User = get_user_model()
 class UserOnline(WebsocketConsumer):
@@ -73,4 +72,5 @@ class UserOnline(WebsocketConsumer):
         self.user.is_online += delta
         if self.user.is_online < 0:
             self.user.is_online = 0
+        print('update_user_status', self.user.is_online)
         self.user.save()

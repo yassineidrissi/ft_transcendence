@@ -148,10 +148,20 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'transcendence',
+        'HOST': 'db',
+        'PORT': '5432',
+        'USER': 'pfister',
+        'PASSWORD': 'password',
     }
 }
 
@@ -219,7 +229,7 @@ CORS_ALLOWED_ORIGINS = [
     'http://127.0.0.1:5501',
     'https://127.0.0.1'
 ]
-ALLOWED_HOSTS = ['0.0.0.0','127.0.0.1']
+ALLOWED_HOSTS = ['*']
 
 
 # for 42 API
@@ -227,7 +237,7 @@ FORTYTWO_CLIENT_ID = (
     "u-s4t2ud-e77a8458846c5717dd0ecd89e663025ce33b92511d830379eee4bbb374bd0f34"
 )
 FORTYTWO_CLIENT_SECRET = (
-    "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"
+    "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"
 )
 # FORTYTWO_REDIRECT_URI = 'https://api.intra.42.fr/oauth/authorize'
 FORTYTWO_REDIRECT_URI = "http://127.0.0.1:8000/oauth/callback/"
