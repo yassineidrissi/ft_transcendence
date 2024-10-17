@@ -52,10 +52,23 @@ const urlRoutes = {
 	}
 }
 
+const handleLogout = () => {
+	localStorage.setItem("isUserSignedIn", JSON.parse(false));
+	navigateTo("signin")
+}
 
+const handleLayout = async (route) => {
+	html = await fetch(route.page).then(response => response.text());
+	if (route.title === "Sign up" || route.title === "Sign in")
+		app.innerHTML = `<auth-layout route="${route.title}">${html}</auth-layout>`
+	else if (route.title === "Dashboard" || route.title === "Profile")
+		app.innerHTML = `<core-layout showHistory=${true}>${html}</core-layout>`;
+	else if (route.title === "History" || route.title === "Messages"
+				|| route.title === "Tournament")
+		app.innerHTML = `<core-layout showHistory=${false}>${html}</core-layout>`;
+}
 
 const urlLocationHandler = async () => {
-	let html = null;
 	const location = window.location.pathname.toLowerCase();
 	let route = urlRoutes[location] || urlRoutes[404];
 	const storedUserData = localStorage.getItem('isUserSignedIn')
@@ -69,9 +82,8 @@ const urlLocationHandler = async () => {
 		route = urlRoutes["/signin"];
 		window.history.pushState({}, "", "/signin");
 	}
-	html = await fetch(route.page).then(response => response.text());
 	document.title = `${route.title} | SPA JS`;
-	handleLayout();
+	handleLayout(route);
 }
 
 window.onpopstate = urlLocationHandler;
@@ -93,70 +105,3 @@ const signin = () => {
 	navigateTo("/")
 }
 
-const handleLayout = () => {
-	
-	const location = window.location.pathname.toLowerCase();
-	if ((location == "/" || location == "/profile"))
-	{
-		app.innerHTML = `<nav>
-			<a href="/">Home</a>
-			<a href="/messages">Messages</a>
-			<a href="/history">History</a>
-			<a href="/sidebar">Sidebar</a>
-		</nav>`
-	}
-	if (location == "/signin" || location == "/signup")
-	{
-		app.innerHTML = `<div class="container d-flex justify-content-between flex-column vh-100">
-			<span class="cursor-pointer" onclick="navigateTo('signin')" href="signin.html"><img src="./Auth/Assets/logo.svg" class="logo" alt="ping pong logo"></span>
-			<div id="form-container" class="signin-form-container d-flex flex-column justify-content-center align-items-center"></div>
-			<div class="d-flex justify-content-between align-items-center footer">
-				<img src="./Auth/Assets/signin-logo.svg" class="" id="signin-logo" alt="signin logo">
-				<img src="./Auth/Assets/signup-logo.svg" class="d-none" id="signup-logo" alt="signup logo">
-				<h1 class="text-success fs-1">PING PONG ...</h1>
-			</div>
-		</div>`
-		const form = document.getElementById("form-container");
-		const signinLogo = document.getElementById("signin-logo");
-		const signupLogo = document.getElementById("signup-logo");
-		if (location == "/signin")
-		{
-			form.innerHTML = `<form action="#" class="d-flex justify-content-center align-items-center flex-column border-bottom pb-4 mb-4">
-						<auth-input type="email" name="email" id="email" placeholder="Email"></auth-input>
-						<auth-input type="password" name="password" id="password" placeholder="Password"></auth-input>
-						<p class="text-light text-end w-100 cursor-pointer">Forgot password?</p>
-						<auth-btn title="Sign in" alt="sign in" onclick="signin()" ></auth-btn>
-						</form>
-						<div>
-							<auth-method logo-src="./Auth/Assets/42-ico.svg" method="Intra"></auth-method>
-							<p class="text-light text-center mt-4">Don't have an account?<span onclick="navigateTo('signup')" class="ms-2 text-success cursor-pointer text-decoration-underline">Sign up</span></p>
-						</div>
-			`
-			signinLogo.setAttribute("class", "");
-			signupLogo.setAttribute("class", "d-none")
-		}
-		else if (location == "/signup")
-		{
-			form.innerHTML = `<form action="#" class="d-flex justify-content-center align-items-center flex-column">
-						<auth-input type="text" name="username" id="username" placeholder="Username"></auth-input>
-						<auth-input type="email" name="email" id="email" placeholder="Email"></auth-input>
-						<auth-input type="password" name="password" id="password" placeholder="Password"></auth-input>
-						<auth-input type="password" name="confirm-password" id="confirm-password" placeholder="Confirm Password"></auth-input>
-						<auth-btn title="Sign up" alt="sign up"></auth-btn>
-					</form>
-					<div>
-						<p class="text-light text-center mt-4">Already have an account?<span onclick="navigateTo('signin')" class="ms-2 text-success cursor-pointer text-decoration-underline">Sign in</span></p>
-					</div>`
-			signinLogo.setAttribute("class", "d-none");
-			signupLogo.setAttribute("class", "")
-		}
-	}
-	else 
-	{
-		app.innerHTML = `<nav>
-			<a href="/">Home</a>
-			<a href="/messages">Messages</a>
-			<a href="/sidebar">Sidebar</a>
-		</nav>`
-	}
-}

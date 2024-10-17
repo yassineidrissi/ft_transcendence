@@ -15,20 +15,6 @@ class AuthMethod extends HTMLElement {
 		// styles
 		const style = document.createElement('style');
         style.textContent = `
-			.signin-method:hover
-			{
-				.btn-overlay {
-					z-index: -1;
-					animation-name: slidein;
-					animation-duration: 0.5s;
-					animation-timing-function: ease-out;
-					background: #ffffff;
-				}
-				p {
-					color: #000;
-					font-weight: 500;
-				}
-			}
 			.signin-method
 			{
 				display: flex;
@@ -37,13 +23,12 @@ class AuthMethod extends HTMLElement {
 				position: relative;
 				border: 1px solid #fff;
 				margin-bottom: 1rem;
-				
 				border-radius: 4px;
-				color: #fff;
 				cursor: pointer;
 				height: 44px;
 				width: 360px;
 				max-width: 360px;
+				color: #fff;
 			}
 			.btn-overlay
 			{
@@ -67,11 +52,20 @@ class AuthMethod extends HTMLElement {
 				user-select: none;
 				margin-left: 1rem;
 			}
+			.signin-method:hover
+			{
+				color: #000;
+				.btn-overlay {
+					z-index: -1;
+					background: #fff;
+				}
+			}
         `;
-        this.shadowRoot.append(style, div,overlay, p, img);
+        this.shadowRoot.append(style);
 		div.append(overlay);
 		div.append(p);
 		div.append(img)
+		this.shadowRoot.append(div);
     }
 }
 
