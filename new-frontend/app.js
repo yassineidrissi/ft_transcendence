@@ -63,9 +63,9 @@ const handleLayout = async (route) => {
 		app.innerHTML = `<auth-layout route="${route.title}">${html}</auth-layout>`
 	else if (route.title === "Dashboard" || route.title === "Profile")
 		app.innerHTML = `<core-layout showHistory=${true}>${html}</core-layout>`;
-	else if (route.title === "History" || route.title === "Messages"
-				|| route.title === "Tournament")
+	else
 		app.innerHTML = `<core-layout showHistory=${false}>${html}</core-layout>`;
+	// console.log(route);
 }
 
 const urlLocationHandler = async () => {

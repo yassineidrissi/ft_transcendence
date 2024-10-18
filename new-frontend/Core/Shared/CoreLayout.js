@@ -2,36 +2,34 @@ class CoreLayout extends HTMLElement {
     constructor() {
         super();
         this.attachShadow({ mode: 'open' });
+	
 		const container = document.createElement("div");
-		container.className = `d-flex bg-success vw-100 vh-100`;
+		container.className = `d-flex core vw-100 vh-100`;
 		const main = document.createElement("div");
-		main.className = "bg-secondary main" ;
-		const header = document.createElement("div");
-		header.className = "bg-primary-subtle";
-		header.textContent = "HEADER";
-		main.append(header);
-		const content = document.createElement("div");
-		content.className = `bg-danger`;
-		content.textContent = "CONTENT"
-		main.append(content);
+		main.className = "main text-primary" ;
+		main.innerHTML += `<dashbboard-header></dashbboard-header>`
+		while (this.firstChild)
+		{
+			this.firstChild.classList.add("container")
+			main.append(this.firstChild);
+		}
 		container.append(main);
-		const history = document.createElement("div");
-		const showHistory = JSON.parse(this.getAttribute("showHistory"));
-		history.className = `bg-warning history ${!showHistory && "d-none"}`;
-		history.textContent = "HISTORY";
+		const showHistory = this.getAttribute("showHistory");
+		container.innerHTML += `<history-glimpse ${JSON.parse(showHistory) && "class='history'"} showHistory=${showHistory}></history-glimpse>`
+		// BEGIN SIDEBAR
 		const sidebar = document.createElement("div");
-		sidebar.className = "bg-primary sidebar"
+		sidebar.className = "bg-primary-subtle sidebar"
 		sidebar.textContent = "SIDEBAR";
-		container.append(history);
+		// END SIDEBAR
 		container.append(sidebar);
-
 		
-        while (this.firstChild) {
-            main.appendChild(this.firstChild);
-        }
 		const style = document.createElement('style');
 		style.textContent = `
     		@import url('https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css');
+			.core {
+				background: #020D14;
+				color: #fff;
+			}
 			.cursor-pointer
 			{
 				cursor: pointer;
@@ -46,8 +44,8 @@ class CoreLayout extends HTMLElement {
 				flex: 1;
 			}
 		`;
-		this.shadowRoot.append(style);
         this.shadowRoot.append(container);
+		this.shadowRoot.append(style);
     }
 }
 
