@@ -42,6 +42,13 @@ class CoreLayout extends HTMLElement {
 			}
 			.sidebar {
 				flex: 1;
+				color: #000;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				font-size: 2rem;
+				font-weight: 700;
+				// max-width:320px;
 			}
 		`;
         this.shadowRoot.append(container);

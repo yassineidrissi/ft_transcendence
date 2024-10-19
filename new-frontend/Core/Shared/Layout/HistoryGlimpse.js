@@ -4,7 +4,7 @@ class HistoryGlimpse extends HTMLElement {
         this.attachShadow({ mode: 'open' });
         const history = document.createElement("div");
 		const showHistory = JSON.parse(this.getAttribute("showHistory"));
-		history.className = `history ${this.getAttribute("class")} flex h-100 ${!showHistory && "d-none" } p-2`;
+		history.className = `history ${this.getAttribute("class")} flex h-100 ${!showHistory && "invisible" } p-2`;
 		history.innerHTML = `<history-header></history-header>`
 		history.innerHTML = history.innerHTML + `<scores-list></scores-list>`
 		const style = document.createElement('style');

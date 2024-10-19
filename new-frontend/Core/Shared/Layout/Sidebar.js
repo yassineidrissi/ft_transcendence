@@ -6,7 +6,7 @@ class Sidebar extends HTMLElement {
         
 		const style = document.createElement('style');
         style.textContent = `
-            
+            // max-width: 256px;
 			`;
 			
         this.shadowRoot.append(style, sidebar);
