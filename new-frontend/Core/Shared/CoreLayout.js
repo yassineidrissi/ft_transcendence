@@ -8,6 +8,7 @@ class CoreLayout extends HTMLElement {
 		const main = document.createElement("div");
 		main.className = "main text-primary" ;
 		main.innerHTML += `<dashbboard-header></dashbboard-header>`
+
 		while (this.firstChild)
 		{
 			this.firstChild.classList.add("container")
@@ -16,23 +17,25 @@ class CoreLayout extends HTMLElement {
 		container.append(main);
 		const showHistory = this.getAttribute("showHistory");
 		container.innerHTML += `<history-glimpse ${JSON.parse(showHistory) && "class='history'"} showHistory=${showHistory}></history-glimpse>`
-		// BEGIN SIDEBAR
-		const sidebar = document.createElement("div");
-		sidebar.className = "bg-primary-subtle sidebar"
-		sidebar.textContent = "SIDEBAR";
-		// END SIDEBAR
-		container.append(sidebar);
+
+		// const sidebar = document.createElement("div");
+		// sidebar.className = "bg-primary-subtle sidebar p-3"
+		// sidebar.innerHTML += `<sidebar-header></sidebar-header>`;
+		// sidebar.innerHTML += `<friends-section></friends-section>`;
+
+
+		container.innerHTML += `<layout-sidebar class="sidebar"></layout-sidebar>`;
 		
 		const style = document.createElement('style');
-		style.textContent = `
+		style.textContent = `	
     		@import url('https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css');
-			.core {
-				background: #020D14;
-				color: #fff;
-			}
 			.cursor-pointer
 			{
 				cursor: pointer;
+			}
+			.core {
+				background: #020D14;
+				color: #fff;
 			}
 			.main {
 				flex: 6;
@@ -43,12 +46,12 @@ class CoreLayout extends HTMLElement {
 			.sidebar {
 				flex: 1;
 				color: #000;
-				display: flex;
-				justify-content: center;
-				align-items: center;
+				// display: flex;
+				// justify-content: center;
+				// align-items: center;
 				font-size: 2rem;
-				font-weight: 700;
-				// max-width:320px;
+				// font-weight: 700;
+				max-width: 284px;
 			}
 		`;
         this.shadowRoot.append(container);

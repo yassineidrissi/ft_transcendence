@@ -6,7 +6,7 @@ class ScoreCard extends HTMLElement {
 		const result = JSON.parse(this.getAttribute('isWinner'));
 		scoreCard.className = `d-flex justify-content-between align-items-center me-4 mb-2 px-2 border-end ${result ? "border-success" : "border-danger"} border-5`;
 		scoreCard.innerHTML = `
-			<img src="./Core/Shared/assets/avatar.jpg" height='44'></img>
+			<img src="./Core/Shared/assets/avatar.jpg" class="rounded" height='44'></img>
 			<div class="d-flex">
 				score
 			</div>

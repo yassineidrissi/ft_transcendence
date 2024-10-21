@@ -6,7 +6,8 @@ class HistoryGlimpse extends HTMLElement {
 		const showHistory = JSON.parse(this.getAttribute("showHistory"));
 		history.className = `history ${this.getAttribute("class")} flex h-100 ${!showHistory && "invisible" } p-2`;
 		history.innerHTML = `<history-header></history-header>`
-		history.innerHTML = history.innerHTML + `<scores-list></scores-list>`
+		history.innerHTML += `<input type="date" class="mb-4 flex " ></input>`
+		history.innerHTML += `<scores-list></scores-list>`
 		const style = document.createElement('style');
 		style.textContent = `
 			@import url('https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css');
