@@ -65,7 +65,6 @@ const handleLayout = async (route) => {
 		app.innerHTML = `<core-layout showHistory=${true}>${html}</core-layout>`;
 	else
 		app.innerHTML = `<core-layout showHistory=${false}>${html}</core-layout>`;
-	// console.log(route);
 }
 
 const urlLocationHandler = async () => {
