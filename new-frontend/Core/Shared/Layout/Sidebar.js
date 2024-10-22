@@ -4,6 +4,7 @@ class Sidebar extends HTMLElement {
         this.attachShadow({ mode: 'open' });
         const sidebar = document.createElement('div');
 		sidebar.className = `bg-primary-subtle ${this.getAttribute("class")} p-3 vh-100`;
+		sidebar.innerHTML += `<div id="overlay" class="position-absolute top-0 bottom-0 start-0 end-0 bg-dark" ></div>`
 		sidebar.innerHTML += `<sidebar-header></sidebar-header>`;
 		sidebar.innerHTML += `<friends-section></friends-section>`;
 		const style = document.createElement('style');
@@ -12,6 +13,9 @@ class Sidebar extends HTMLElement {
 			.cursor-pointer
 			{
 				cursor: pointer;
+			}
+			#overlay{
+				z-index: -1;
 			}
 		`;
         this.shadowRoot.append(style, sidebar);

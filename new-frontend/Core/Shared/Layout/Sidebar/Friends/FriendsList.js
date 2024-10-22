@@ -5,9 +5,9 @@ class FriendsList extends HTMLElement {
         const friendsList = document.createElement('div');
 		friendsList.className = "mt-4";
         friendsList.innerHTML = `
-			<single-friend></single-friend>
-			<single-friend></single-friend>
-			<single-friend></single-friend>
+			<single-friend name="Ramzy Chahbani" ></single-friend>
+			<single-friend name="Yassine idrissi"></single-friend>
+			<single-friend name="Amine l7atba"></single-friend>
 		`
 		const style = document.createElement('style');
         style.textContent = `

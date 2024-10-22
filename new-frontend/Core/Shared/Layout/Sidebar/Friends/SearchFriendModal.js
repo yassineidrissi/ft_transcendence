@@ -42,8 +42,7 @@ class SearchFriendModal extends HTMLElement {
         });
     }
 	closeModal() {
-		// Logic to close the modal
-		this.remove(); // or hide the modal instead of removing it
+		this.remove();
 	}
 }
 

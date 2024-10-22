@@ -8,7 +8,14 @@ class Header extends HTMLElement {
 							<p id="view-matches" class="text-white-50 me-4 cursor-pointer text-decoration-underline" onclick="navigateTo('history')">View All Matches</p>
 						`;
 		const style = document.createElement('style');
-        style.textContent = `@import url('https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css'); .cursor-pointer{cursor: pointer;}`;
+        style.textContent = `@import url('https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css');
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap');
+         .cursor-pointer{cursor: pointer;
+        }
+        h1 {
+            font-family: "Orbitron", sans-serif;
+        } 
+        `;
 			
         this.shadowRoot.append(style, header);
     }

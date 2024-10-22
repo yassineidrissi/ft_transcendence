@@ -8,7 +8,9 @@ class ScoreCard extends HTMLElement {
 		scoreCard.innerHTML = `
 			<img src="./Core/Shared/assets/avatar.jpg" class="rounded" height='44'></img>
 			<div class="d-flex">
-				score
+				<span class="mx-2">1</span>
+				<span class="mx-2">-</span>
+				<span class="mx-2">6</span>
 			</div>
 			<span class="fw-semibold">${ result ? "Win" : "Loss"}</span>
 		`
