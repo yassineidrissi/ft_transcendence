@@ -5,16 +5,20 @@ class Dashboard extends HTMLElement {
 		const dashboard = document.createElement("div");
 		dashboard.className = "container"
 		dashboard.innerHTML = `
-			<div class="d-flex">
-                <h1 class="me-2 mb-3">Game Modes</h1>
-                <img src="./Core/Dashboard/assets/modes.svg"></img>
+			<div class="d-flex align-items-center mb-2">
+                <h1 class="mb-0 text-light">Game Modes</h1>
+                <img class="mb-0 rounded" src="./Core/Dashboard/assets/modes.svg"></img>
             </div>
 			<game-modes><game-modes>
-			<tournaments-section></tournaments-section>
 		`
+		dashboard.innerHTML += `<tournaments-section></tournaments-section>`
 		const style = document.createElement('style');
 		style.textContent = `
     		@import url('https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css');
+			 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap');
+			h1{
+				font-family: "Orbitron", sans-serif;
+			}
 			.cursor-pointer
 			{
 				cursor: pointer;
