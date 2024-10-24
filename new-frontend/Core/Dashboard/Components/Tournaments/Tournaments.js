@@ -7,7 +7,7 @@ class Tournaments extends HTMLElement {
 		tournaments.className = "container rounded  w-100 pt-4 ms-2";
         tournaments.innerHTML = `<div>
             <h1 class="text-light fs-3">Tournaments</h1>
-            <table class="w-100">
+            <table class="">
                 <tr class="head">
                   <th>Name</th>
                   <th>Time</th>
@@ -15,16 +15,16 @@ class Tournaments extends HTMLElement {
                   <th>Status</th>
                 </tr>
                 <tr>
-                  <td><span class="number">1</span> Alfreds Futterkiste</td>
-                  <td>Maria Anders</td>
-                  <td>Germany</td>
-                  <td>Germany</td>
+                  <td><span class="number me-2">100</span> Tournament</td>
+                  <td class=""><img src="./Core/Dashboard/assets/time.svg" ></img> 20 july, 2024 5PM</td>
+                  <td class=""><img src="./Core/Dashboard/assets/players.svg" ></img> 4</td>
+                  <td>Register</td>
                 </tr>
                 <tr>
-                  <td><span class="number">2</span> Centro comercial Moctezuma</td>
-                  <td>Francisco Chang</td>
-                  <td>Mexico</td>
-                  <td>Germany</td>
+                  <td><span class="number me-2">2</span> Tournament</td>
+                  <td class=""><img src="./Core/Dashboard/assets/time.svg" ></img> 20 july, 2024 5PM</td>
+                  <td class=""><img src="./Core/Dashboard/assets/players.svg" ></img> 4</td>
+                  <td>Playing</td>
                 </tr>
             </table>
         </div>`
@@ -33,13 +33,24 @@ class Tournaments extends HTMLElement {
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap');
 		h1{
 			font-family: "Orbitron", sans-serif;
+			letter-spacing: 2px;
 		}
         .cursor-pointer{
 			cursor: pointer;
 		}
+		table {
+			min-width: 100%;
+		}
         .head {
             border-bottom: 1px solid white;
+			width: 100%;
         }
+		tr
+		{
+			width: 100%;
+		
+			margin-bottom: 2rem;
+		}
         td, th {
             padding: 0 1rem;
             color: #fff;
@@ -53,10 +64,8 @@ class Tournaments extends HTMLElement {
             display: inline-block;
             padding: 0 1rem;
             text-align: center;
-            width: 3rem;
-        }
-        tr {
-            margin-bottom: 1rem;
+            min-width: 3rem;
+			max-width: 3rem;
         }
         `;
         this.shadowRoot.append(style, tournaments);

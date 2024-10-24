@@ -5,7 +5,7 @@ class GameModes extends HTMLElement {
         this.attachShadow({ mode: 'open' });
         const modes = document.createElement('div');
 		modes.className = "  container mb-2";
-        modes.innerHTML = `<div id="modes" class="d-flex mb-2 ">
+        modes.innerHTML = `<div id="modes" class="d-flex mb-2 justify-content-center">
                 <game-mode color="#CD0024" title="CPU" ></game-mode>
                 <game-mode color="#B98500" title="Online"></game-mode>
                 <game-mode color="#5510BF" title="Offline"></game-mode>

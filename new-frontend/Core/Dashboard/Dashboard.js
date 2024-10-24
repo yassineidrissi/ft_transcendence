@@ -5,8 +5,8 @@ class Dashboard extends HTMLElement {
 		const dashboard = document.createElement("div");
 		dashboard.className = "container"
 		dashboard.innerHTML = `
-			<div class="d-flex align-items-center mb-2">
-                <h1 class="mb-0 text-light">Game Modes</h1>
+			<div class="d-flex align-items-center mb-3">
+                <h1 class="mb-0 text-light me-2">Game Modes</h1>
                 <img class="mb-0 rounded" src="./Core/Dashboard/assets/modes.svg"></img>
             </div>
 			<game-modes><game-modes>

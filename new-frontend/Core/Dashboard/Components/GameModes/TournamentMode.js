@@ -70,12 +70,13 @@ class TournamentMode extends HTMLElement {
             position: absolute;
             right: 4px;
             bottom: 4px;
-            background: transparent;
-            color: #fff;
+            
+			background: #fff;
+            color: #000;
         }
         button:hover{
-            background: #fff;
-            color: #000;
+            background: transparent;
+            color: #fff;
         }
         `;
         this.shadowRoot.append(style, tournamentMode);
