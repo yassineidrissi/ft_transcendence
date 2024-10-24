@@ -1,12 +1,4 @@
-document.addEventListener('click', e => {
-	if (!e.target.matches('nav a'))
-		return;
-	e.preventDefault()
-	navigateTo(e.target.href)
-})
 
-if (!JSON.parse(localStorage.getItem("isUserSignedIn")))
-	localStorage.setItem("isUserSignedIn", JSON.stringify(false));
 const app = document.getElementById("app");
 const urlRoutes = {
 	404: {
@@ -51,6 +43,9 @@ const urlRoutes = {
 		description: ""
 	}
 }
+
+if (!JSON.parse(localStorage.getItem("isUserSignedIn")))
+	localStorage.setItem("isUserSignedIn", JSON.stringify(false));
 
 const handleLogout = () => {
 	localStorage.setItem("isUserSignedIn", JSON.parse(false));
