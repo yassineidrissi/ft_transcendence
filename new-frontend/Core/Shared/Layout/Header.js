@@ -2,11 +2,12 @@ class dashHeader extends HTMLElement {
     constructor() {
         super();
         this.attachShadow({ mode: 'open' });
+		let isSettingsModalOpen = false;
         const header = document.createElement('div');
 		header.className = "container d-flex justify-content-between align-items-center py-3";
         header.innerHTML = `
             <img onclick="navigateTo('signin')" src="./Core/Shared/assets/logo.svg" class="cursor-pointer" alt="ping pong logo"></img>
-            <nav-menu></nav-menu>
+            <nav-menu isSettingsModalOpen="${isSettingsModalOpen}"></nav-menu>
             <div class="me-4">
                 <img src="./Core/Shared/assets/message-circle.svg" class="cursor-pointer me-2" onclick="navigateTo('messages')"></img>
                 <img src="./Core/Shared/assets/notification.svg" class="cursor-pointer"></img>

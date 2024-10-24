@@ -20,8 +20,6 @@ class MenuLink extends HTMLElement {
                 color: #000;
             }
             #link:hover {
-                // background: #4AB1B9;
-                // color: #fff;
                 img {
                     background: #fff;
                 }
