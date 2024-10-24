@@ -8,11 +8,16 @@ class CoreLayout extends HTMLElement {
 		const main = document.createElement("div");
 		main.className = "main text-primary" ;
 		main.innerHTML += `<dashbboard-header></dashbboard-header>`
-		while (this.firstChild)
-		{
-			this.firstChild.classList.add("container")
-			main.append(this.firstChild);
-		}
+		// while (this.firstChild)
+		// {
+		// 	this.firstChild.classList.add("container")
+		// 	main.append(this.firstChild);
+		// }
+		const children = Array.from(this.children);
+        children.forEach(child => {
+            child.classList.add("container");
+            main.append(child);
+        });
 		container.append(main);
 		const showHistory = this.getAttribute("showHistory");
 		container.innerHTML += `<history-glimpse ${JSON.parse(showHistory) && "class='history'"} showHistory=${showHistory}></history-glimpse>`
