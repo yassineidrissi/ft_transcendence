@@ -3,29 +3,29 @@ class Settings extends HTMLElement {
         super();
         this.attachShadow({ mode: 'open' });
 		const settings = document.createElement("div");
-		settings.className = "z-3 position-absolute top-0 start-0 end-0 bottom-0"
+		settings.className = "z-3 position-absolute top-0 start-0 end-0 bottom-0 d-flex justify-content-center align-items-center text-light"
 		settings.id = "overlay"
 		settings.innerHTML = `
-					<img id="close" src="./Core/Shared/assets/exit.svg" class="position-absolute top-0 end-0 cursor-pointer	" ></img>
-					<button id="delete-acc" class="position-absolute bottom-0 end-0 m-4 fs-4 px-4 py-1 border fw-medium bg-danger  border-danger text-light">Delete account</button>
-					<h1 class="ms-4 mt-4 mb-4 ">Settings</h1>
-					<div class="ms-4">
-						<h2 class="text-secondary fs-4">Username</h2>
-						<p class="fs-4 mb-0">NoobMaster69</p>
-						<span class="fs-6 fw-light text-info cursor-pointer text-decoration-underline d-inline-block mb-5">Change username</span>
-					<div>
-					<div class="">
-						<h2 class="text-secondary fs-4">Password</h2>
-						<p class="fs-4 mb-0">***************</p>
-						<span class="fs-6 fw-light text-info cursor-pointer text-decoration-underline d-inline-block mb-5">Change password</span>
-					<div>
-					<div>
-						<h2 class="text-secondary fs-4">Activate 2FA <span class="text-success fw-light ms-2 fs-6">Enabled</span></h2>
-						<p class="fs-6">Enable two-factor authentication (2FA) for enhanced account protection.</p>
-						<button id="fa-btn" class="fs-6 border fw-medium  border-danger text-light">Disable</button>
+					<div id="modal" class="position-relative">
+						<img id="close" src="./Core/Shared/assets/exit.svg" class="position-absolute top-0 end-0 cursor-pointer	" ></img>
+						<button id="delete-acc" class="position-absolute bottom-0 end-0 m-4 fs-4 px-4 py-1 border fw-medium bg-danger  border-danger text-light">Delete account</button>
+						<h1 class="ms-4 mt-4 mb-4 ">Settings</h1>
+						<div class="ms-4">
+							<h2 class="text-secondary fs-4">Username</h2>
+							<p class="fs-4 mb-0">NoobMaster69</p>
+							<span class="fs-6 fw-light text-info cursor-pointer text-decoration-underline d-inline-block mb-5">Change username</span>
+						<div>
+						<div class="">
+							<h2 class="text-secondary fs-4">Password</h2>
+							<p class="fs-4 mb-0">***************</p>
+							<span class="fs-6 fw-light text-info cursor-pointer text-decoration-underline d-inline-block mb-5">Change password</span>
+						<div>
+						<div>
+							<h2 class="text-secondary fs-4">Activate 2FA <span class="text-success fw-light ms-2 fs-6">Enabled</span></h2>
+							<p class="fs-6">Enable two-factor authentication (2FA) for enhanced account protection.</p>
+							<button id="fa-btn" class="fs-6 border fw-medium  border-danger text-light">Disable</button>
+						</div>
 					</div>
-					
-				</div>
 		`
 		const style = document.createElement('style');
 		style.textContent = `
