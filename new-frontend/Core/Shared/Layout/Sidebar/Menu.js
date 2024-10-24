@@ -3,7 +3,7 @@ class Menu extends HTMLElement {
         super();
         this.attachShadow({ mode: 'open' });
         const menu = document.createElement('div');
-		menu.className = "bg-primary-subtle d-flex rounded py-1";
+		menu.className = "bg-primary-subtle d-flex rounded py-1 px-4";
         menu.innerHTML = `
                 <menu-link ico="./Core/Shared/assets/profile.svg" onclick="navigateTo('profile')" title="Profile"></menu-link>
                 <menu-link ico="./Core/Shared/assets/settings.svg" title="Settings"></menu-link>
