@@ -5,14 +5,10 @@ class CoreLayout extends HTMLElement {
 	
 		const container = document.createElement("div");
 		container.className = `d-flex core vw-100 vh-100`;
+		container.id = "container"
 		const main = document.createElement("div");
 		main.className = "main text-primary" ;
 		main.innerHTML += `<dashbboard-header></dashbboard-header>`
-		// while (this.firstChild)
-		// {
-		// 	this.firstChild.classList.add("container")
-		// 	main.append(this.firstChild);
-		// }
 		const children = Array.from(this.children);
         children.forEach(child => {
             child.classList.add("container");
@@ -25,6 +21,9 @@ class CoreLayout extends HTMLElement {
 		const style = document.createElement('style');
 		style.textContent = `	
     		@import url('https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css');
+			#container {
+				overflow: hidden;
+			}
 			.cursor-pointer
 			{
 				cursor: pointer;
