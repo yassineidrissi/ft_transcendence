@@ -7,9 +7,8 @@ class Settings extends HTMLElement {
 		this.editPasswordMode = false;
 		this.username = `NoobMaster69`;
 		this.password = `chi haja`;
-		this.handleUsername();
-		this.handlePassword();
 		this.render()
+		this.hashPass();
     }
 	render ()
 	{
@@ -34,7 +33,7 @@ class Settings extends HTMLElement {
 						<div>
 						<div class="">
 							<h2 class="text-secondary fs-4">Password</h2>
-							${this.editPasswordMode ? `<input id="password-input" type="text" value="${this.password}" class="mb-4" />`  : `<p class="fs-4 ">${this.password}</p>`}
+							${this.editPasswordMode ? `<input id="password-input" type="text" value="${this.password}" class="mb-4" />`  : `<p class="fs-4 ">${this.hashPass()}</p>`}
 							${this.editPasswordMode ? `<div class="mb-4"><button id="save-password-change" class="me-2 px-2 border" >Save</button><button id="cancel-password-change" class="px-2 border" >Cancel</button></div>` 
 								: `<span id="change-password-btn" class="fs-6 fw-light text-info cursor-pointer text-decoration-underline d-inline-block mb-5">Change password</span>`} 
 						<div>
@@ -149,11 +148,9 @@ class Settings extends HTMLElement {
 			})
 		}
 	}
-	handleUsername ()
+	hashPass()
 	{
-	}
-	handlePassword ()
-	{
+		return "*".repeat(this.password.length);
 	}
 }
 

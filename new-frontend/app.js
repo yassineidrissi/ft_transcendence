@@ -161,7 +161,6 @@ urlLocationHandler();
 
 const urlRoute = route => {
 	window.history.pushState({}, "", route);
-	console.log(route);
 	urlLocationHandler();
 }
 
