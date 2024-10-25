@@ -22,6 +22,10 @@ class Settings extends HTMLElement {
 						<button id="delete-acc" class="position-absolute bottom-0 end-0 m-4 fs-4 px-4 py-1 border fw-medium bg-danger  border-danger text-light">Delete account</button>
 						<h1 class="ms-4 mt-4 mb-4 ">Settings</h1>
 						<div class="ms-4">
+							<h2 class="text-secondary fs-4">Profile photo</h2>
+							<input id="file-input" type="file" class="mb-4" />
+						<div>
+						<div class="">
 							<h2 class="text-secondary fs-4">Username</h2>
 							${this.editUsernameMode ? `<input id="username-input" type="text" value="${this.username}" class="mb-4" />`  : `<p class="fs-4 ">${this.username}</p>`}
 							${this.editUsernameMode ? 
