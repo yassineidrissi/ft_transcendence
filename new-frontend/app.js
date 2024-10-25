@@ -67,11 +67,12 @@ const usersDB = [
 	"user2",
 	"user3",
 	"user4",
-	"testuser"
+	"testuser",
+	"NoobMaster69"
 ]
 
 const isUser = arg => {
-	const target = usersDB.find(user => user == arg);
+	const target = usersDB.find(user => user.toLowerCase() == arg);
 	if (target)
 		return true;
 	return false;
