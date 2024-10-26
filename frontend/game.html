@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+    .game {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #000;
+    color: #fff;
+    font-family: Arial, sans-serif;
+    /* display: none; */
+}
+
+.game #player1{
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    font-size: 24px;
+}
+
+.game #player2{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 24px;
+}
+
+.game #gameCanvas {
+    border: 2px solid #fff;
+}
+.game #scoreBoard {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 24px;
+}
+.game #waitingMessage {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 24px;
+    text-align: center;
+}
+.game #roomInfo {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 18px;
+}
+.game #resetButton {
+    position: absolute;
+    bottom: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+    </style>
+</head>
+<body>
+    <div class="game">
+        <div id="players">
+            <span id="player1">player 1</span>
+            <span id="player2">player 2</span>
+        </div>
+        <div id="scoreBoard">
+            <span id="leftScore">0</span> - <span id="rightScore">0</span>
+        </div>
+        <canvas id="gameCanvas" width="800" height="400"></canvas>
+        <div id="waitingMessage">Waiting for another player...</div>
+        <div id="winnerinfo">Winer Is: <span id ="winner"></span></div>
+        <div id="roomInfo">Room: <span id="roomName"></span></div>
+        <button id="resetButton">Reset Game</button>
+
+    </div>
+    <!-- <script>
+        class ManageGameAttachment {
+    constructor(matchID) {
+        this.access_token = localStorage.getItem('access_token');
+        console.log(matchID);
+        this.matchID = matchID;
+        this.canvas = document.getElementById('gameCanvas');
+        this.ctx = this.canvas.getContext('2d');
+        this.waitingMessage = document.getElementById('waitingMessage');
+        this.leftScoreElement = document.getElementById('leftScore');
+        this.rightScoreElement = document.getElementById('rightScore');
+        this.roomNameElement = document.getElementById('roomName');
+        this.resetButton = document.getElementById('resetButton');
+        this.player1 = document.getElementById('player1');
+        this.player2 = document.getElementById('player2');
+
+        this.CANVAS_WIDTH = 800;
+        this.CANVAS_HEIGHT = 400;
+        this.PADDLE_WIDTH = 10;
+        this.PADDLE_HEIGHT = 100;
+        this.BALL_SIZE = 10;
+
+        this.gameStarted = false;
+        this.isPlayerOne = false;
+        this.leftPlayer = false;
+        this.winner = null;
+
+        this.leftPaddle = {
+            x: 0,
+            y: this.CANVAS_HEIGHT / 2 - this.PADDLE_HEIGHT / 2,
+            speed: 5,
+            score: 0
+        };
+
+        this.rightPaddle = {
+            x: this.CANVAS_WIDTH - this.PADDLE_WIDTH,
+            y: this.CANVAS_HEIGHT / 2 - this.PADDLE_HEIGHT / 2,
+            speed: 5,
+            score: 0
+        };
+
+        this.ball = {
+            x: this.CANVAS_WIDTH / 2,
+            y: this.CANVAS_HEIGHT / 2,
+            speedX: 5,
+            speedY: 5
+        };
+
+        this.keys = {
+            w: false,
+            s: false,
+            ArrowUp: false,
+            ArrowDown: false
+        };
+
+        this.socket = null;
+        // this.roomName = this.joinUrl();
+
+        this.initEventListeners();
+        this.initializeGame(this.matchID);
+        // this.startGame();
+    }
+
+    // async startGame() {
+    //     try {
+    //         const access_token = localStorage.getItem('access_token');
+    //         let response = await fetch(`http://localhost:8000/api/rooms/gamestart/${this.matchID}`, {
+    //             method: 'GET',
+    //             credentials: 'include',
+    //             headers: {
+    //                 'Authorization': `Bearer ${access_token}`
+    //             }
+    //         });
+    //         if (response.ok) {
+    //             const data = await response.json();
+    //             this.initializeGame(data.match);
+    //         }
+    //     } catch (error) {
+    //         console.error('Error:', error);
+    //     }
+    // }
+
+    initializeGame() {
+        // this.roomNameElement.textContent = this.roomName;
+        this.socket = new WebSocket(`ws://localhost:8000/ws/game/${this.matchID}/?token=${this.access_token}`);
+
+        this.socket.onopen = () => {
+            console.log('WebSocket connection established');
+            this.drawGame();
+        };
+
+        this.socket.onclose = () => {
+            console.log('WebSocket connection closed');
+        };
+
+        this.socket.onmessage = (event) => {
+            const data = JSON.parse(event.data);
+            
+            switch (data.type) {
+                case 'game_state':
+                    this.handleGameState(data.game_state);
+                    break;
+                case 'paddle_move':
+                    this.handlePaddleMove(data.paddle_move);
+                    break;
+                case 'ball_position':
+                    this.handleBallPosition(data.ball_position);
+                    break;
+                case 'score_update':
+                    this.handleScoreUpdate(data.score_update);
+                    break;
+            }
+            
+            this.drawGame();
+        };
+    }
+
+    // generateRoomName() {
+    //     return Math.random().toString(36).substring(2, 8);
+    // }
+
+    // joinUrl() {
+    //     let roomName = new URLSearchParams(window.location.search).get('room');
+    //     if (!roomName) {
+    //         roomName = this.generateRoomName();
+    //         window.history.pushState({}, '', `?room=${roomName}`);
+    //     }
+    //     return roomName;
+    // }
+
+    handleGameState(gameState) {
+        this.leftPaddle.y = gameState.left_paddle_y;
+        this.rightPaddle.y = gameState.right_paddle_y;
+        this.ball.x = gameState.ball_position.x;
+        this.ball.y = gameState.ball_position.y;
+        this.leftPaddle.score = gameState.left_score;
+        this.rightPaddle.score = gameState.right_score;
+        console.log(gameState);
+        this.updateScore();
+
+        if (gameState.players === 1) {
+            this.isPlayerOne = true;
+            this.waitingMessage.textContent = "You are Player 1 (Left Paddle). Waiting for Player 2...";
+            this.player1.textContent = gameState.nickname_one;
+            this.leftPlayer = true;
+        } else if (gameState.players === 2 && !this.gameStarted) {
+            this.waitingMessage.style.display = 'none';
+            this.isPlayerOne = true;
+            this.gameStarted = true;
+            const playerMessage = this.leftPlayer ? "You are Player 1 (Left Paddle)" : "You are Player 2 (Right Paddle)";
+            this.player1.textContent = gameState.nickname_one;
+            this.player2.textContent = gameState.nickname_two;
+            document.getElementById('roomInfo').innerHTML += `<br>${playerMessage}`;
+            this.gameLoop();
+        }
+    }
+
+    movePaddles() {
+        let leftPaddleMoved = false;
+        let rightPaddleMoved = false;
+
+        if (this.leftPlayer) {
+            if ((this.keys.w || this.keys.ArrowUp) && this.leftPaddle.y > 0) {
+                this.leftPaddle.y -= this.leftPaddle.speed;
+                leftPaddleMoved = true;
+            } else if ((this.keys.s || this.keys.ArrowDown) && this.leftPaddle.y < this.CANVAS_HEIGHT - this.PADDLE_HEIGHT) {
+                this.leftPaddle.y += this.leftPaddle.speed;
+                leftPaddleMoved = true;
+            }
+        } else {
+            if ((this.keys.w || this.keys.ArrowUp) && this.rightPaddle.y > 0) {
+                this.rightPaddle.y -= this.rightPaddle.speed;
+                rightPaddleMoved = true;
+            } else if ((this.keys.s || this.keys.ArrowDown) && this.rightPaddle.y < this.CANVAS_HEIGHT - this.PADDLE_HEIGHT) {
+                this.rightPaddle.y += this.rightPaddle.speed;
+                rightPaddleMoved = true;
+            }
+        }
+
+        if (leftPaddleMoved) {
+            this.sendPaddleMove(this.leftPaddle, 'left');
+        }
+        if (rightPaddleMoved) {
+            this.sendPaddleMove(this.rightPaddle, 'right');
+        }
+    }
+
+    sendPaddleMove(paddle, side) {
+        this.socket.send(JSON.stringify({
+            paddle_move: {
+                player: side,
+                y: paddle.y
+            }
+        }));
+    }
+
+    gameLoop() {
+        console.log(this.leftPaddle.score, this.rightPaddle.score);
+        if (!this.gameStarted || this.leftPaddle.score >= 5 || this.rightPaddle.score >= 5) {
+            if (this.leftPaddle.score >= 5)
+                this.winner = "left";
+            else if (this.rightPaddle.score >= 5)
+                this.winner = "right";
+            if (this.winner) {
+                document.getElementById('winner').textContent = this.winner;
+                game.style.display = 'none';
+                collecgraph.style.display = 'block';
+                // localStorage.getItem('roomID');
+                // fetch_on_next_around(localStorage.getItem('roomID'));
+            }
+            return;
+        }
+        this.movePaddles();
+        if (this.isPlayerOne) {
+            this.moveBall();
+        }
+        this.drawGame();
+        requestAnimationFrame(() => this.gameLoop());
+    }
+
+    handlePaddleMove(paddleMove) {
+        if (paddleMove.player === 'left') {
+            this.leftPaddle.y = paddleMove.y;
+        } else {
+            this.rightPaddle.y = paddleMove.y;
+        }
+    }
+
+    handleBallPosition(ballPosition) {
+        this.ball.x = ballPosition.x;
+        this.ball.y = ballPosition.y;
+        this.ball.speedX = ballPosition.speedx;
+        if (ballPosition.y <= 0 && ballPosition.speedy <= 0)
+            this.ball.speedY = -ballPosition.speedy;
+        else
+            this.ball.speedY = ballPosition.speedy;
+    }
+
+    handleScoreUpdate(scoreUpdate) {
+        this.leftPaddle.score = scoreUpdate.left_score;
+        this.rightPaddle.score = scoreUpdate.right_score;
+        this.updateScore();
+    }
+
+    sendBallPosition() {
+        this.socket.send(JSON.stringify({
+            ball_position: {
+                x: this.ball.x,
+                y: this.ball.y,
+                speedx: this.ball.speedX,
+                speedy: this.ball.speedY
+            }
+        }));
+    }
+
+    sendScoreUpdate() {
+        this.socket.send(JSON.stringify({
+            score_update: {
+                left_score: this.leftPaddle.score,
+                right_score: this.rightPaddle.score
+            }
+        }));
+    }
+
+    sendWinner() {
+        this.socket.send(JSON.stringify({
+            winner_data: {
+                winner: this.winner,
+                match_id: this.matchID
+            }
+        }));
+    }
+
+    drawPaddle(paddle) {
+        this.ctx.fillStyle = 'white';
+        this.ctx.fillRect(paddle.x, paddle.y, this.PADDLE_WIDTH, this.PADDLE_HEIGHT);
+    }
+
+    drawBall() {
+        this.ctx.fillStyle = 'white';
+        this.ctx.fillRect(this.ball.x, this.ball.y, this.BALL_SIZE, this.BALL_SIZE);
+    }
+
+    updateScore() {
+        this.leftScoreElement.textContent = this.leftPaddle.score;
+        this.rightScoreElement.textContent = this.rightPaddle.score;
+    }
+
+    moveBall() {
+        this.ball.x += this.ball.speedX;
+        this.ball.y += this.ball.speedY;
+
+        let checkWall = false;
+        let checkPaddle = false;
+
+        if (this.ball.y <= 0 || this.ball.y >= this.CANVAS_HEIGHT - this.BALL_SIZE) {
+            this.ball.speedY = -this.ball.speedY;
+            checkWall = true;
+        }
+
+        if (
+            (this.ball.x <= this.leftPaddle.x + this.PADDLE_WIDTH && this.ball.y + this.BALL_SIZE >= this.leftPaddle.y && this.ball.y <= this.leftPaddle.y + this.PADDLE_HEIGHT) ||
+            (this.ball.x + this.BALL_SIZE >= this.rightPaddle.x && this.ball.y + this.BALL_SIZE >= this.rightPaddle.y && this.ball.y <= this.rightPaddle.y + this.PADDLE_HEIGHT)
+        ) {
+            this.ball.speedX = -this.ball.speedX;
+            checkPaddle = true;
+        }
+
+        if (this.ball.x < 0) {
+            this.rightPaddle.score++;
+            this.resetBall();
+            this.sendScoreUpdate();
+        }
+
+        if (this.ball.x > this.CANVAS_WIDTH) {
+            this.leftPaddle.score++;
+            this.resetBall();
+            this.sendScoreUpdate();
+        }
+
+        if (checkWall || checkPaddle) {
+            if (this.ball.y > this.CANVAS_HEIGHT - this.BALL_SIZE)
+                this.ball.y -= this.BALL_SIZE;
+            this.sendBallPosition();
+        }
+    }
+
+    resetBall() {
+        this.ball.x = this.CANVAS_WIDTH / 2;
+        this.ball.y = this.CANVAS_HEIGHT / 2;
+        this.ball.speedX = -this.ball.speedX;
+    }
+
+    drawGame() {
+        this.ctx.fillStyle = 'black';
+        this.ctx.fillRect(0, 0, this.CANVAS_WIDTH, this.CANVAS_HEIGHT);
+        this.drawPaddle(this.leftPaddle);
+        this.drawPaddle(this.rightPaddle);
+        this.drawBall();
+    }
+
+    resetGame() {
+        this.leftPaddle.score = 0;
+        this.rightPaddle.score = 0;
+        this.resetBall();
+        this.updateScore();
+        this.sendScoreUpdate();
+        this.sendBallPosition();
+    }
+
+    initEventListeners() {
+        document.addEventListener('keydown', (e) => {
+            if (e.key in this.keys) {
+                e.preventDefault();
+                this.keys[e.key] = true;
+            }
+        });
+
+        document.addEventListener('keyup', (e) => {
+            if (e.key in this.keys) {
+                e.preventDefault();
+                this.keys[e.key] = false;
+            }
+        });
+
+        this.resetButton.addEventListener('click', () => this.resetGame());
+    }
+
+
+}
+new ManageGameAttachment(3);
+    </script> -->
+    <script src="game.js"></script>
+</body>
+</html>
