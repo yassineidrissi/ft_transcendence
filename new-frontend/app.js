@@ -78,9 +78,6 @@ const isUser = arg => {
 	return false;
 }
 
-
-
-
 const urlLocationHandler = async () => {
 	const location = window.location.pathname.toLowerCase();
 	let route = urlRoutes[location] || urlRoutes[404];
