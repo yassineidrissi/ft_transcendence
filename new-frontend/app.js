@@ -47,10 +47,6 @@ const urlRoutes = {
 if (!JSON.parse(localStorage.getItem("isUserSignedIn")))
 	localStorage.setItem("isUserSignedIn", JSON.stringify(false));
 
-const handleLogout = () => {
-	localStorage.setItem("isUserSignedIn", JSON.parse(false));
-	navigateTo("signin")
-}
 
 const handleLayout = async (route) => {
 	html = await fetch(route.page).then(response => response.text());

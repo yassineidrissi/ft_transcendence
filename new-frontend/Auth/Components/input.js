@@ -9,12 +9,13 @@ class Input extends HTMLElement {
 		input.name = this.getAttribute("name") || "";
 		const style = document.createElement('style');
         style.textContent = `
+		@import url('https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css');
             input {
                 font-weight: 500;
 			border-radius: 4px;
 			font-size: 1rem;
 			border: 1px solid;
-			width: 340px;
+			width: 360px;
 			margin-bottom: 1rem;
 			height: 40px;
 			background: transparent;

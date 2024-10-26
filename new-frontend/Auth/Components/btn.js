@@ -11,6 +11,7 @@ class Btn extends HTMLElement {
 		button.append(ico);
 		const style = document.createElement('style');
         style.textContent = `
+		@import url('https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css');
 			button {
 				margin-bottom: 0.4rem;
                 transition: 0.3s;
