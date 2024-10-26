@@ -2,20 +2,12 @@ class History extends HTMLElement {
 	constructor() {
         super();
         this.attachShadow({ mode: 'open' });
-		// const gamesHistory = [
-		// 	{
-		// 		date: "23 Sep 2024", 
-		// 		history: [
-
-		// 		]
-		// 	}
-		// ]
 		const history = document.createElement("div");
 		history.className = "container text-light"
 		history.id = "history-container"
 		history.innerHTML = `
 			<h1 class="mb-4">History</h1>
-			<div id="history">
+			<div id="history" class="container">
 				<h2 class="my-4">20 Sep 2024</h2>
 				<win-card></win-card>
 				<win-card></win-card>
