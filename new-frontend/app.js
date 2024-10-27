@@ -1,4 +1,3 @@
-
 const app = document.getElementById("app");
 const urlRoutes = {
 	404: {
@@ -40,6 +39,11 @@ const urlRoutes = {
 	"/tournament": {
 		page: "/pages/tournament.html",
 		title: "Tournament",
+		description: ""
+	},
+	"/online-game": {
+		page: "/pages/online-game/online-game.html",
+		title: "Online Game",
 		description: ""
 	}
 }

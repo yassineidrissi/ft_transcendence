@@ -8,7 +8,7 @@ class SidebarHeader extends HTMLElement {
         sidebarHeader.innerHTML = `
 			<div class="d-flex align-items-center">
 				<img src="./Core/Shared/assets/avatar.jpg" class="rounded" height='40'></img>
-				<span class="fs-5 fw-normal ms-2">NoobMaster69</span>
+				<span class="fs-5 fw-medium ms-2">NoobMaster69</span>
 			</div>
 		`
 		
@@ -21,6 +21,9 @@ class SidebarHeader extends HTMLElement {
 			}
 			#sidebar-header {
 				z-index: 200 !important;
+			}
+			span {
+				color: #020F10;
 			}
 		`;
         this.shadowRoot.append(style, sidebarHeader);

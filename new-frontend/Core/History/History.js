@@ -12,6 +12,7 @@ class History extends HTMLElement {
 				<win-card></win-card>
 				<win-card></win-card>
 				<loss-card></loss-card>
+				<draw-card></draw-card>
 				<win-card></win-card>
 				<h2 class="my-4">19 Sep 2024</h2>
 				<win-card></win-card>

@@ -5,12 +5,12 @@ class TournamentMode extends HTMLElement {
         this.attachShadow({ mode: 'open' });
         const tournamentMode = document.createElement('div');
         tournamentMode.id = "tournament-mode"
-		tournamentMode.className = "position-relative";
+		tournamentMode.className = "position-relative rounded";
         tournamentMode.innerHTML = `<div  class="d-flex">
                 <game-mode color="#18be7f" title="Tournament"></game-mode>
-                <div class="d-flex justify-content-between ms-4 p-2">
+                <div class="d-flex justify-content-between w-100 ms-4 p-2">
                     <p class="text-light fw-medium fs-3">Prove your ping pong prowess in thrilling tournaments!<p>
-                    <svg class="" width="44" height="44" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <svg class="" width="56" height="56" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <g clip-path="url(#clip0_173_2071)">
                             <path
                                 d="M44.9751 53.6626L32 49.9126L19.0249 53.6626C18.9125 53.8876 18.875 54.1126 18.875 54.3751V62.1251H45.125V54.3751C45.125 54.1126 45.0875 53.8876 44.9751 53.6626Z"
@@ -52,13 +52,14 @@ class TournamentMode extends HTMLElement {
                         </defs>
                     </svg>
                 </div>
-                <button class="px-4 py-1 border border-light  fw-semibold fs-5">Start</button>	
+                <button class="px-4 py-1 border border-light fw-bold fs-5">Start</button>	
             </div>
             					
         `
 
 		const style = document.createElement('style');
         style.textContent = `@import url('https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css');
+		@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap');
         .cursor-pointer{
 			cursor: pointer;
 		}
@@ -70,9 +71,10 @@ class TournamentMode extends HTMLElement {
             position: absolute;
             right: 4px;
             bottom: 4px;
-            
 			background: #fff;
             color: #000;
+			font-family: "Orbitron", sans-serif;
+			letter-spacing: 2px;
         }
         button:hover{
             background: transparent;
