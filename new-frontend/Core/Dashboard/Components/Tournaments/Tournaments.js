@@ -24,7 +24,7 @@ class Tournaments extends HTMLElement {
         ];
         
         tournaments.innerHTML = `
-            <div>
+            <div class="position-relative">
                 <h1 class="text-light fs-2 mb-2">Tournaments</h1>
                 <div class="table-wrapper ">
                     <table>
@@ -36,7 +36,8 @@ class Tournaments extends HTMLElement {
                                 <th>Status</th>
                             </tr>
                         </thead>
-                        <tbody id="tournament-rows"></tbody>
+                        <tbody id="tournament-rows">
+						</tbody>
                     </table>
                 </div>
             </div>
@@ -46,6 +47,15 @@ class Tournaments extends HTMLElement {
         style.textContent = `
             @import url('https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css');
             @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap');
+			#overlay {	
+				background: rgba(0, 0, 0, 0.7);
+			}
+			#modal {
+				border-radius: 10px;
+				background: #061924;
+				padding: 2rem;
+				width: 30%;
+			}
             h1 {
                 font-family: "Orbitron", sans-serif;
                 letter-spacing: 2px;
@@ -82,15 +92,37 @@ class Tournaments extends HTMLElement {
                 background: gray;
                 border-radius: 50px;
             }
+			#close:hover {
+				background: #0dcaf0;
+			}
+			#join {
+				border: 1px solid #0dcaf0;
+				background: transparent;
+				color:#0dcaf0;
+			}
+			#join:hover {
+				background: #0dcaf0;
+				color: #fff;
+			}
         `;
         
         this.shadowRoot.append(style, tournaments);
-        this.renderTournaments(tournamentData);
+        this.renderTournaments(tournamentData)
     }
 
     renderTournaments(data) {
         const tbody = this.shadowRoot.querySelector('#tournament-rows');
         tbody.innerHTML = data.map(tournament => `
+			<!-- <div id="overlay" class="z-3 position-absolute top-0 start-0 end-0 bottom-0 d-flex justify-content-center align-items-center text-light">
+				<img id="close" src="./Core/Shared/assets/exit.svg" class="position-absolute top-0 end-0 cursor-pointer	" ></img>
+				<div id="modal" class="d-flex flex-column align-items-center justify-content-center" >
+					<h3 class="mb-3">Enter a nickname</h3>
+					<div>
+						<input type="text" class="input ps-2" placeholder="Slayer69" />
+						<button id="join" class="px-2 ">Join</button>
+					</div>
+				</div>
+			</div> -->
             <tr>
                 <td ><span style=" display: inline-block; width:3rem; max-width: 3rem;" class="number me-2 fw-medium">${tournament.id}</span>${tournament.name}</td>
                 <td><img src="./Core/Dashboard/assets/time.svg" ></img> 20 July, 2024 5PM</td>
@@ -111,6 +143,7 @@ class Tournaments extends HTMLElement {
                 </td>
             </tr>
         `).join('');
+		
     }
 }
 
