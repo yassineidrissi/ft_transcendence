@@ -9,7 +9,7 @@ class Signin extends HTMLElement {
 				<auth-input type="email" name="email" id="email" placeholder="Email"></auth-input>
 				<auth-input type="password" name="password" id="password" placeholder="Password"></auth-input>
 				<p class="text-light text-end w-100 cursor-pointer">Forgot password?</p>
-				<auth-btn title="Sign in" alt="sign in" onclick="signin()" ></auth-btn>
+				<auth-btn title="Sign in" alt="sign in" onclick="LogIn()" ></auth-btn>
 			</div>
 			<div>
 				<auth-method logo-src="./Auth/Assets/42-ico.svg" method="Intra"></auth-method>

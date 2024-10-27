@@ -10,7 +10,7 @@ class Signup extends HTMLElement {
 				<auth-input type="email" name="email" id="email" placeholder="Email"></auth-input>
 				<auth-input type="password" name="password" id="password" placeholder="Password"></auth-input>
 				<auth-input type="password" name="confirm-password" id="confirm-password" placeholder="Confirm Password"></auth-input>
-				<auth-btn title="Sign up" alt="sign up"></auth-btn>
+				<auth-btn title="Sign up" alt="sign up" onclick="Register()"></auth-btn>
 			</div>
 			<div>
 				<p class="text-light text-center mt-4">Already have an account?<span onclick="navigateTo('signin')" class="ms-2 text-success cursor-pointer text-decoration-underline">Sign in</span></p>
