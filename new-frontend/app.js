@@ -48,8 +48,8 @@ const urlRoutes = {
 	}
 }
 
-if (!JSON.parse(localStorage.getItem("isUserSignedIn")))
-	localStorage.setItem("isUserSignedIn", JSON.stringify(false));
+// if (!JSON.parse(localStorage.getItem("isUserSignedIn")))
+// 	localStorage.setItem("isUserSignedIn", JSON.stringify(false));
 
 
 const handleLayout = async (route) => {
@@ -161,12 +161,32 @@ const urlRoute = route => {
 	urlLocationHandler();
 }
 
-const navigateTo = route => {
-	urlRoute(route);
+// !---------------------------------
+async function checkAccessToken(route) {
+    const token = localStorage.getItem('access_token') || '';
+    if (token === '') {
+        console.log('No token found. Redirecting to sign-in.');
+        localStorage.removeItem('isUserSignedIn');
+        return false;
+    }
+    return true;
 }
+const navigateTo = async (route) => {
+    const hasToken = await checkAccessToken(route);
+    if (hasToken) {
+        urlRoute(route);
+    } else {
+		console.log(route);
+		if (route == "signin" || route == "signup")
+        	urlRoute(route);
+		else
+			urlRoute("signin");
+    }
+};
 
-const signin = () => {
-	localStorage.setItem("isUserSignedIn", JSON.stringify(true));
-	navigateTo("/")
-}
+// const signin = () => {
+// 	localStorage.setItem("isUserSignedIn", JSON.stringify(true));
+// 	navigateTo("/")
+// }
+check_auth();
 

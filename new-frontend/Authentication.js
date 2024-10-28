@@ -9,9 +9,6 @@ async function Register(){
     data.append("email", Remail.value);
     data.append("password", Rpassword.value);
     data.append("password1", password1.value);
-    for (var pair of data.entries()) {
-        console.log(pair[0]+ ', ' + pair[1]); 
-    }
     let response = await fetch('http://127.0.0.1:8000/api/register/', {
             method: 'POST',
             body: data
@@ -26,9 +23,6 @@ async function LogIn(){
     let data = new FormData();
     data.append("email", Semail.value);
     data.append("password", Spassword.value);
-    for (var pair of data.entries()) {
-        console.log(pair[0]+ ', ' + pair[1]); 
-    }
     let request = await fetch('http://127.0.0.1:8000/api/login/', {
         method: 'POST',
         credentials: 'include',
@@ -40,59 +34,53 @@ async function LogIn(){
         console.log(`Error : ${result.detail}`);
     }
     else{
+
         localStorage.setItem('isUserSignedIn', true)
         localStorage.setItem('access_token', result.access_token);
+        await check_auth();
         navigateTo('/profile')
     }
 }
 
-
-
-async function checkIsLoggedIn() {
-	const token = localStorage.getItem('access_token') || '';
-    if (!token) {
-        console.log('no token');
-        navigateTo('/signin');
+async function check_auth()
+{
+    let access_token = localStorage.getItem('access_token');
+    if(!access_token)
+    {
+        urlRoute('signin');
         return;
     }
     let response = await fetch('http://127.0.0.1:8000/api/user/',{
-           method: 'GET',
-           credentials: 'include',
-           headers: {
-               'Authorization': `Bearer ${token}`,
-           }
-    });
-    let result = await response.json();
-    console.log(result);
-    if(response.ok)
-    {navigateTo('/profile');
-    return;}
-    else
-        {navigateTo('/signin');
-    return;}
-}
-
-async function DeleteAccount(){
-    console.log("delete account");
-    let access_token = localStorage.getItem('access_token');
-    let response = await fetch('http://127.0.0.1:8000/api/deletUser/',{
-        method: 'DELETE',
+        method: 'GET',
         credentials: 'include',
         headers: {
             'Authorization': `Bearer ${access_token}`,
         }
+    });
+    response = await handleAuthResponse(response, check_auth);
+    if(response.ok)
+    {
+        let data = await response.json();
+        window.UserData = data;
+    }   
+}
+
+
+async function LogOut(){
+    let access_token = localStorage.getItem('access_token');
+    let response = await fetch('http://127.0.0.1:8000/api/logout/',{
+        method: 'POST',
+        credentials: 'include',
     })
-    handleAuthResponse(response, DeleteAccount);
+    handleAuthResponse(response, LogOut);
     let result = await response.json();
+    console.log(result);
     if(response.ok)
     {
         localStorage.removeItem('access_token');
         localStorage.removeItem('isUserSignedIn');
-        alert('Account deleted');
+        window.UserData = {};
         navigateTo('/signin');
     }
-    else
-    {
-        console.log(`ERROR :${result}`);
-    }
+
 }
