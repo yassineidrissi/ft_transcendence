@@ -18,7 +18,7 @@ class Settings extends HTMLElement {
 		settings.innerHTML = `
 					<div id="modal" class="position-relative">
 						<img id="close" src="./Core/Shared/assets/exit.svg" class="position-absolute top-0 end-0 cursor-pointer	" ></img>
-						<button id="delete-acc" class="position-absolute bottom-0 end-0 m-4 fs-4 px-4 py-1 border fw-medium bg-danger  border-danger text-light">Delete account</button>
+						<button onclick='DeleteAccount()' id="delete-acc" class="position-absolute bottom-0 end-0 m-4 fs-4 px-4 py-1 border fw-medium bg-danger  border-danger text-light">Delete account</button>
 						<h1 class="ms-4 mt-4 mb-4 ">Settings</h1>
 						<div class="ms-4">
 							<h2 class="text-secondary fs-4">Profile photo</h2>

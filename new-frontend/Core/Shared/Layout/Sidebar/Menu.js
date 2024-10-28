@@ -13,7 +13,7 @@ class Menu extends HTMLElement {
         menu.innerHTML = `
                 <menu-link ico="./Core/Shared/assets/profile.svg" onclick="navigateTo('profile')" title="Profile"></menu-link>
                 <menu-link id="settings" ico="./Core/Shared/assets/settings.svg" title="Settings"></menu-link>
-                <menu-link id="logout" ico="./Core/Shared/assets/logout.svg" title="Logout"></menu-link>
+                <menu-link id="logout" ico="./Core/Shared/assets/logout.svg" title="Logout" onclick='LogOut()'></menu-link>
 				${ this.isSettingsModalOpen ? `<settings-modal isSettingsModalOpen="${this.isSettingsModalOpen}" ></settings-modal>` : ``}
 		`
 		const style = document.createElement('style');
