@@ -246,12 +246,6 @@ def updateUser(request):
         return Response({'message': 'User updated successfully','data':data}, status=status.HTTP_200_OK)
     print('errors::',serializer.errors)
     return Response({'message': 'User not updated'}, status=status.HTTP_400_BAD_REQUEST)
-    # if serializer.is_valid():
-    #     serializer.save()
-    #     print('Update serializer.data::',serializer.data)
-    #     return Response(serializer.data)
-    # print('serializer.errors::',serializer.errors)
-    # return Response(serializer.errors)
 
 @api_view(['POST'])
 # @permission_classes([IsAuthenticated])

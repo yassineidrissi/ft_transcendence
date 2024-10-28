@@ -61,6 +61,7 @@ async function check_auth()
     if(response.ok)
     {
         let data = await response.json();
+        console.log(data);
         window.UserData = data;
     }   
 }

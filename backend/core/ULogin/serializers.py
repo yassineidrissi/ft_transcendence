@@ -92,9 +92,10 @@ class LoginUserSerializer(serializers.ModelSerializer):
 
 class UserUpdateSerializer(serializers.ModelSerializer):
     img_url = serializers.ImageField(required=False)  # Add this to handle file uploads
+    password = serializers.CharField(write_only=True, required=False)
     class Meta:
         model = User
-        fields = ['first_name', 'last_name', 'state_2fa', 'level', 'img_url', 'username']
+        fields = ['first_name', 'last_name', 'state_2fa', 'level', 'img_url', 'username', 'password']
     def update(self, instance, validated_data):
         img_file = validated_data.pop('img_url', None)
         if img_file:
@@ -114,10 +115,21 @@ class UserUpdateSerializer(serializers.ModelSerializer):
         else:
             instance.img_url = validated_data.get('img_url', instance.img_url)
 
+        # !password
+        if 'password' in validated_data:
+            instance.set_password(validated_data['password'])
+            # !to check if password is valid(mean password is not too common)
+            # try:
+            #     validate_password(validated_data['password'])
+            # except serializers.ValidationError as e:
+            #     raise serializers.ValidationError({"password": list(e.messages)})
+        if 'username' in validated_data:
+            if User.objects.filter(username=validated_data['username']).exists():
+                raise serializers.ValidationError({"username": "username is already taken"})
+        
         instance.first_name = validated_data.get('first_name', instance.first_name)
         instance.last_name = validated_data.get('last_name', instance.last_name)
         instance.level = validated_data.get('level', instance.level)
-        instance.username = validated_data.get('full_name', instance.username)
         instance.state_2fa = validated_data.get('state_2fa', instance.state_2fa)
         if(instance.state_2fa == True):
             instance.otp_secret = pyotp.random_base32()

@@ -23,18 +23,19 @@ class Settings extends HTMLElement {
 						<div class="ms-4">
 							<h2 class="text-secondary fs-4">Profile photo</h2>
 							<input id="file-input" type="file" class="mb-4" />
+							<div class="mb-4"><button id="save-img-profile" onclick='UpdateImg()' class="me-2 px-2 border" >Save</button><button id="cancel-img-profile" class="px-2 border" >Cancel</button></div>
 						<div>
 						<div class="">
 							<h2 class="text-secondary fs-4">Username</h2>
 							${this.editUsernameMode ? `<input id="username-input" type="text" value="${this.username}" class="mb-4" />`  : `<p class="fs-4 ">${this.username}</p>`}
 							${this.editUsernameMode ? 
-								`<div class="mb-4"><button id="save-username-change" class="me-2 px-2 border" >Save</button><button id="cancel-username-change" class="px-2 border" >Cancel</button></div>` 
+								`<div class="mb-4"><button id="save-username-change" onclick='UpdateUsername()' class="me-2 px-2 border" >Save</button><button id="cancel-username-change" class="px-2 border" >Cancel</button></div>` 
 								: `<span id="change-username-btn" class="fs-6 fw-light text-info cursor-pointer text-decoration-underline d-inline-block mb-5">Change username</span>`} 
 						<div>
 						<div class="">
 							<h2 class="text-secondary fs-4">Password</h2>
 							${this.editPasswordMode ? `<input id="password-input" type="text" value="${this.password}" class="mb-4" />`  : `<p class="fs-4 ">${this.hashPass()}</p>`}
-							${this.editPasswordMode ? `<div class="mb-4"><button id="save-password-change" class="me-2 px-2 border" >Save</button><button id="cancel-password-change" class="px-2 border" >Cancel</button></div>` 
+							${this.editPasswordMode ? `<div class="mb-4"><button onclick='UpdatePassword()' id="save-password-change" class="me-2 px-2 border" >Save</button><button id="cancel-password-change" class="px-2 border" >Cancel</button></div>` 
 								: `<span id="change-password-btn" class="fs-6 fw-light text-info cursor-pointer text-decoration-underline d-inline-block mb-5">Change password</span>`} 
 						<div>
 						<div>
@@ -70,10 +71,24 @@ class Settings extends HTMLElement {
 			#close:hover {
 				background: #0dcaf0;
 			}
+			#save-img-profile{
+				display: none;
+			}
+			#cancel-img-profile{
+				display: none;
+			}
 		`;
 		this.shadowRoot.innerHTML = '';
 		this.shadowRoot.append(style);
         this.shadowRoot.append(settings);
+		const fileInput =this.shadowRoot.getElementById('file-input')
+		fileInput.addEventListener('change', (e) => {
+			if(fileInput.files.length > 0)
+			{
+				this.shadowRoot.getElementById('save-img-profile').style.display = 'inline';
+				this.shadowRoot.getElementById('cancel-img-profile').style.display = 'inline';
+			}
+		})
 		this.shadowRoot.getElementById("close").addEventListener("click", () => {
 			this.setAttribute('isSettingsModalOpen', false)
 			this.remove()
