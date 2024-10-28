@@ -1,0 +1,98 @@
+async function Register(){
+    let Rusername = document.querySelector("#app > auth-layout").shadowRoot.querySelector("#form-container > signup-page").shadowRoot.querySelector("#username").shadowRoot.querySelector("#username")
+    let Remail = document.querySelector("#app > auth-layout").shadowRoot.querySelector("#form-container > signup-page").shadowRoot.querySelector("#email").shadowRoot.querySelector("#email")
+    let Rpassword = document.querySelector("#app > auth-layout").shadowRoot.querySelector("#form-container > signup-page").shadowRoot.querySelector("#password").shadowRoot.querySelector("#password")
+    let password1 = document.querySelector("#app > auth-layout").shadowRoot.querySelector("#form-container > signup-page").shadowRoot.querySelector("#confirm-password").shadowRoot.querySelector("#confirm-password")
+
+    let data = new FormData();
+    data.append("username", Rusername.value);
+    data.append("email", Remail.value);
+    data.append("password", Rpassword.value);
+    data.append("password1", password1.value);
+    for (var pair of data.entries()) {
+        console.log(pair[0]+ ', ' + pair[1]); 
+    }
+    let response = await fetch('http://127.0.0.1:8000/api/register/', {
+            method: 'POST',
+            body: data
+    })
+    let result = await response.json();
+	console.log(result);
+}
+async function LogIn(){
+    let Semail = document.querySelector("#app > auth-layout").shadowRoot.querySelector("#form-container > signin-page").shadowRoot.querySelector("#email").shadowRoot.querySelector("#email")
+    let Spassword = document.querySelector("#app > auth-layout").shadowRoot.querySelector("#form-container > signin-page").shadowRoot.querySelector("#password").shadowRoot.querySelector("#password")
+
+    let data = new FormData();
+    data.append("email", Semail.value);
+    data.append("password", Spassword.value);
+    for (var pair of data.entries()) {
+        console.log(pair[0]+ ', ' + pair[1]); 
+    }
+    let request = await fetch('http://127.0.0.1:8000/api/login/', {
+        method: 'POST',
+        credentials: 'include',
+        body: data
+    });
+    let result = await request.json();
+    console.log(result);
+    if (!request.ok) {
+        console.log(`Error : ${result.detail}`);
+    }
+    else{
+        localStorage.setItem('isUserSignedIn', true)
+        localStorage.setItem('access_token', result.access_token);
+        navigateTo('/profile')
+    }
+}
+
+
+
+async function checkIsLoggedIn() {
+	const token = localStorage.getItem('access_token') || '';
+    if (!token) {
+        console.log('no token');
+        navigateTo('/signin');
+        return;
+    }
+    let response = await fetch('http://127.0.0.1:8000/api/user/',{
+           method: 'GET',
+           credentials: 'include',
+           headers: {
+               'Authorization': `Bearer ${token}`,
+           }
+    });
+    let result = await response.json();
+    console.log(result);
+    if(response.ok)
+    {navigateTo('/profile');
+    return;}
+    else
+        {navigateTo('/signin');
+    return;}
+}
+
+async function DeleteAccount(){
+    console.log("delete account");
+    let access_token = localStorage.getItem('access_token');
+    let response = await fetch('http://127.0.0.1:8000/api/deletUser/',{
+        method: 'DELETE',
+        credentials: 'include',
+        headers: {
+            'Authorization': `Bearer ${access_token}`,
+        }
+    })
+    handleAuthResponse(response, DeleteAccount);
+    let result = await response.json();
+    if(response.ok)
+    {
+        localStorage.removeItem('access_token');
+        localStorage.removeItem('isUserSignedIn');
+        alert('Account deleted');
+        navigateTo('/signin');
+    }
+    else
+    {
+        console.log(`ERROR :${result}`);
+    }
+}

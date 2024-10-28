@@ -28,7 +28,8 @@ services:
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro
       - ./nginx/certs:/etc/nginx/certs:ro
-      - ./frontend:/var/www/html/frontend
+      # - ./frontend:/var/www/html/frontend
+      - ./new-frontend:/var/www/html/
       - ./media:/var/www/html/media
     networks:
       - transcendence
