@@ -3,10 +3,11 @@ class Scores extends HTMLElement {
         super();
         this.attachShadow({ mode: 'open' });
         const scores = document.createElement("div");
+		scores.id = "scores"
 		const dates = [
 			{date: "Today", matches: [{result:  "LOSS", opponent: "Ahmed Anogot"}, {result: "LOSS", opponent: "Amine l7atba"}]},
 			{date: "Yesterday", matches: [{result: "WIN", opponent: "Ahmed Anogot"}, {result: "LOSS", opponent: "Amine l7atba"}]}, 
-			{date: "6th, july 2000", matches: [{result: "WIN", opponent: "Ahmed Anogot"}, {result: "LOSS", opponent: "Amine l7atba"}]},
+			{date: "19th, may 2024", matches: [{result: "WIN", opponent: "Ahmed Anogot"}, {result: "LOSS", opponent: "Amine l7atba"}]},
 			];
 		dates.forEach(item => {
 			const element = document.createElement("div");
@@ -24,6 +25,10 @@ class Scores extends HTMLElement {
 			h3 {
 				font-family: "Orbitron", sans-serif;
 				color: #F1F1F1;
+			}
+			#scores {
+				height: 50%;
+				overflow: auto;
 			}
 		`;
 			

@@ -4,7 +4,7 @@ class GameMode extends HTMLElement {
         this.attachShadow({ mode: 'open' });
         const mode = document.createElement('div');
 		mode.id = "mode"
-		mode.className = " p-5 position-relative d-flex justify-content-center align-items-center rounded " + this.getAttribute("class");
+		mode.className = "cursor-pointer p-5 position-relative d-flex justify-content-center align-items-center rounded " + this.getAttribute("class");
         const title = this.getAttribute("title")
         mode.innerHTML = `
             <p class="fw-medium text-light fs-3">${title}</p>

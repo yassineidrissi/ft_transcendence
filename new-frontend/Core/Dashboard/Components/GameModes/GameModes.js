@@ -7,7 +7,7 @@ class GameModes extends HTMLElement {
         modes.innerHTML = `<div id="modes" class="mb-3 ">
                 <game-mode class="mode" color="#CD0024" title="CPU" ></game-mode>
                 <game-mode class="mode" color="#B98500" onclick="navigateTo('online-game')" id="online" title="Online"></game-mode>
-                <game-mode class="mode" color="#5510BF" title="Offline"></game-mode>
+                <game-mode class="mode" color="#5510BF" onclick="navigateTo('offline-game')" title="Offline"></game-mode>
             </div>
             <tournament-mode></tournament-mode>							
         `

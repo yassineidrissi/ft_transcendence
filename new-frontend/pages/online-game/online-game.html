@@ -1,88 +1,53 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <style>
-    .game {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-    /* background-color: #000; */
-    color: #fff;
-    font-family: Arial, sans-serif;
-	position: relative;
-    /* display: none; */
-}
+<style>
+	.game {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		height: 100vh;
+		margin: 0;
+		color: #fff;
+		font-family: Arial, sans-serif;
+		position: relative;
+	}
+	.game #gameCanvas {
+		border: 2px solid #fff;
+	}
+	.game #waitingMessage {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		font-size: 24px;
+		text-align: center;
+	}
+	#resetButton {
+		background: transparent;
+		border: 2px solid rgb(21, 167, 177);
+		color: rgb(21, 167, 177);
+	}
+	#resetButton:hover {
+		background: rgb(21, 167, 177);
+		border: 2px solid aqua;
+		color: #fff;
+	}
+</style>
 
-.game #player1{
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    font-size: 24px;
-}
-
-.game #player2{
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    font-size: 24px;
-}
-
-.game #gameCanvas {
-    border: 2px solid #fff;
-}
-.game #scoreBoard {
-    position: absolute;
-    top: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 24px;
-}
-.game #waitingMessage {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 24px;
-    text-align: center;
-}
-.game #roomInfo {
-    position: absolute;
-    bottom: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 18px;
-}
-.game #resetButton {
-    position: absolute;
-    bottom: 50px;
-    left: 50%;
-    transform: translateX(-50%);
-}
-    </style>
-</head>
-<body>
-    <div class="game">
-		<div id="players">
-			<span id="player1" class="bg-primary p-2 px-4 rounded">player 1</span>
-			<span id="player2" class="bg-danger p-2 px-4 rounded">player 2</span>
+<div class="game">
+	<div class="w-100 d-flex justify-content-between align-items-center position-absolute start-0 top-0 mt-4">
+		<span id="player1" class="bg-primary p-2 px-4 rounded fs-5">player 1</span>
+		<div id="scoreBoard" class="fs-3">
+			<span id="leftScore" class="fw-sem px-2">0</span> - <span id="rightScore" class="fw-sem px-2">0</span>
 		</div>
-		<div id="scoreBoard">
-			<span id="leftScore">0</span> - <span id="rightScore">0</span>
-		</div>
-		<div class="d-flex flex-column align-items-center">
-			<div id="winnerinfo" class="fs-2 fw-semibold mb-2">Winner is: <span id ="winner"></span></div>
-			<canvas id="gameCanvas" width="1200" height="800"></canvas>
-			<div id="waitingMessage">Waiting for another player...</div>
-			<div id="roomInfo">Room: <span id="roomName"></span></div>
-			<button id="resetButton">Reset Game</button>
-		</div>
+		<span id="player2" class="bg-danger p-2 px-4 rounded fs-5">player 2</span>
+	</div>
+	<div class="d-flex flex-column align-items-center">
+		<div id="winnerinfo" class="fs-2 mb-2">Winner is: <span id="winner"></span></div>
+		<canvas id="gameCanvas" width="4000" height="2400" class="w-100 h-100"></canvas>
+		<div id="waitingMessage">Waiting for another player...</div>
+		<div id="roomInfo" class="my-4 fs-4">Room: <span id="roomName"></span></div>
+		<button id="resetButton" class="px-4 py-2 fw-medium">Reset Game</button>
+	</div>
 
-    </div>
-    <script src="game.js"></script>
-</body>
-</html>
+</div>
+<script src="game.js"></script>

@@ -47,7 +47,12 @@ const urlRoutes = {
 		page: "/pages/online-game/online-game.html",
 		title: "Online Game",
 		description: ""
-	}
+	},
+	"/offline-game": {
+		page: "/pages/offline-game/offline-game.html",
+		title: "Offline Game",
+		description: ""
+	},
 }
 
 // if (!JSON.parse(localStorage.getItem("isUserSignedIn")))
