@@ -9,7 +9,7 @@ class TournamentMode extends HTMLElement {
         tournamentMode.innerHTML = `<div  class="d-flex">
                 <game-mode color="#18be7f" title="Tournament"></game-mode>
                 <div class="d-flex justify-content-between w-100 ms-4 p-2">
-                    <p class="text-light fw-medium fs-3">Prove your ping pong prowess in thrilling tournaments!<p>
+                    <p class="text-light fw-bold fs-3">Prove your ping pong prowess in thrilling tournaments!<p>
                     <svg class="" width="56" height="56" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <g clip-path="url(#clip0_173_2071)">
                             <path
