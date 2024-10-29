@@ -12,7 +12,7 @@ class Signin extends HTMLElement {
 				<auth-btn title="Sign in" alt="sign in" onclick="LogIn()" ></auth-btn>
 			</div>
 			<div>
-				<auth-method logo-src="./Auth/Assets/42-ico.svg" method="Intra"></auth-method>
+				<auth-method logo-src="./Auth/Assets/42-ico.svg" method="Intra" onclick='LogIn42()'></auth-method>
 				<p class="text-light text-center mt-4">Don't have an account?<span onclick="navigateTo('signup')" class="ms-2 text-success cursor-pointer text-decoration-underline">Sign up</span></p>
 			</div>
 		`

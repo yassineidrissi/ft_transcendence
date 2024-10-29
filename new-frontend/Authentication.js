@@ -42,31 +42,35 @@ async function LogIn(){
     }
 }
 
-async function check_auth()
-{
-    let access_token = localStorage.getItem('access_token');
-    if(!access_token)
-    {
-        urlRoute('signin');
-        return;
-    }
-    let response = await fetch('http://127.0.0.1:8000/api/user/',{
-        method: 'GET',
-        credentials: 'include',
-        headers: {
-            'Authorization': `Bearer ${access_token}`,
-        }
-    });
-    response = await handleAuthResponse(response, check_auth);
-    if(response.ok)
-    {
-        let data = await response.json();
-        console.log(data);
-        window.UserData = data;
-    }   
+// async function check_auth()
+// {
+//     console.log('lolololololololololo');
+//     let access_token = localStorage.getItem('access_token');
+//     let response = await fetch('http://127.0.0.1:8000/api/user/',{
+//         method: 'GET',
+//         credentials: 'include',
+//         headers: {
+//             'Authorization': `Bearer ${access_token}`,
+//         }
+//     });
+//     response = await handleAuthResponse(response, check_auth);
+//     if(response.ok)
+//     {
+//         let data = await response.json();
+//         console.log(data);
+//         window.UserData = data;
+//     }   
+//     if(!access_token)
+//     {
+//         urlRoute('signin');
+//         return;
+//     }
+// }
+function LogIn42(){
+    console.log('42');
+    localStorage.setItem('isUserSignedIn', true);
+    window.location.href = 'http://127.0.0.1:8000/api/login42/';
 }
-
-
 async function LogOut(){
     let access_token = localStorage.getItem('access_token');
     let response = await fetch('http://127.0.0.1:8000/api/logout/',{

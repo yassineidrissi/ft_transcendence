@@ -121,8 +121,8 @@ def login42(request):
 
 def redirect42(user):
     if user.state_2fa == False:
-        return HttpResponseRedirect('https://127.0.0.1/frontend/profile.html')
-    return HttpResponseRedirect('https://127.0.0.1/frontend/2fa.html')
+        return HttpResponseRedirect('https://127.0.0.1/profile')
+    return HttpResponseRedirect('https://127.0.0.1/profile')
 @api_view(["GET"])
 @authentication_classes([])
 @permission_classes([AllowAny])
@@ -130,12 +130,17 @@ def callback42(request):
     code = request.GET.get("code")
     error = request.GET.get("error")
     scope = request.GET.get("scope")
+    responseFailed = HttpResponseRedirect('https://127.0.0.1/signin')
     
     if error:
-        return Response({"error": error})
+        # response = HttpResponseRedirect('https://127.0.0.1/signin')
+        responseFailed.data = {'error': error,'scope': scope}
+        return responseFailed
     
     if not code:
-        return Response({"error": "No code provided"})
+        # response = HttpResponseRedirect('https://127.0.0.1/signin')
+        responseFailed.data = {'error': 'Code not found'}
+        return responseFailed
     
     token_url = "https://api.intra.42.fr/oauth/token"
     payload = {
@@ -187,7 +192,7 @@ def callback42(request):
                 return response
             user_serializer = User42Login(data=user_profile)
             if user_serializer.is_valid():
-                response = HttpResponseRedirect('http://127.0.0.1:5501/frontend/profile.html')
+                response = HttpResponseRedirect('https://127.0.0.1/profile')
                 user = user_serializer.save()
                 refresh = RefreshToken.for_user(user)
                 access_token = str(refresh.access_token)
@@ -207,8 +212,9 @@ def callback42(request):
                 print(user.errors)
             return Response(user_info)
         else:
-            return HttpResponse(f"An error occurred while trying to log you in. Status Code: {token_response.status_code}. Response: {token_response.text}")
-
+            return responseFailed(data={'error': 'Failed to get user info'})
+    return responseFailed(data={'error': 'Failed to get access token'})
+    
 
 @api_view(['POST'])
 def logoutView(request):

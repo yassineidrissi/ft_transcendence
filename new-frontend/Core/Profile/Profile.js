@@ -4,8 +4,10 @@ class Profile extends HTMLElement {
         this.attachShadow({ mode: 'open' });
 		const profile = document.createElement("div");
 		profile.className = "container  d-flex flex-column align-items-center text-light"
+		// <h1>${window.UserData['username']}</h1>
+		// <img src="${window.UserData['img_url']}" 
 		profile.innerHTML = `
-				<img src="./Core/Shared/assets/avatar.jpg" width="120" class="rounded" ></img>
+				<img src="./Core/Shared/assets/avatar.jpg"  width="120" class="rounded" ></img>
 				<div id"profile-info" class="d-flex flex-column align-items-center mb-4">
 					<h1>NoobMaster69</h1>
 					<win-loss-draw></win-loss-draw>
@@ -44,6 +46,11 @@ class Profile extends HTMLElement {
 					</div>
 				</div>
 		`
+		// const script = document.createElement("script");
+		// script.innerHTML = `
+		// 	console.log('Profile Page Loaded');
+		// `
+		// profile.append(script);
 		const style = document.createElement('style');
 		style.textContent = `
     		@import url('https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css');

@@ -1,3 +1,5 @@
+// check_auth();
+
 const app = document.getElementById("app");
 const urlRoutes = {
 	404: {
@@ -135,7 +137,6 @@ const urlLocationHandler = async () => {
 		window.history.pushState({}, "", location.substring(1));
 	}
 	else {
-		
 		if (JSON.parse(storedUserData) == true && (location == "/" || location == "/signin" || location == "/signup"))
 		{
 			route = urlRoutes["/dashboard"];
@@ -188,5 +189,4 @@ const navigateTo = async (route) => {
 // 	localStorage.setItem("isUserSignedIn", JSON.stringify(true));
 // 	navigateTo("/")
 // }
-check_auth();
 
