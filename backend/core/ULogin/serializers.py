@@ -126,6 +126,7 @@ class UserUpdateSerializer(serializers.ModelSerializer):
         if 'username' in validated_data:
             if User.objects.filter(username=validated_data['username']).exists():
                 raise serializers.ValidationError({"username": "username is already taken"})
+            instance.username = validated_data.get('username', instance.username)
         
         instance.first_name = validated_data.get('first_name', instance.first_name)
         instance.last_name = validated_data.get('last_name', instance.last_name)
