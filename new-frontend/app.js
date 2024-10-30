@@ -1,3 +1,5 @@
+check_auth();
+
 const app = document.getElementById("app");
 const urlRoutes = {
 	404: {
@@ -51,6 +53,11 @@ const urlRoutes = {
 		title: "Offline Game",
 		description: ""
 	},
+	"/cpu-game": {
+		page: "/pages/cpu-game/cpu-game.html",
+		title: "CPU Game",
+		description: ""
+	},
 }
 
 if (!JSON.parse(localStorage.getItem("isUserSignedIn")))
@@ -63,12 +70,13 @@ const handleLayout = async (route) => {
 		app.innerHTML = `<auth-layout route="${route.title}">${html}</auth-layout>`
 	else if (route.title === "Dashboard" || route.title === "Profile")
 		app.innerHTML = `<core-layout showHistory=${true}>${html}</core-layout>`;
-	else
+	else {
 		app.innerHTML = `<core-layout showHistory=${false}>${html}</core-layout>`;
+	}
 }
 
 const usersDB = [
-	"user1", 
+	"user1",
 	"user2",
 	"user3",
 	"user4",
@@ -87,8 +95,7 @@ const urlLocationHandler = async () => {
 	const location = window.location.pathname.toLowerCase();
 	let route = urlRoutes[location] || urlRoutes[404];
 	const storedUserData = localStorage.getItem('isUserSignedIn')
-	if (JSON.parse(storedUserData) == true && isUser(location.substring(1)))
-	{
+	if (JSON.parse(storedUserData) == true && isUser(location.substring(1))) {
 		const profile = document.createElement("div");
 		profile.className = "container  d-flex flex-column align-items-center text-light"
 		profile.innerHTML = `
@@ -134,20 +141,17 @@ const urlLocationHandler = async () => {
 		const coreLayout = document.createElement("core-layout");
 		coreLayout.setAttribute("showHistory", "true");
 		coreLayout.appendChild(profile);
-		app.innerHTML = ''; 
+		app.innerHTML = '';
 		app.appendChild(coreLayout);
 		document.title = `PING PONG | ${location.substring(1)}`;
 		window.history.pushState({}, "", location.substring(1));
 	}
 	else {
-		
-		if (JSON.parse(storedUserData) == true && (location == "/" || location == "/signin" || location == "/signup"))
-		{
+		if (JSON.parse(storedUserData) == true && (location == "/" || location == "/signin" || location == "/signup")) {
 			route = urlRoutes["/dashboard"];
 			window.history.pushState({}, "", "/");
 		}
-		else if (JSON.parse(storedUserData) == false && location != "/signin" && location != "/signup")
-		{
+		else if (JSON.parse(storedUserData) == false && location != "/signin" && location != "/signup") {
 			route = urlRoutes["/signin"];
 			window.history.pushState({}, "", "/signin");
 		}
@@ -177,16 +181,16 @@ const urlRoute = route => {
 //     return true;
 // }
 const navigateTo = async (route) => {
-    // const hasToken = await checkAccessToken(route);
-    // if (hasToken) {
-    //     urlRoute(route);
-    // } else {
+	// const hasToken = await checkAccessToken(route);
+	// if (hasToken) {
+	//     urlRoute(route);
+	// } else {
 	// 	console.log(route);
 	// 	if (route == "signin" || route == "signup")
-    //     	urlRoute(route);
+	//     	urlRoute(route);
 	// 	else
 	// 		urlRoute("signin");
-    // }
+	// }
 	urlRoute(route)
 };
 
@@ -194,5 +198,5 @@ const navigateTo = async (route) => {
 // 	localStorage.setItem("isUserSignedIn", JSON.stringify(true));
 // 	navigateTo("/")
 // }
-// check_auth();
+
 

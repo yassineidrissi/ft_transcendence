@@ -1,13 +1,29 @@
 class Profile extends HTMLElement {
 	constructor() {
-        super();
-        this.attachShadow({ mode: 'open' });
+		super();
+		this.attachShadow({ mode: 'open' });
+	}
+
+	connectedCallback() {
+		if (window.UserData) {
+			this.renderProfile();
+		} else {
+			this.userDataInterval = setInterval(() => {
+				if (window.UserData) {
+					clearInterval(this.userDataInterval);
+					this.renderProfile();
+				}
+			}, 100);
+		}
+	}
+	renderProfile() {
 		const profile = document.createElement("div");
 		profile.className = "container  d-flex flex-column align-items-center text-light"
+		console.log(window.UserData);
 		profile.innerHTML = `
-				<img src="./Core/Shared/assets/avatar.jpg" width="120" class="rounded" ></img>
+				<img src=${window.UserData['img_url']}  width="120" class="rounded" ></img>
 				<div id"profile-info" class="d-flex flex-column align-items-center mb-4">
-					<h1>NoobMaster69</h1>
+					<h1>${window.UserData.username}</h1>
 					<win-loss-draw></win-loss-draw>
 				</div>
 				<div class="general-stats mb-5 d-flex w-100 justify-content-evenly">
@@ -72,8 +88,15 @@ class Profile extends HTMLElement {
 			}
 		`;
 		this.shadowRoot.append(style);
-        this.shadowRoot.append(profile);
-    }
+		this.shadowRoot.append(profile);
+	}
+
+	disconnectedCallback() {
+		// Clear the interval when the element is removed from the DOM
+		if (this.userDataInterval) {
+			clearInterval(this.userDataInterval);
+		}
+	}
 }
 
 customElements.define('profile-page', Profile);

@@ -7,13 +7,13 @@ class Loss extends HTMLElement {
 		loss.id = "loss"
 		loss.innerHTML = `
 				<div class="d-flex align-items-center">
-					<img src="./Core/Shared/assets/avatar.jpg" class="mb-0 me-2	 rounded" width="84" ></img>
-					<p class="mb-0 fs-5 fw-medium">NoobMaster69</p>
+					<img src=${window.UserData['img_url']} class="mb-0 me-2	 rounded" width="56" ></img>
+					<p class="mb-0 fs-5 fw-medium">${window.UserData.username}</p>
 				</div>
 				<div class="mb-0 d-flex align-items-center fw-bold fs-3 w-25 justify-content-between px-4"> <span class="d-inline-block fs-3">21</span> -  <span class="d-inline-block fs-3">8</span></div>
 				<div class="d-flex align-items-center">
 					<p class="mb-0 me-2 fs-5 fw-medium">NoobMaster69</p>
-					<img src="./Core/Shared/assets/avatar.jpg" class="m-0 rounded" width="84" ></img>
+					<img src="./Core/Shared/assets/avatar.jpg" class="rounded" width="56" ></img>
 				</div>
 		`
 		const style = document.createElement('style');

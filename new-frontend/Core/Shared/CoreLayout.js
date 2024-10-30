@@ -2,7 +2,21 @@ class CoreLayout extends HTMLElement {
     constructor() {
         super();
         this.attachShadow({ mode: 'open' });
-	
+	}
+	connectedCallback() {
+		if (window.UserData) {
+			this.renderCoreLayout();
+		} else {
+			this.userDataInterval = setInterval(() => {
+				if (window.UserData) {
+					clearInterval(this.userDataInterval);
+					this.renderCoreLayout();
+				}
+			}, 100);
+		}
+	}
+
+	renderCoreLayout() {
 		const container = document.createElement("div");
 		container.className = `d-flex core vw-100 vh-100`;
 		container.id = "container"

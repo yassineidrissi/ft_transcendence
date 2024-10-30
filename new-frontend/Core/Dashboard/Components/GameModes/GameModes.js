@@ -5,7 +5,7 @@ class GameModes extends HTMLElement {
         const modes = document.createElement('div');
 		modes.className = "  container mb-3 d-flex flex-column ";
         modes.innerHTML = `<div id="modes" class="mb-3 ">
-                <game-mode class="mode" color="#CD0024" title="CPU" ></game-mode>
+                <game-mode class="mode" color="#CD0024" onclick="navigateTo('cpu-game')" title="CPU" ></game-mode>
                 <game-mode class="mode" color="#B98500" onclick="navigateTo('online-game')" id="online" title="Online"></game-mode>
                 <game-mode class="mode" color="#5510BF" onclick="navigateTo('offline-game')" title="Offline"></game-mode>
             </div>

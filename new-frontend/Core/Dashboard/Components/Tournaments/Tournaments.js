@@ -143,7 +143,6 @@ class Tournaments extends HTMLElement {
                 </td>
             </tr>
         `).join('');
-		
     }
 }
 
