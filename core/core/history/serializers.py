@@ -13,7 +13,7 @@ class MatchSerializer(serializers.ModelSerializer):
     def get_player(self, obj):
         player = obj.p1
         score = obj.player1_score
-        if obj.player2 == self.context.get("user"):
+        if obj.p2 == self.context.get("user"):
             player = obj.p2
             score = obj.player2_score
 
@@ -26,7 +26,7 @@ class MatchSerializer(serializers.ModelSerializer):
     def get_opponent(self, obj):
         player = obj.p1
         score = obj.player1_score
-        if obj.player2 != self.context.get("user"):
+        if obj.p2 != self.context.get("user"):
             player = obj.p2
             score = obj.player2_score
 
