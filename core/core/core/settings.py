@@ -53,9 +53,9 @@ INSTALLED_APPS = [
 # rest framework
 
 REST_FRAMEWORK = {
-	'DEFAULT_RENDERER_CLASSES': [
-        'rest_framework.renderers.JSONRenderer",
-	],
+    'DEFAULT_RENDERER_CLASSES': [
+        'rest_framework.renderers.JSONRenderer',
+    ],
     # "DEFAULT_PARSER_CLASSES": [
     #     "rest_framework.parsers.JSONParser",
     # ],
@@ -222,7 +222,7 @@ CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_ORIGINS = [
-    'https://127.0.0.1'
+    'https://127.0.0.1',
 ]
 
 # for 42 API
