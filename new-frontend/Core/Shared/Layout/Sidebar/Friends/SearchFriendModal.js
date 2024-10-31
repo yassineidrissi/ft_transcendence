@@ -8,7 +8,7 @@ class SearchFriendModal extends HTMLElement {
         searchFriendModal.innerHTML = `<div class="h-75 position-absolute pt-4 top-50 start-50 translate-middle w-75 d-flex flex-column justify-content-start align-items-center bg-dark z-3">
 									<img id="close-modal" src="./Core/Shared/assets/exit.svg" class="position-absolute top-0 end-0 cursor-pointer" ></img>
 									<h1 class="text-light fw-bold">Discover New Friends<h1>
-									<input class="form-control search-input  mb-4 flex" id="search-friend" type="text" placeholder="Search friends">
+									<input class="form-control search-input  mb-4 flex" id="search-friend" oninput='SeachUser(this)' type="text" placeholder="Search friends">
 									<div class="friends-search-results">
 										<search-friend></search-friend>
 										<search-friend></search-friend>

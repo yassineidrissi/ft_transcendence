@@ -5,7 +5,6 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import api_view,authentication_classes, permission_classes
 from .serializers import UserSerializer,LoginUserSerializer,User42Login,UserDataSerializer,UserUpdateSerializer
 from .models import User,Friend,FriendRequest,BlockFriend
-from .tests import save_user42
 from django.conf import settings
 import requests
 
@@ -97,6 +96,13 @@ def refresh_token(request):
         return Response({'detail': 'Refresh token not found'}, status=status.HTTP_400_BAD_REQUEST)
     try:
         refresh_token_obj = RefreshToken(refresh_token)
+        userId = refresh_token_obj['user_id']
+        try:
+            user = User.objects.get(id=userId)
+        except User.DoesNotExist:
+            return Response({'detail': 'User no longer exists'}, status=status.HTTP_404_NOT_FOUND)
+
+
         new_access_token = refresh_token_obj.access_token
         response = Response({
             'message': 'Token refreshed',
@@ -121,8 +127,8 @@ def login42(request):
 
 def redirect42(user):
     if user.state_2fa == False:
-        return HttpResponseRedirect('https://127.0.0.1/profile')
-    return HttpResponseRedirect('https://127.0.0.1/profile')
+        return HttpResponseRedirect('https://127.0.0.1/dashboard')
+    return HttpResponseRedirect('https://127.0.0.1/dashboard')
 @api_view(["GET"])
 @authentication_classes([])
 @permission_classes([AllowAny])
@@ -192,7 +198,7 @@ def callback42(request):
                 return response
             user_serializer = User42Login(data=user_profile)
             if user_serializer.is_valid():
-                response = HttpResponseRedirect('https://127.0.0.1/profile')
+                response = HttpResponseRedirect('https://127.0.0.1/dashboard')
                 user = user_serializer.save()
                 refresh = RefreshToken.for_user(user)
                 access_token = str(refresh.access_token)

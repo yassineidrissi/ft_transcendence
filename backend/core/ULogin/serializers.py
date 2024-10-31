@@ -58,15 +58,18 @@ class UserDataSerializer(serializers.ModelSerializer):
         model = User
         fields = ['id', 'state_2fa' , 'first_name', 'last_name','first_name', 'email', 'level', 'img_url', 'full_name', 'username']
 
-    
+from .tests import generate_new_username
 class User42Login(serializers.ModelSerializer):
     class Meta:
         model = User  # Make sure User model has the fields 'email', etc.
         fields = ['id','username', 'email', 'first_name', 'last_name', 'img_url', 'full_name']
 
     def create(self, validated_data):
+        username = validated_data['username']
+        if User.objects.filter(username=validated_data['username']).exists():
+            username = generate_new_username(username)
         user = User.objects.create_user(
-            username= validated_data['username'],
+            username= username,
             email= validated_data['email'],
             img_url= validated_data['img_url'],
             full_name= validated_data['full_name']

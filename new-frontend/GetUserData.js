@@ -27,8 +27,10 @@ async function handleAuthResponse(response, retryFunction) {
             return await retryFunction(); // Ensure retryFunction is awaited
         }
     } catch (e) {
+        localStorage.removeItem('access_token');
+        localStorage.removeItem('isUserSignedIn');
         console.error('Error during token refresh:', e);
-        // Clear tokens and redirect if necessary
+        urlRoute('signin');
     }
     return response;
 }

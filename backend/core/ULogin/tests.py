@@ -19,7 +19,7 @@ def save_user42(user):
     nuser = user.validated_data
     if User.objects.filter(username=nuser['username']).exists():
         nuser['username'] = generate_new_username(nuser['username'])
-    user = User.objects.create_user(**nuser)
-    user.save()
+    # user = User.objects.create_user(**nuser)
+    # user.save()
 
     
