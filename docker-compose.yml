@@ -37,7 +37,7 @@ networks:
 
 services:
   db:
-    depends_on:
+    # depends_on:
       # logstash:
       #   condition: service_healthy
     image: postgres:latest
@@ -88,6 +88,8 @@ services:
         condition: service_started
     image: backend:latest
     container_name: backend
+    ports:
+      - "8000:8000"
     networks:
       - default
       - elastic

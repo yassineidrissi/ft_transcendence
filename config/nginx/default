@@ -25,6 +25,9 @@ server {
 	ssl_certificate /etc/nginx/certs/cert.pem;
 	ssl_certificate_key /etc/nginx/certs/cert.key;
 	ssl_ciphers HIGH:!aNULL:!MD5;
+
+	root /var/www/html;
+	index index.html;
 	
 	location / {
 		try_files $uri $uri/ /index.html;
