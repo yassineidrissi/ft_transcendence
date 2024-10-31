@@ -101,6 +101,7 @@ SIMPLE_JWT = {
 
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -223,16 +224,17 @@ CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_ORIGINS = [
     'https://127.0.0.1',
+    'https://localhost',
 ]
 
 # for 42 API
 FORTYTWO_CLIENT_ID = (
-    "u-s4t2ud-e77a8458846c5717dd0ecd89e663025ce33b92511d830379eee4bbb374bd0f34"
+    "u-s4t2ud-aa40036aa2286b9ef5f45afc46777f5b35f377c3e85c74ff57de96d1da91bae0"
 )
 
 FORTYTWO_CLIENT_SECRET = (
-    "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"
+    "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"
 )
 
 # FORTYTWO_REDIRECT_URI = 'https://api.intra.42.fr/oauth/authorize'
-FORTYTWO_REDIRECT_URI = "http://127.0.0.1:8000/oauth/callback/"
+FORTYTWO_REDIRECT_URI = "http://127.0.0.1:8000/api/callback/"

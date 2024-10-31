@@ -39,9 +39,9 @@ def get_tokens_for_user(user):
 
 @api_view(['POST'])
 def register(request):
+    print('request.data::',request.data)
     user = UserSerializer(data=request.data)
     if user.is_valid():
-        print('User is valid')
         user.save()
         return Response({'message': 'User created successfully'}, status=status.HTTP_201_CREATED)
     for key in user.errors:
@@ -84,6 +84,7 @@ def loginView(request):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def checkAuth(request):
+    print('cookies',request.COOKIES)
     user = request.user
     serializer = UserSerializer(user, context={'request': request})
     return Response(UserDataSerializer(user).data)
