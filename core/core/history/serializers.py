@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from tournament.models import Match
+from game.models import MatchGame
 
 
 class MatchSerializer(serializers.ModelSerializer):
@@ -8,14 +8,14 @@ class MatchSerializer(serializers.ModelSerializer):
 
     class Meta:
         fields = ["created_at", "player", "opponent"]
-        model = Match
+        model = MatchGame
 
     def get_player(self, obj):
-        player = obj.player1
-        score = obj.score1
+        player = obj.p1
+        score = obj.player1_score
         if obj.player2 == self.context.get("user"):
-            player = obj.player2
-            score = obj.score2
+            player = obj.p2
+            score = obj.player2_score
 
         return {
             "id": player.id,
@@ -24,11 +24,11 @@ class MatchSerializer(serializers.ModelSerializer):
         }
 
     def get_opponent(self, obj):
-        player = obj.player1
-        score = obj.score1
+        player = obj.p1
+        score = obj.player1_score
         if obj.player2 != self.context.get("user"):
-            player = obj.player2
-            score = obj.score2
+            player = obj.p2
+            score = obj.player2_score
 
         return {
             "id": player.id,

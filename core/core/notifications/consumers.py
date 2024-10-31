@@ -14,7 +14,7 @@ class NotificationConsumer(AsyncWebsocketConsumer):
             self.room_group_name = self.user.username
             await self.channel_layer.group_add(self.room_group_name, self.channel_name)
             await self.accept()
-            send_notification_to_user(self.user.username, "Hola", "https://localhost")
+            # await send_notification_to_user(self.user.username, "Hola", "https://localhost")
         else:
             self.close()
 
@@ -31,7 +31,7 @@ class NotificationConsumer(AsyncWebsocketConsumer):
                 text_data=json.dumps(
                     {
                         "link": notification_data.link,
-                        "message": notification_data.message,
+                        "content": notification_data.content,
                         "is_read": notification_data.is_read,
                         "timestamp": str(notification_data.timestamp),
                     }
@@ -43,7 +43,7 @@ class NotificationConsumer(AsyncWebsocketConsumer):
         notification_data = {
             "user": self.user.id,
             "link": notification["link"],
-            "message": notification["message"],
+            "content": notification["content"],
         }
         serialized = NotificationSerializer(data=notification_data)
         if serialized.is_valid():

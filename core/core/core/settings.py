@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     "tournament",
     "notifications",
     "daphne",
+    "channels",
     "corsheaders",
     "rest_framework",
     "rest_framework_simplejwt.token_blacklist",
@@ -53,8 +54,8 @@ INSTALLED_APPS = [
 # rest framework
 
 REST_FRAMEWORK = {
-    'DEFAULT_RENDERER_CLASSES': [
-        'rest_framework.renderers.JSONRenderer',
+    "DEFAULT_RENDERER_CLASSES": [
+        "rest_framework.renderers.JSONRenderer",
     ],
     # "DEFAULT_PARSER_CLASSES": [
     #     "rest_framework.parsers.JSONParser",
@@ -101,7 +102,6 @@ SIMPLE_JWT = {
 
 
 MIDDLEWARE = [
-    'corsheaders.middleware.CorsMiddleware',
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -109,6 +109,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
 ]
 
 ROOT_URLCONF = "core.urls"
@@ -129,7 +130,9 @@ TEMPLATES = [
     },
 ]
 
-ASGI_APPLICATION = 'core.asgi.application'
+CHANNEL_LAYERS = {"default": {"BACKEND": "channels.layers.InMemoryChannelLayer"}}
+
+ASGI_APPLICATION = "core.asgi.application"
 WSGI_APPLICATION = "core.wsgi.application"
 
 
@@ -138,12 +141,12 @@ WSGI_APPLICATION = "core.wsgi.application"
 
 DATABASES = {
     "default": {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'transcendence',
-        'HOST': 'db',
-        'POST': '5432',
-        'USER': 'pfister',
-        'PASSWORD': 'password',
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "transcendence",
+        "HOST": "db",
+        "POST": "5432",
+        "USER": "pfister",
+        "PASSWORD": "password",
     }
 }
 
@@ -223,8 +226,8 @@ CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_ORIGINS = [
-    'https://127.0.0.1',
-    'https://localhost',
+    "https://127.0.0.1",
+    "https://localhost",
 ]
 
 # for 42 API

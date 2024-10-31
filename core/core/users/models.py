@@ -18,6 +18,13 @@ class User(AbstractUser):
     USERNAME_FIELD = 'email'  # Set email as the primary identifier
     REQUIRED_FIELDS = ['username']  # Add any other fields that are required
     
+    is_joining = models.BooleanField(default=False)
+    nickname = models.CharField(max_length=100, default='')
+    is_invited = models.BooleanField(default=False)
+
+    win_stats = models.IntegerField(default=0)
+    loss_stats = models.IntegerField(default=0)
+    
     def __str__(self):
         return self.email  
     

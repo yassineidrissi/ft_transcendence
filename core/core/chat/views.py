@@ -19,19 +19,6 @@ def home(request):
     )
 
 
-"""
-    - GET to endpoint /chat/
-    - return json {
-        id: id
-        source: user
-        destination: target user
-        message: message
-        timestamp: timestamp
-        viewed_at: viewed time
-    }
-"""
-
-
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])
 def list_chat(request):
@@ -51,19 +38,6 @@ def list_chat(request):
         conversations, many=True, context={"user": user}
     )
     return Response(serialized.data, status=status.HTTP_200_OK)
-
-
-"""
-    - GET to endpoint /chat/{username}/
-    - return json {
-        id: id
-        source: user
-        destination: target user
-        message: message
-        timestamp: timestamp
-        seen_at: viewed time
-    }
-"""
 
 
 @api_view(["GET"])
@@ -95,16 +69,6 @@ def get_chat(request, conversation_id):
 #         serialized = MessageSerializer(messages, many=True)
 #         return Response(serialized.data, status=status.HTTP_200_OK)
 #     return Response({"message": "user not found"}, status=status.HTTP_404_NOT_FOUND)
-
-
-"""
-    - POST to endpoint /message/
-    - body json {
-        destination: destination username
-        message: message
-    }
-    - return\ none
-"""
 
 
 @api_view(["POST"])
@@ -158,12 +122,6 @@ def get_message(request, message_id):
     return Response(serialized.data, status=status.HTTP_200_OK)
 
 
-"""
-    - DELETE to endpoint /chat/{target_user}/delete/
-    - return none
-"""
-
-
 @api_view(["DELETE"])
 @permission_classes([IsAuthenticated])
 def delete_chat(request, username):
@@ -178,12 +136,6 @@ def delete_chat(request, username):
         ).delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
     return Response({"detail": "user not found"}, status=status.HTTP_404_NOT_FOUND)
-
-
-"""
-    - DELETE to endpoint /message/{message_id}/delete/
-    - return none
-"""
 
 
 @api_view(["DELETE"])
