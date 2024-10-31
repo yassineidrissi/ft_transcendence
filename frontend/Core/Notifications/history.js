@@ -7,7 +7,7 @@ async function fetchHistory(userId) {
             'Authorization': `Bearer ${access_token}`,
         }
     });
-    // response = await handleAuthResponse(response, fetchChat); add params to callback
+    response = await handleAuthResponse(response, fetchChat, userId);
 
     if (response.ok) {
         let data = await response.json();
@@ -30,6 +30,8 @@ async function fetchDateHistory(date) {
         }
     });
 
+    response = await handleAuthResponse(response, fetchChat, date);
+
     if (response.ok) {
         let data = await response.json();
         return data;
@@ -39,11 +41,11 @@ async function fetchDateHistory(date) {
 }
 
 async function getYesterdatHistory() {
-    return fetchDateHistory
-}
-
-async function getTodayHistory() {
     const newDate = new Date(date);
     newDate.setDate(newDate.getDate() - 1);
     return await fetchDateHistory(newDate);
+}
+
+async function getTodayHistory() {
+    return fetchDateHistory
 }

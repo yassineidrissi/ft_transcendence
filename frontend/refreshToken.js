@@ -37,10 +37,12 @@
 // }
 
 
-async function handleAuthResponse(response, retryFunction) {
-    try{
+async function handleAuthResponse(response, retryFunction, callback_params = null) {
+    try {
         if (response.status === 401) {
             await refresh_token();
+            if (callback_params)
+                return retryFunction(callback_params);
             return retryFunction();
         }
     }
@@ -55,7 +57,7 @@ async function refresh_token() {
         method: 'POST',
         credentials: 'include',
     });
-    console.log('refresh status',response.status);
+    console.log('refresh status', response.status);
     if (response.status === 200) {
         let data = await response.json();
         console.log('refreshed token');

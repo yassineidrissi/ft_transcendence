@@ -1,27 +1,34 @@
 async function eraseNotifications() {
-    const respose = await fetch('http://localhost:8000/api/notification/delete/',
+    const response = await fetch('http://localhost:8000/api/notification/delete/',
         {
             method: 'DELETE',
             headers: { 'Authorization': `Bearer ${localStorage.getItem('access_token')}` },
             credentials: 'include'
         })
-    if (!respose.ok) {
+
+    response = handleAuthResponse(response, eraseNotifications);
+
+    if (!response.ok) {
         throw new Error('Failed to feach on notifications')
     }
     return true
 }
 
 async function fetchNotifications() {
-    const respose = await fetch('http://localhost:8000/api/notification/',
+    const response = await fetch('http://localhost:8000/api/notification/',
         {
             method: 'GET',
             headers: { 'Authorization': `Bearer ${localStorage.getItem('access_token')}` },
             credentials: 'include'
         })
-    if (!respose.ok) {
+
+    response = handleAuthResponse(response, fetchNotifications);
+
+
+    if (!response.ok) {
         throw new Error('Failed to feach on notifications')
     }
-    return respose.json()
+    return response.json()
 }
 
 function createNotificationSocket() {

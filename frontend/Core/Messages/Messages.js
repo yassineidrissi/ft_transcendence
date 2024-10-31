@@ -1,5 +1,5 @@
 
-// import { fetchChat, getConversation } from "../services/chatService.js"
+// import { fetchChat } from "./chatService.js"
 class Messages extends HTMLElement {
 	constructor() {
 		super();
