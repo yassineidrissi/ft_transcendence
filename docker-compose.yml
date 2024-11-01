@@ -38,8 +38,8 @@ networks:
 services:
   db:
     # depends_on:
-      # logstash:
-      #   condition: service_healthy
+    # logstash:
+    #   condition: service_healthy
     image: postgres:latest
     container_name: db
     env_file:
@@ -80,7 +80,7 @@ services:
     restart: unless-stopped
   backend:
     build:
-      context: ./core
+      context: ./config/backend
     depends_on:
       # logstash:
       #   condition: service_healthy
@@ -95,7 +95,7 @@ services:
       - elastic
       - monitoring
     volumes:
-      - ./core/core/:/app/core
+      - ./core:/main/core
     restart: unless-stopped
   # nginx-exporter:
   #   depends_on:
