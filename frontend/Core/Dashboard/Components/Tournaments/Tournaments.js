@@ -108,25 +108,23 @@ class Tournaments extends HTMLElement {
         this.renderTournaments(tournamentData)
         this.shadowRoot.querySelectorAll("#join").forEach(btn => {
             btn.addEventListener("click", (e) => {
-                console.log(e.target.dataset);
                 const tournamentId = e.target.dataset.id;
                 this.selectedTournamentId = tournamentId;
                 this.isJoiningTournament = true;
                 console.log(this.selectedTournamentId);
-                
                 this.render()
             })
         })
         if (this.isJoiningTournament) {
-            const closeButton = this.shadowRoot.querySelector("#close");
-            if (closeButton) {
-                closeButton.addEventListener("click", () => {
+            this.shadowRoot.querySelectorAll("#close").forEach(btn => {
+                
+                btn.addEventListener("click", () => {
+                    console.log("closing tournament ", this.selectedTournamentId);
                     this.isJoiningTournament = false;
                     this.selectedTournamentId = null;
                     this.render();
                 });
-            }
-        }
+            })}
     }
 
     renderTournaments(data) {
@@ -154,10 +152,10 @@ class Tournaments extends HTMLElement {
                         <img class="d-inline mb-0 me-2" src="./Core/Dashboard/assets/zap.svg"></img>
                         <span class="mb-0">Playing</span>
                     ` : `
-                        <svg class="me-2 p-1 cursor-pointer" id="join" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-play">
+                        <svg data-id=${tournament.id} class="me-2 p-1 cursor-pointer" id="join" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-play">
                             <polygon points="5 3 19 12 5 21 5 3"></polygon>
                         </svg>
-                        <span data-id=${tournament.id} class="mb-0">Join</span>
+                        <span  class="mb-0">Join</span>
                     `}
                 </td>
             </tr>
