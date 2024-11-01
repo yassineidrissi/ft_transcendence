@@ -53,6 +53,6 @@ async function refresh_token() {
 }
 
 // Call check_auth when needed, and ensure it is awaited
-// (async () => {
-//     await check_auth();
-// })();
+(async () => {
+    await check_auth();
+})();
