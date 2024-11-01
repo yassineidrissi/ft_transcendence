@@ -6,10 +6,10 @@ class SearchFriend extends HTMLElement {
         friend.id = "search-res-friend";
 		friend.className = "d-flex justify-content-between align-items-center px-4 mb-2";
         friend.innerHTML = `<div class="d-flex align-items-center">
-								<img src="./Core/Shared/assets/avatar.jpg" class="rounded me-2" height='32'></img>
-								<p id="friend-name" class="mb-0 fs-5">Amine l7tba</p>
+								<img src="${this.getAttribute("img")}" class="rounded me-2" height='32'></img>
+								<p id="friend-name" class="mb-0 fs-5">${this.getAttribute("username")}</p>
                                 </div>
-                            <button class=" text-light px-2 py-1 round">Send</button>`
+                            <button id="${this.getAttribute("idUser")}"  class=" text-light px-2 py-1 round">Send</button>`
 		const style = document.createElement('style');
         style.textContent = `
 			@import url('https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css');
@@ -33,7 +33,28 @@ class SearchFriend extends HTMLElement {
 			
 		`;
         this.shadowRoot.append(style, friend);
+        this.shadowRoot.querySelector('button').addEventListener('click', (e) => {
+            // console.log(e.target.id);
+            this.sendRequest(e.target.id);
+        });
     }
+    async sendRequest(idUser){
+        let response = await fetch(`http://127.0.0.1:8000/api/sendRequestFriend/`, {
+            method: 'POST',
+            credentials: 'include',
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                'id': idUser
+            })
+        })
+        response = await handleAuthResponse(response, this.sendRequest);
+        let data = await response.json();
+        console.log(data['message']);
+    }
+    
 }
 
 customElements.define('search-friend', SearchFriend);

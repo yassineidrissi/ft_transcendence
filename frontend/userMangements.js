@@ -92,3 +92,42 @@ async function UpdateImg() {
         window.UserData = result['data'];
     }
 }
+
+async function Update2fa(state) {
+    console.log("2fa", state);
+    let access_token = localStorage.getItem('access_token');
+    const formData = new FormData();
+    formData.append('state_2fa', state);
+    let response = await fetch('http://127.0.0.1:8000/api/updateUser/', {
+        method: 'PATCH',
+        credentials: 'include',
+        body: formData,
+        headers: {
+            'Authorization': `Bearer ${access_token}`,
+        }
+    });
+    response = await handleAuthResponse(response, Update2fa);
+    let result = await response.json();
+    console.log(result);
+    if(response.ok)
+    {
+        window.UserData = result['data'];
+    }
+}
+
+async function SeachUser(value) {
+    console.log("search user", value);
+    if (value.trim() == "")
+        return;
+    let response = await fetch(`http://127.0.0.1:8000/api/searchUsers/?q=${value.trim()}`, {
+        method: 'GET',
+        credentials: 'include',
+        headers: {
+            'Authorization': `Bearer ${localStorage.getItem('access_token')}`
+        }
+    });
+    response = await handleAuthResponse(response, SeachUser);
+    let result = await response.json();
+    // console.log(result);
+    return result
+}

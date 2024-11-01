@@ -15,7 +15,6 @@ async function check_auth() {
         let data = await response.json();
         console.log('User data:', data);
         window.UserData = data;
-		localStorage.setItem('isUserSignedIn', true)
     } else if (!access_token) {
         urlRoute('signin');
     }
@@ -28,8 +27,10 @@ async function handleAuthResponse(response, retryFunction) {
             return await retryFunction(); // Ensure retryFunction is awaited
         }
     } catch (e) {
+        localStorage.removeItem('access_token');
+        localStorage.removeItem('isUserSignedIn');
         console.error('Error during token refresh:', e);
-        // Clear tokens and redirect if necessary
+        urlRoute('signin');
     }
     return response;
 }
@@ -42,7 +43,6 @@ async function refresh_token() {
     console.log('Refresh token status:', response.status);
     
     if (response.status === 200) {
-		console.log(response);
         let data = await response.json();
         console.log('Token refreshed successfully');
         localStorage.setItem('access_token', data.access_token);
@@ -56,4 +56,3 @@ async function refresh_token() {
 (async () => {
     await check_auth();
 })();
-
