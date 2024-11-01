@@ -33,7 +33,7 @@ async function fetchNotifications() {
 
 function createNotificationSocket() {
     const Socket = new WebSocket(
-        'ws://localhost:8000/ws/notification/'
+        `ws://localhost:8000/ws/notification/?token=${localStorage.getItem('access_token')}/`
     )
 
     Socket.onmessage = function (e) {
