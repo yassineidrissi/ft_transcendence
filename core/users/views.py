@@ -315,11 +315,15 @@ def sendRequestFriend(request):
     #     "content": f"{user.username} sent you a friend request",
     #     "is_read": False
     # }
-    # notification_serializer = NotificationSerializer(data=notification_data)
-    # if notification_serializer.is_valid():
-    #     notification_serializer.save()
+    notification_data = {'user': to_user.id, 'sender' : user.id, 'content': f"{user.username} sent you a friend request",'fulfill_link':"http://127.0.0.1:8000/api/acceptFriendRequest/",'reject_link':"http://127.0.0.1:8000/api/rejectFriendRequest/"}
+    notification_serializer = NotificationSerializer(data=notification_data)
+    if notification_serializer.is_valid():
+        print("Hello")
+        notification_serializer.save()
+    else:
+        print(notification_serializer.errors)
 
-    # send_notification_to_user(to_user.username, f'{user.username} sent you a friend request')
+    # send_notification_to_user({'username': to_user.username, 'sender' : user, 'content': f"{user.username} sent you a friend request",'fulfill_link':"http://127.0.0.1:8000/api/acceptFriendRequest/",'reject_link':"http://127.0.0.1:8000/api/rejectFriendRequest/"})
     return Response({'message': 'Friend request sent successfully'}, status=status.HTTP_200_OK)
 
 # ! get friend requests
