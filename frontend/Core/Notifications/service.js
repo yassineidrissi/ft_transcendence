@@ -31,23 +31,23 @@ async function fetchNotifications() {
     return response.json()
 }
 
-function createNotificationSocket() {
-    const Socket = new WebSocket(
-        `ws://localhost:8000/ws/notification/?token=${localStorage.getItem('access_token')}`
-    )
+// function createNotificationSocket() {
+//     const Socket = new WebSocket(
+//         `ws://localhost:8000/ws/notification/?token=${localStorage.getItem('access_token')}`
+//     )
 
-    Socket.onmessage = function (e) {
-        const data = JSON.parse(e.data)
-        console.log({
-            "is_read": data.is_read,
-            "content": data.content,
-            "timestamp": data.timestamp,
-            "fulfill_link": data.fulfill_link,
-            "reject_link": data.reject_link
-        })
-    }
+//     Socket.onmessage = function (e) {
+//         const data = JSON.parse(e.data)
+//         console.log({
+//             "is_read": data.is_read,
+//             "content": data.content,
+//             "timestamp": data.timestamp,
+//             "fulfill_link": data.fulfill_link,
+//             "reject_link": data.reject_link
+//         })
+//     }
 
-    Socket.onclose = function (e) {
-        console.error('Chat socket closed unexpectedly');
-    }
-}
+//     Socket.onclose = function (e) {
+//         console.error('Chat socket closed unexpectedly');
+//     }
+// }
