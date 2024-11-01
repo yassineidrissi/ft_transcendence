@@ -604,14 +604,15 @@ class Messages extends HTMLElement {
 					emptyChatBox.style.display = 'flex'
 					return;
 				}
+				
 				conversations.forEach(conversation => {
 					const chatListItem = new ChatListItem()
-					const chatSocket = createChatSocket(conversation.target.username, chatListItem)
+					const chatSocket =this.createChatSocket(conversation.target.username, chatListItem)
 					chatSockets[conversation.target.username] = chatSocket
 					chatListItem.config = conversation
 					chatListItem.addEventListener('click', () => {
 						target = conversation.target.username
-						markMessageAsViewed(chatSockets[target])
+						// markMessageAsViewed(chatSockets[target])
 						chatListItem.mute()
 						const conversationHeader = new ChatHeader()
 						conversationHeader.config = conversation

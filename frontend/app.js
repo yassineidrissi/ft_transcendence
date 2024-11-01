@@ -1,4 +1,4 @@
-// check_auth();
+check_auth();
 
 const app = document.getElementById("app");
 const urlRoutes = {

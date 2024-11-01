@@ -17,7 +17,7 @@ let nickname = null;
 function init() {
     connectSocket();
     setupEventListeners();
-    checkAuth();
+    getTournaments();
 }
 
 function connectSocket() {
@@ -185,7 +185,7 @@ async function createRoom(roomName) {
     }
 }
 
-async function checkAuth() {
+async function getTournaments() {
     // try {
         let response = await fetch('http://127.0.0.1:8000/api/rooms/rooms-list/', {
             method: 'GET',
@@ -194,7 +194,7 @@ async function checkAuth() {
                 'Authorization': `Bearer ${access_token}`,
             }
         });
-        response = await handleAuthResponse(response, checkAuth);
+        response = await handleAuthResponse(response, getTournaments);
         if (response.ok) {
             const data = await response.json();
             updateRooms(data.rooms);
@@ -280,7 +280,7 @@ export {
     leaveRoom,
     sendSocketMessage,
     createRoom,
-    checkAuth,
+    getTournaments,
     getMatchs,
     updateMatches,
     fetchMatches,

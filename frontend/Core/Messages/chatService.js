@@ -9,8 +9,8 @@ async function fetchChat() {
             'Authorization': `Bearer ${access_token}`,
         }
     });
-    response = await handleAuthResponse(response, fetchChat);
-
+    // response = await handleAuthResponse(response, fetchChat);
+	console.log(response)
     if (response.ok) {
         let data = await response.json();
         return data;

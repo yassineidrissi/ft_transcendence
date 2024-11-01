@@ -44,6 +44,7 @@ class ConversationSerializer(serializers.ModelSerializer):
             "username": target.username,
             "first_name": target.first_name,
             "last_name": target.last_name,
+			"imgUrl": target.img_url
         }
 
     def get_overview(self, obj):
