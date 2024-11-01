@@ -5,30 +5,31 @@ class OfflineGame extends HTMLElement {
 		this.isMultiplayer = true;
 		this.render();
 	}
+
 	render() {
 		const cpuGame = document.createElement("div");
-		cpuGame.className = "container text-light position-relative"
-		cpuGame.id = "cpu-game"
+		cpuGame.className = "container text-light position-relative";
+		cpuGame.id = "cpu-game";
 		cpuGame.innerHTML = `
 		<div class="d-flex mb-5">
-			<button id="multiplayerButton" class=" modeBtn ${this.isMultiplayer && `activeBtn`} me-2 p-2 fw-medium">Multiplayer Mode</button>
-			<button id="singleplayerButton" class=" modeBtn ${!this.isMultiplayer && `activeBtn`} p-2 fw-medium" >Single Player Mode</button>
+			<button id="multiplayerButton" class="modeBtn ${this.isMultiplayer ? 'activeBtn' : ''} me-2 p-2 fw-medium">Multiplayer Mode</button>
+			<button id="singleplayerButton" class="modeBtn ${!this.isMultiplayer ? 'activeBtn' : ''} p-2 fw-medium">Single Player Mode</button>
 		</div>
 		<div class="w-100 d-flex justify-content-between align-items-center my-4 text-light">
 			<span id="player1" class="bg-primary p-2 px-4 rounded fs-5">player 1</span>
 			<div id="scoreBoard" class="fs-3">
 				<span id="leftScore" class="fw-sem px-2">0</span> - <span id="rightScore" class="fw-sem px-2">0</span>
 			</div>
-			<span id="player2" class="bg-danger p-2 px-4 rounded fs-5">${this.isMultiplayer ? `player 2` : `Bot`}</span>
+			<span id="player2" class="bg-danger p-2 px-4 rounded fs-5">${this.isMultiplayer ? 'player 2' : 'Bot'}</span>
 		</div>
-		<canvas id="gameCanvas" height="400" width="800" class="w-100 h-100 border"></canvas>`
+		<canvas id="gameCanvas" height="400" width="800" class="w-100 h-100 border"></canvas>`;
+		
 		const style = document.createElement('style');
 		style.textContent = `
-    		@import url('https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css');
+			@import url('https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css');
 			@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap');
 
-			.modeBtn
-			{
+			.modeBtn {
 				border: 1px solid #fff;
 				background: transparent;
 				color: #fff;
@@ -39,40 +40,38 @@ class OfflineGame extends HTMLElement {
 			}
 		`;
 
-		this.shadowRoot.innerHTML = ''
+		this.shadowRoot.innerHTML = '';
 		this.shadowRoot.append(style);
 		this.shadowRoot.append(cpuGame);
+
 		// BUTTONS
-		const singleplayerButton = this.shadowRoot.getElementById("singleplayerButton")
-		const multiplayerButton = this.shadowRoot.getElementById("multiplayerButton")
+		const singleplayerButton = this.shadowRoot.getElementById("singleplayerButton");
+		const multiplayerButton = this.shadowRoot.getElementById("multiplayerButton");
+
+		const resetGame = () => {
+			leftPaddle.score = 0;
+			rightPaddle.score = 0;
+			resetBall();
+			updateScore();
+		};
+
 		singleplayerButton.addEventListener("click", () => {
 			this.isMultiplayer = false;
-			this.render()
-		})
+			resetGame();
+			this.render();
+		});
+
 		multiplayerButton.addEventListener("click", () => {
 			this.isMultiplayer = true;
-			this.render()
-		})
-		function resetGame() {
-            leftPaddle.score = 0;
-            rightPaddle.score = 0;
-            resetBall();
-            updateScore();
-        }
-		multiplayerButton.addEventListener('click', () => {
-            this.isMultiplayer = true;
-            resetGame();	
-        });
+			resetGame();
+			this.render();
+		});
 
-        singleplayerButton.addEventListener('click', () => {
-            this.isMultiplayer = false;
-            resetGame();
-        });
-
-		// CANVAS
-		const canvas = this.shadowRoot.getElementById("gameCanvas")
-		const leftScore = this.shadowRoot.getElementById('leftScore')
-		const rightScore = this.shadowRoot.getElementById('rightScore')
+		// CANVAS and GAME LOGIC
+		const canvas = this.shadowRoot.getElementById("gameCanvas");
+		const leftScore = this.shadowRoot.getElementById('leftScore');
+		const rightScore = this.shadowRoot.getElementById('rightScore');
+		
 		if (canvas.getContext) {
 			const ctx = canvas.getContext('2d');
 			const paddleWidth = 5, paddleHeight = 70;
@@ -98,8 +97,6 @@ class OfflineGame extends HTMLElement {
 				score: 0
 			};
 
-			let isSinglePlayer = false;
-
 			function drawPaddle(paddle) {
 				ctx.fillStyle = 'white';
 				ctx.fillRect(paddle.x, paddle.y, paddleWidth, paddleHeight);
@@ -111,7 +108,7 @@ class OfflineGame extends HTMLElement {
 				ctx.beginPath();
 				ctx.roundRect(ballX, ballY, ballSize, ballSize, 100);
 				ctx.stroke();
-				ctx.fill()
+				ctx.fill();
 			}
 
 			function updateScore() {
@@ -126,7 +123,7 @@ class OfflineGame extends HTMLElement {
 				if (leftPaddle.moveDown && leftPaddle.y < canvas.height - paddleHeight) {
 					leftPaddle.y += leftPaddle.speed;
 				}
-				if (!isSinglePlayer) {
+				if (this.isMultiplayer) {
 					if (rightPaddle.moveUp && rightPaddle.y > 0) {
 						rightPaddle.y -= rightPaddle.speed;
 					}
@@ -134,7 +131,7 @@ class OfflineGame extends HTMLElement {
 						rightPaddle.y += rightPaddle.speed;
 					}
 				} else {
-					// Simple AI for the robot
+					// Simple AI for the bot
 					if (ballY > rightPaddle.y + paddleHeight / 2 && rightPaddle.y < canvas.height - paddleHeight) {
 						rightPaddle.y += rightPaddle.speed;
 					} else if (ballY < rightPaddle.y + paddleHeight / 2 && rightPaddle.y > 0) {
@@ -182,16 +179,15 @@ class OfflineGame extends HTMLElement {
 				drawPaddle(leftPaddle);
 				drawPaddle(rightPaddle);
 				drawBall();
-				movePaddles();
+				movePaddles.call(this);
 				moveBall();
-				this.isMultiplayer = isSinglePlayer;
-				requestAnimationFrame(gameLoop);
+				requestAnimationFrame(gameLoop.bind(this));
 			}
 
 			document.addEventListener('keydown', (e) => {
 				if (e.key === 'w') leftPaddle.moveUp = true;
 				if (e.key === 's') leftPaddle.moveDown = true;
-				if (!isSinglePlayer) {
+				if (this.isMultiplayer) {
 					if (e.key === 'ArrowUp') rightPaddle.moveUp = true;
 					if (e.key === 'ArrowDown') rightPaddle.moveDown = true;
 				}
@@ -200,29 +196,13 @@ class OfflineGame extends HTMLElement {
 			document.addEventListener('keyup', (e) => {
 				if (e.key === 'w') leftPaddle.moveUp = false;
 				if (e.key === 's') leftPaddle.moveDown = false;
-				if (!isSinglePlayer) {
+				if (this.isMultiplayer) {
 					if (e.key === 'ArrowUp') rightPaddle.moveUp = false;
 					if (e.key === 'ArrowDown') rightPaddle.moveDown = false;
 				}
 			});
 
-			multiplayerButton.addEventListener('click', () => {
-				isSinglePlayer = false;
-				resetGame();
-			});
-	
-			singleplayerButton.addEventListener('click', () => {
-				isSinglePlayer = true;
-				resetGame();
-			});
-	
-			function resetGame() {
-				leftPaddle.score = 0;
-				rightPaddle.score = 0;
-				resetBall();
-				updateScore();
-			}
-			gameLoop();
+			gameLoop.call(this);
 		}
 	}
 }
