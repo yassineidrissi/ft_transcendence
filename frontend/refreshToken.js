@@ -37,18 +37,16 @@
 // }
 
 
-async function handleAuthResponse(response, retryFunction, callback_params = null) {
-    try {
+async function handleAuthResponse(response, retryFunction) {
+    try{
         if (response.status === 401) {
             await refresh_token();
-            if (callback_params)
-                return retryFunction(callback_params);
             return retryFunction();
         }
     }
     catch (e) {
         console.error('error');
-        window.location.href = 'https://127.0.0.1/frontend/signin/signin.html';
+        window.location.href = 'https://127.0.0.1/signin';
     }
     return response;
 }
@@ -57,7 +55,7 @@ async function refresh_token() {
         method: 'POST',
         credentials: 'include',
     });
-    console.log('refresh status', response.status);
+    console.log('refresh status',response.status);
     if (response.status === 200) {
         let data = await response.json();
         console.log('refreshed token');

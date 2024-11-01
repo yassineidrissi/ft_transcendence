@@ -25,8 +25,7 @@ class User(AbstractUser):
 
     is_joining = models.BooleanField(default=False)
     nickname = models.CharField(max_length=100, default="")
-    # is_invited = models.BooleanField(default=False)
-    is_invited_from = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True)
+    is_invited = models.BooleanField(default=False)
 
     win_stats = models.IntegerField(default=0)
     loss_stats = models.IntegerField(default=0)

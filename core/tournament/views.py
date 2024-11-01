@@ -68,6 +68,34 @@ def create_room(request, roomName):
     #     'message': 'Invalid request method'
     # })
 
+
+@api_view(['DELETE'])
+@permission_classes([IsAuthenticated])
+def delete_room(request, room_id):
+    if request.method == 'DELETE':
+        if room_id:
+            try:
+                room = Room.objects.get(id=room_id)
+                room.delete()
+                return JsonResponse({
+                    'success': True,
+                    'message': f'Deleted room {room_id}'
+                })
+            except Room.DoesNotExist:
+                return JsonResponse({
+                    'success': False,
+                    'message': 'Room not found'
+                })
+        else:
+            return JsonResponse({
+                'success': False,
+                'message': 'Room ID is required'
+            })
+    return JsonResponse({
+        'success': False,
+        'message': 'Invalid request method'
+    })
+
 # @login_required
 @csrf_exempt
 def join_room(request):

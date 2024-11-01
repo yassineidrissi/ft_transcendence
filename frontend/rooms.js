@@ -14,10 +14,12 @@ let access_token = localStorage.getItem('access_token');
 let roomstate = null;
 let nickname = null;
 
+window.type_game = null;
+
 function init() {
     connectSocket();
     setupEventListeners();
-    getTournaments();
+    checkAuth();
 }
 
 function connectSocket() {
@@ -40,9 +42,9 @@ function connectSocket() {
                     console.log('march_id', data.match_id);
                     game.style.display = 'flex';
                     collecgraph.style.display = 'none';
+                    window.type_game = 'final_match';
                     startGame(data.match_id);
                 }
-                
             }
             else
             {
@@ -181,11 +183,30 @@ async function createRoom(roomName) {
                 console.error(data.message);
         }
     } catch (error) {
-        window.location.href = 'https://127.0.0.1/frontend/signin/signin.html';
+        window.location.href = 'https://127.0.0.1/singin';
     }
 }
 
-async function getTournaments() {
+async function deleteRoom(roomID) {
+    try {
+        let response = await fetch(`http://localhost:8000/api/rooms/delete-room/${roomID}/`, {
+            method: 'DELETE',
+            credentials: 'include',
+            headers: {
+                'Authorization': `Bearer ${access_token}`,
+            }
+        });
+        response = await handleAuthResponse(response, deleteRoom);
+        if (response.ok) {
+            const data = await response.json();
+            console.log(data);
+        }
+    } catch (error) {
+        window.location.href = 'https://127.0.0.1/';
+    }
+}
+
+async function checkAuth() {
     // try {
         let response = await fetch('http://127.0.0.1:8000/api/rooms/rooms-list/', {
             method: 'GET',
@@ -194,7 +215,7 @@ async function getTournaments() {
                 'Authorization': `Bearer ${access_token}`,
             }
         });
-        response = await handleAuthResponse(response, getTournaments);
+        response = await handleAuthResponse(response, checkAuth);
         if (response.ok) {
             const data = await response.json();
             updateRooms(data.rooms);
@@ -280,7 +301,8 @@ export {
     leaveRoom,
     sendSocketMessage,
     createRoom,
-    getTournaments,
+    deleteRoom,
+    checkAuth,
     getMatchs,
     updateMatches,
     fetchMatches,

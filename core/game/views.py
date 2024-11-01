@@ -28,65 +28,133 @@ def startgame(request, match_id):
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
-def startmatch(request, status):
+# def startmatch(request, status):
+#     user = request.user
+#     print('im here', flush=True)
+#     last_match = MatchGame.objects.last()
+#     if last_match is None:
+#         game = MatchGame.objects.create(p1=user)
+#         game.player1 = user
+#         if status == 'invite':
+#             game.is_invite_only = True
+#         game.save()
+#         return JsonResponse({
+#             'success': True,
+#             'message': 'Match started',
+#             'id': game.id,
+#             'player1': game.p1.username,
+#         })
+#     else:
+#         if last_match.p2 is not None:
+#             game = MatchGame.objects.create(p1=user)
+#             game.p1 = user
+#             if status == 'invite':
+#                 game.is_invite_only = True
+#             game.p1.nickname = user.username
+#             game.p1.save()
+#             game.save()
+#             return JsonResponse({
+#                 'success': True,
+#                 'message': 'Match started',
+#                 'id': game.id,
+#                 'player1': game.p1.username,
+#             })
+#         else:
+#             if last_match.is_invite_only and user.is_invited is False:
+#                 game = MatchGame.objects.create(p1=user)
+#                 game.player1 = user
+#                 game.save()
+#                 return JsonResponse({
+#                     'success': True,
+#                     'message': 'Match started',
+#                     'id': game.id,
+#                     'player1': game.p1.username,
+#                 }) 
+#             game = MatchGame.objects.last()
+#             if game.p1 == user:
+#                 return JsonResponse({
+#                     'success': False,
+#                     'message': 'You are already in the match'
+#                 })
+#             game.p2 = user
+#             game.p2.nickname = user.nickname
+#             game.p2.save()
+#             game.save()
+#             return JsonResponse({
+#                 'success': True,
+#                 'message': 'Match started',
+#                 'id': game.id,
+#                 'player1': game.p1.username,
+#                 'player2': game.p2.username,
+#             })
+ 
+@api_view(['DELETE'])
+@permission_classes([IsAuthenticated])
+def delete_match(request, match_id):
     user = request.user
-    print('im here', flush=True)
-    last_match = MatchGame.objects.last()
-    if last_match is None:
-        game = MatchGame.objects.create(p1=user)
-        game.player1 = user
-        if status == 'invite':
-            game.is_invite_only = True
-        game.save()
+    if match_id:
+        try:
+            game = MatchGame.objects.get(id=match_id)
+            if game.p1 == user or game.p2 == user:
+                game.delete()
+                return JsonResponse({
+                    'success': True,
+                    'message': 'Match deleted'
+                })
+            return JsonResponse({
+                'success': False,
+                'message': 'You are not in the match'
+            })
+        except MatchGame.DoesNotExist:
+            return JsonResponse({
+                'success': False,
+                'message': 'Match not found'
+            })
+    return JsonResponse({
+        'success': False,
+        'message': 'Match ID is required'
+    })
+
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def start_match(request, status):
+    user = request.user
+    matches = MatchGame.objects.all()
+    for match in matches:
+        if match.p2 is not None:
+            continue
+        print('match', match, flush=True)
+        if match.p1 == user:
+            return JsonResponse({
+                'success': False,
+                'message': 'You are already in the match'
+            })
+        if match.is_invite_only and user.is_invited_from != match.p1:
+            # return JsonResponse({
+            #     'success': False,
+            #     'message': 'You are not invited'
+            # })
+            continue
+        match.p2 = user
+        match.save()
         return JsonResponse({
             'success': True,
             'message': 'Match started',
-            'id': game.id,
-            'player1': game.p1.username,
+            'id': match.id,
+            'player1': match.p1.username,
+            'player2': match.p2.username,
         })
-    else:
-        if last_match.p2 is not None:
-            game = MatchGame.objects.create(p1=user)
-            game.p1 = user
-            if status == 'invite':
-                game.is_invite_only = True
-            game.p1.nickname = user.username
-            game.p1.save()
-            game.save()
-            return JsonResponse({
-                'success': True,
-                'message': 'Match started',
-                'id': game.id,
-                'player1': game.p1.username,
-            })
-        else:
-            if last_match.is_invite_only and user.is_invited is False:
-                game = MatchGame.objects.create(p1=user)
-                game.player1 = user
-                game.save()
-                return JsonResponse({
-                    'success': True,
-                    'message': 'Match started',
-                    'id': game.id,
-                    'player1': game.p1.username,
-                }) 
-            game = MatchGame.objects.last()
-            game.p2 = user
-            game.p2.nickname = user.nickname
-            game.p2.save()
-            game.save()
-            return JsonResponse({
-                'success': True,
-                'message': 'Match started',
-                'id': game.id,
-                'player1': game.p1.username,
-                'player2': game.p2.username,
-            })
- 
-
-
-
-
-
+    game = MatchGame.objects.create(p1=user)
+    game.p1 = user
+    if status == 'invite':
+        game.is_invite_only = True
+    game.save()
+    return JsonResponse({
+        'success': True,
+        'message': 'Match started',
+        'id': game.id,
+        'player1': game.p1.username,
+    })
 
 
