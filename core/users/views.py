@@ -21,6 +21,8 @@ import pyotp
 import jwt
 from rest_framework.permissions import AllowAny
 
+from notifications.serializers import NotificationSerializer
+
 
 def generetToekn2fa(user):
     payload = {
@@ -98,13 +100,6 @@ def refresh_token(request):
         return Response({'detail': 'Refresh token not found'}, status=status.HTTP_400_BAD_REQUEST)
     try:
         refresh_token_obj = RefreshToken(refresh_token)
-        userId = refresh_token_obj['user_id']
-        try:
-            user = User.objects.get(id=userId)
-        except User.DoesNotExist:
-            return Response({'detail': 'User no longer exists'}, status=status.HTTP_404_NOT_FOUND)
-
-
         new_access_token = refresh_token_obj.access_token
         response = Response({
             'message': 'Token refreshed',
@@ -115,6 +110,7 @@ def refresh_token(request):
 
     except TokenError:
         return Response({'detail': 'Refresh token is invalid or expired!'}, status=status.HTTP_401_UNAUTHORIZED)
+
 
 # 42 api
 @api_view(["GET"])
@@ -284,7 +280,7 @@ def validate2fa(request):
         }
         return response
     return Response({'message': 'Invalid 2fa code'}, status=status.HTTP_400_BAD_REQUEST)
-from notifications.serializers import NotificationSerializer
+
 # *this for friend part
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
@@ -305,19 +301,18 @@ def sendRequestFriend(request):
     to_user = User.objects.get(id=id)
     friend =  FriendRequest.objects.create(from_user=user, to_user=to_user)
     friend.save()
-    notification_data = {
-        "user": to_user.id,
-        "link": "/friends/requests",  # Adjust link to where requests are viewed
-        "content": f"{user.username} sent you a friend request",
-        "is_read": False
-    }
-    notification_serializer = NotificationSerializer(data=notification_data)
-    if notification_serializer.is_valid():
-        notification_serializer.save()
+    # notification_data = {
+    #     "user": to_user.id,
+    #     "link": "/friends/requests",  # Adjust link to where requests are viewed
+    #     "content": f"{user.username} sent you a friend request",
+    #     "is_read": False
+    # }
+    # notification_serializer = NotificationSerializer(data=notification_data)
+    # if notification_serializer.is_valid():
+    #     notification_serializer.save()
 
     # send_notification_to_user(to_user.username, f'{user.username} sent you a friend request')
     return Response({'message': 'Friend request sent successfully'}, status=status.HTTP_200_OK)
-
 
 # ! get friend requests
 @api_view(['GET'])

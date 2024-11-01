@@ -11,6 +11,7 @@ from io import BytesIO
 import os
 from django.conf import settings
 from django.db import models
+from .models import Friend
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -52,11 +53,23 @@ class ProfileSerializer(serializers.ModelSerializer):
         model = User
         fields = ['id', 'username', 'email', 'img_url', 'full_name', 'level' ]
 
+class FriendUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User 
+        fields = ['id', 'username', 'img_url'] 
+
 class UserDataSerializer(serializers.ModelSerializer):
-    # img_url = serializers.SerializerMethodField()
+    friends = serializers.SerializerMethodField()
+
     class Meta:
         model = User
-        fields = ['id', 'state_2fa' , 'first_name', 'last_name','first_name', 'email', 'level', 'img_url', 'full_name', 'username']
+        fields = ['id', 'state_2fa', 'first_name', 'last_name', 'img_url', 'username', 'friends']
+
+    def get_friends(self, obj):
+        friend_instance = Friend.objects.filter(user=obj).first()
+        if friend_instance:
+            return FriendUserSerializer(friend_instance.friends.all(), many=True).data
+        return []
 
     
 class User42Login(serializers.ModelSerializer):
