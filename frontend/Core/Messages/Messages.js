@@ -75,7 +75,7 @@ class Messages extends HTMLElement {
             </div>
         </div>
     `
-	const style = document.createElement('style');
+		const style = document.createElement('style');
 		style.textContent = `
     		@import url('https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css');
 			@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap');
@@ -573,30 +573,30 @@ class Messages extends HTMLElement {
 			
 		`;
 		this.shadowRoot.append(style);
-        this.shadowRoot.append(container);
+		this.shadowRoot.append(container);
 		this.shadowRoot.querySelector(".chat-list div")?.addEventListener('click', function () {
 			this.shadowRoot.querySelector(".chatbox").classList.add('showbox');
 			return false;
 		});
-	
+
 		const emptyChatBox = this.shadowRoot.querySelector(".chatbox-empty")
 		const chatBox = this.shadowRoot.querySelector(".chatbox")
 		const chatBody = this.shadowRoot.querySelector(".msg-body ul")
 		const chatList = this.shadowRoot.querySelector(".chat-list")
 		const chatHeader = this.shadowRoot.querySelector(".msg-head")
-	
+
 		const messageInput = this.shadowRoot.querySelector(".send-box input")
 		const sendButton = this.shadowRoot.querySelector("#message-button")
 		const emojiButton = this.shadowRoot.querySelector('#emoji-button');
 		const emojiPicker = this.shadowRoot.querySelector('#emoji-picker');
-	
+
 		const picker = document.createElement('emoji-picker');
 		emojiPicker.appendChild(picker)
-	
+
 		const chatSockets = {}
 		let target = null
-		
-		
+
+
 		fetchChat()
 			.then(conversations => {
 				console.log(conversations)
@@ -604,10 +604,10 @@ class Messages extends HTMLElement {
 					emptyChatBox.style.display = 'flex'
 					return;
 				}
-				
+
 				conversations.forEach(conversation => {
 					const chatListItem = new ChatListItem()
-					const chatSocket =this.createChatSocket(conversation.target.username, chatListItem)
+					const chatSocket = this.createChatSocket(conversation.target.username, chatListItem)
 					chatSockets[conversation.target.username] = chatSocket
 					chatListItem.config = conversation
 					chatListItem.addEventListener('click', () => {
@@ -643,14 +643,14 @@ class Messages extends HTMLElement {
 			}).catch(error => {
 				console.log(error)
 			})
-	
+
 		messageInput.onkeyup = function (e) {
 			e.preventDefault()
 			if (e.key == 'Enter') {
 				sendButton.click()
 			}
 		}
-	
+
 		sendButton.addEventListener('click', function (e) {
 			const content = messageInput.value
 			if (content) {
@@ -660,11 +660,11 @@ class Messages extends HTMLElement {
 			}
 			messageInput.value = ''
 		})
-	
+
 		emojiButton.addEventListener('click', () => {
 			emojiPicker.classList.toggle('hidden');
 		})
-	
+
 		picker.addEventListener('emoji-click', event => {
 			messageInput.value += event.detail.unicode;
 		});
@@ -674,19 +674,20 @@ class Messages extends HTMLElement {
 			'event': 'seen',
 		}))
 	}
-	
+
 	createChatSocket(target, chatListItem) {
+		const chatBody = this.shadowRoot.querySelector(".msg-body ul")
 		const chatSocket = new WebSocket(
 			'ws://localhost:8000/ws/chat/'
 			+ target
 			+ '/'
+			+ `?token=${localStorage.getItem('access_token')}`
 		)
-	
+
 		chatSocket.onmessage = function (e) {
-			const chatBody = this.shadowRoot.querySelector(".msg-body ul")
 			const data = JSON.parse(e.data)
 			const messageItem = new Message()
-	
+
 			// if (data.sender != user.id) {
 			//     if (chatListItem.chatListItemElement.classList.contains("active-chat")) {
 			//         markMessageAsViewed(chatSocket)
@@ -698,17 +699,17 @@ class Messages extends HTMLElement {
 			messageItem.config = data
 			chatBody.appendChild(messageItem)
 			messageItem.scrollIntoView()
-	
+
 			if (chatBody.firstElementChild == messageItem) {
 				chatBody.nextElementSibling.style.display = 'none'
 			}
 			chatListItem.update(data)
 		}
-	
+
 		chatSocket.onclose = function (e) {
 			console.error('Chat socket closed unexpectedly');
 		}
-	
+
 		return chatSocket
 	}
 }

@@ -15,8 +15,8 @@ class Message extends HTMLElement {
     create() {
         this.messageElement.className = (window.UserData.id == this.message.sender ? 'sender' : 'reply')
         this.messageElement.innerHTML = `
-            <p> ${this.message.content} </p>
-            <span class="time">${this.message.timestamp}</span>
+            <p> ${limitText(this.message.content, this.maxLength)} </p>
+            <span class="time">${normalizeDate(this.message.timestamp)}</span>
         `
         this.messageElement.onclick = this.expand
         this.messageElement.addEventListener('click', () => {
@@ -24,7 +24,7 @@ class Message extends HTMLElement {
                 this.messageElement.firstElementChild.textContent = this.message.content
                 this.expanded = true
             } else {
-                this.messageElement.firstElementChild.textContent = this.message.content
+                this.messageElement.firstElementChild.textContent = limitText(this.message.content, this.maxLength)
                 this.expanded = false
             }
         })

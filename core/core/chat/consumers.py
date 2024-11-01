@@ -16,6 +16,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
         self.room_group_name = None
         self.conversation = None
         self.user = self.scope["user"]
+        print(self.scope["user"])
         if self.user.is_authenticated:
             self.target = await self.get_user(self.scope["url_route"]["kwargs"]["user"])
             if self.target:

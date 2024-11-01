@@ -15,6 +15,7 @@ function createChatSocket(target, chatListItem) {
         'ws://localhost:8000/ws/chat/'
         + target
         + '/'
+        + `?token=${localStorage.getItem('access_token')}`
     )
 
     chatSocket.onmessage = function (e) {

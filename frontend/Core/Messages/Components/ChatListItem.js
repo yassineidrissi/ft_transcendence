@@ -27,15 +27,15 @@ class ChatListItem extends HTMLElement {
         this.chatListItemElement.className = 'd-flex align-items-center'
         this.chatListItemElement.innerHTML = `
             <div class="flex-shrink-0">
-                <img class="user-img" src="${target.imgUrl}"
-                    alt="user img" />
+                <img class="user-img" src="../assets/images/profile.jpg"
+                    alt="user img">
                 <span class="active"></span>
             </div>
             <div class="flex-grow-1 ms-3">
                 <h3>${target.first_name} ${target.last_name}</h3>
                 <p class="single-line-text">
-                    ${message ? message : ``} 
-                    <span class="right-aligned-item">${(timestamp ? timestamp : ``)}</span>
+                    ${limitText(message, this.maxLength)}
+                    <span class="right-aligned-item">${normalizeDate(timestamp)}</span>
                 </p>
             </div>
         `
@@ -57,8 +57,8 @@ class ChatListItem extends HTMLElement {
 
     update(message) {
         const p = this.chatListItemElement.querySelector('p')
-        p.firstChild.textContent = (message.content)
-        p.lastElementChild.textContent = (message.timestamp)
+        p.firstChild.textContent = limitText(message.content, this.maxLength)
+        p.lastElementChild.textContent = normalizeDate(message.timestamp)
         if (message.seen_at) {
             p.classList.add('text-white-50')
         } else {
