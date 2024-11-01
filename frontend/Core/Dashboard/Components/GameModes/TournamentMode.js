@@ -3,10 +3,25 @@ class TournamentMode extends HTMLElement {
     constructor() {
         super();
         this.attachShadow({ mode: 'open' });
+        this.isCreatingTournament = false;
+        this.render()
+    }
+    render()
+    {
+        
         const tournamentMode = document.createElement('div');
         tournamentMode.id = "tournament-mode"
-		tournamentMode.className = "position-relative rounded";
-        tournamentMode.innerHTML = `<div  class="d-flex">
+        tournamentMode.className = "position-relative rounded ";
+        tournamentMode.innerHTML = `
+        ${this.isCreatingTournament ? `<div id="overlay" class=" z-2 position-absolute top-0 bottom-0 start-0 end-0 p-4">
+            <img id="close" src="./Core/Shared/assets/exit.svg" height="44" width="44" class="position-absolute top-0 end-0 cursor-pointer	" ></img>
+            <div class="d-flex flex-column h-100 w-100 align-items-center justify-content-center">
+                <input type="text" id="tournament-name" class="mb-2 border border-2 border-success bg-transparent text-light fw-medium p-2" value="" placeholder="Enter tournament name" />
+                <input type="text" id="nickname" class="mb-2 border border-2 border-success bg-transparent text-light p-2 fw-medium " value="" placeholder="Enter nickname" />
+                <button class=" border border-light fw-semibold fs-6 px-2 py-1 position-absolute bottom-0 end-0">Create</button>
+            </div> 
+        </div>` : ``}
+        <div class="d-flex">
                 <game-mode color="#18be7f" title="Tournament"></game-mode>
                 <div class="d-flex justify-content-between w-100 ms-4 p-2">
                     <p class="text-light fw-bold fs-3">Prove your ping pong prowess in thrilling tournaments!<p>
@@ -52,12 +67,12 @@ class TournamentMode extends HTMLElement {
                         </defs>
                     </svg>
                 </div>
-                <button class="px-4 py-1 border border-light fw-bold fs-5">Start</button>	
+                <button id="start" class="start px-4 py-1 border border-light fw-bold fs-5">Start</button>	
             </div>
             					
         `
 
-		const style = document.createElement('style');
+        const style = document.createElement('style');
         style.textContent = `@import url('https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css');
 		@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap');
         .cursor-pointer{
@@ -67,7 +82,7 @@ class TournamentMode extends HTMLElement {
             background: rgb(2,0,36);
             background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(0,0,0,1) 0%, rgba(1,53,44,1) 50%);
         }
-        button {
+        button.start {
             position: absolute;
             right: 4px;
             bottom: 4px;
@@ -80,8 +95,37 @@ class TournamentMode extends HTMLElement {
             background: transparent;
             color: #fff;
         }
+        
+        #close {
+           background: rgb(2,100,36);
+        }
+        #close:hover {
+				background: none;
+			}
+        input {
+            outline: none !important;
+        }
+        input::placeholder {
+            color: green !important;
+        }
+        #overlay {
+			background: rgba(2, 13, 20, 1);
+		}
         `;
+        this.shadowRoot.innerHTML = ''
         this.shadowRoot.append(style, tournamentMode);
+        this.shadowRoot.getElementById("start").addEventListener("click", () => {
+            this.isCreatingTournament = true;
+            this.render()
+        })
+        const closeBtn = this.shadowRoot.getElementById("close");
+        if (closeBtn)
+        {
+            closeBtn.addEventListener("click", () => {
+                this.isCreatingTournament = false;
+                this.render()
+            })
+        }
     }
 }
 

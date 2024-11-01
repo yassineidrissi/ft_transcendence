@@ -27,7 +27,7 @@ class Scores extends HTMLElement {
 				color: #F1F1F1;
 			}
 			#scores {
-				height: 50%;
+				height: 80%;
 				overflow: auto;
 			}
 		`;

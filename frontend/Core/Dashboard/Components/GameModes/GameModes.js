@@ -3,7 +3,7 @@ class GameModes extends HTMLElement {
         super();
         this.attachShadow({ mode: 'open' });
         const modes = document.createElement('div');
-		modes.className = "  container mb-3 d-flex flex-column ";
+		modes.className = "  container mb-3 d-flex flex-column position-relative";
         modes.innerHTML = `<div id="modes" class="mb-3 ">
                 <game-mode class="mode" color="#CD0024" onclick="navigateTo('cpu-game')" title="CPU" ></game-mode>
                 <game-mode class="mode" color="#B98500" onclick="navigateTo('online-game')" id="online" title="Online"></game-mode>

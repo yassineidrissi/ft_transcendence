@@ -599,6 +599,7 @@ class Messages extends HTMLElement {
 		
 		fetchChat()
 			.then(conversations => {
+				console.log(conversations)
 				if (!conversations?.length) {
 					emptyChatBox.style.display = 'flex'
 					return;

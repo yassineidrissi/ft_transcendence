@@ -2,6 +2,12 @@ class Tournaments extends HTMLElement {
     constructor() {
         super();
         this.attachShadow({ mode: 'open' });
+        this.isJoiningTournament = false;
+        this.selectedTournamentId = null;
+        this.render();
+    }
+    render ()
+    {
         const tournaments = document.createElement('div');
         tournaments.id = "tournaments";
         tournaments.className = "container rounded p-4";
@@ -14,11 +20,11 @@ class Tournaments extends HTMLElement {
 			{ id: 5, name: '5th tournament', isFull: false },
             {id: 6, name: '6th tournament', isFull: true },
 			{ id: 7, name: '7th tournament', isFull: false },
-            // {id: 8, name: '8th tournament', isFull: true },
-			// { id: 9, name: '9th tournament', isFull: false },
-            // {id: 10, name: '10th tournament', isFull: true },
-			// { id: 11, name: '11th tournament', isFull: false },
-            // {id: 12, name: '12th tournament', isFull: true },
+            {id: 8, name: '8th tournament', isFull: true },
+			{ id: 9, name: '9th tournament', isFull: false },
+            {id: 10, name: '10th tournament', isFull: true },
+			{ id: 11, name: '11th tournament', isFull: false },
+            {id: 12, name: '12th tournament', isFull: true },
 			// { id: 13, name: '13th tournament', isFull: false },
             // {id: 14, name: '14th tournament', isFull: true },
         ];
@@ -68,7 +74,7 @@ class Tournaments extends HTMLElement {
 			}
             .table-wrapper {
                 overflow-y: auto;
-                max-height: 400px;
+                max-height: 360px;
 				background: transparent;
             }
             #tournaments {
@@ -88,33 +94,46 @@ class Tournaments extends HTMLElement {
                 min-width: 3rem;
                 max-width: 3rem;
             }
-            #register:hover {
+            #join:hover {
                 background: gray;
                 border-radius: 50px;
             }
 			#close:hover {
 				background: #0dcaf0;
 			}
-			#join {
-				border: 1px solid #0dcaf0;
-				background: transparent;
-				color:#0dcaf0;
-			}
-			#join:hover {
-				background: #0dcaf0;
-				color: #fff;
-			}
+			
         `;
-        
+        this.shadowRoot.innerHTML = ''
         this.shadowRoot.append(style, tournaments);
         this.renderTournaments(tournamentData)
+        this.shadowRoot.querySelectorAll("#join").forEach(btn => {
+            btn.addEventListener("click", (e) => {
+                console.log(e.target.dataset);
+                const tournamentId = e.target.dataset.id;
+                this.selectedTournamentId = tournamentId;
+                this.isJoiningTournament = true;
+                console.log(this.selectedTournamentId);
+                
+                this.render()
+            })
+        })
+        if (this.isJoiningTournament) {
+            const closeButton = this.shadowRoot.querySelector("#close");
+            if (closeButton) {
+                closeButton.addEventListener("click", () => {
+                    this.isJoiningTournament = false;
+                    this.selectedTournamentId = null;
+                    this.render();
+                });
+            }
+        }
     }
 
     renderTournaments(data) {
         const tbody = this.shadowRoot.querySelector('#tournament-rows');
         tbody.innerHTML = data.map(tournament => `
-			<!-- <div id="overlay" class="z-3 position-absolute top-0 start-0 end-0 bottom-0 d-flex justify-content-center align-items-center text-light">
-				<img id="close" src="./Core/Shared/assets/exit.svg" class="position-absolute top-0 end-0 cursor-pointer	" ></img>
+			${this.isJoiningTournament && this.selectedTournamentId !== null ? `<div id="overlay" class="z-2 position-absolute top-0 start-0 end-0 bottom-0 d-flex justify-content-center align-items-center text-light">
+				<img id="close" data-id=${tournament.id} src="./Core/Shared/assets/exit.svg" class="position-absolute top-0 end-0 cursor-pointer	" ></img>
 				<div id="modal" class="d-flex flex-column align-items-center justify-content-center" >
 					<h3 class="mb-3">Enter a nickname</h3>
 					<div>
@@ -122,7 +141,7 @@ class Tournaments extends HTMLElement {
 						<button id="join" class="px-2 ">Join</button>
 					</div>
 				</div>
-			</div> -->
+			</div>` : ``}
             <tr>
                 <td ><span style=" display: inline-block; width:3rem; max-width: 3rem;" class="number me-2 fw-medium">${tournament.id}</span>${tournament.name}</td>
                 <td><img src="./Core/Dashboard/assets/time.svg" ></img> 20 July, 2024 5PM</td>
@@ -135,10 +154,10 @@ class Tournaments extends HTMLElement {
                         <img class="d-inline mb-0 me-2" src="./Core/Dashboard/assets/zap.svg"></img>
                         <span class="mb-0">Playing</span>
                     ` : `
-                        <svg class="me-2 p-1 cursor-pointer" id="register" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-play">
+                        <svg class="me-2 p-1 cursor-pointer" id="join" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-play">
                             <polygon points="5 3 19 12 5 21 5 3"></polygon>
                         </svg>
-                        <span class="mb-0">Register</span>
+                        <span data-id=${tournament.id} class="mb-0">Join</span>
                     `}
                 </td>
             </tr>
