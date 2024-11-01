@@ -1,10 +1,12 @@
 from channels.layers import get_channel_layer
 
 
-async def send_notification_to_user(username, content, link=None):
+async def send_notification_to_user(data):
     channel_layer = get_channel_layer()
-    room_group_name = username
+    if not data.get("username"):
+        return
+    room_group_name = data.get("username")
     await channel_layer.group_send(
         room_group_name,
-        {"type": "send.notification", "content": content, "link": link},
+        {"type": "send.notification", **data},
     )

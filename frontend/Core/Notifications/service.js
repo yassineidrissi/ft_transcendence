@@ -33,16 +33,17 @@ async function fetchNotifications() {
 
 function createNotificationSocket() {
     const Socket = new WebSocket(
-        `ws://localhost:8000/ws/notification/?token=${localStorage.getItem('access_token')}/`
+        `ws://localhost:8000/ws/notification/?token=${localStorage.getItem('access_token')}`
     )
 
     Socket.onmessage = function (e) {
         const data = JSON.parse(e.data)
         console.log({
-            "content": data.content,
-            "link": data.link,
             "is_read": data.is_read,
+            "content": data.content,
             "timestamp": data.timestamp,
+            "fulfill_link": data.fulfill_link,
+            "reject_link": data.reject_link
         })
     }
 
