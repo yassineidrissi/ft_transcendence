@@ -275,6 +275,14 @@ class OnlineGame extends HTMLElement {
 
   gameLoop() {
     if (!this.gameStarted || this.leftPaddle.score >= 5 || this.rightPaddle.score >= 5) {
+      if (this.leftPaddle.score >= 5)
+        this.winner = this.player1.textContent;
+      else if (this.rightPaddle.score >= 5)
+        this.winner = this.player2.textContent;
+      if (this.winner) {
+        this.winnerElement.textContent = this.winner;
+        this.gameSocket.close();
+      }
       return;
     }
     this.movePaddles();

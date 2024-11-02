@@ -15,6 +15,7 @@ class Notification(models.Model):
     )
     content = models.CharField(max_length=255)
     is_read = models.BooleanField(default=False)
+    is_invite = models.BooleanField(default=False)
     timestamp = models.DateTimeField(auto_now_add=True)
     fulfill_link = models.CharField(max_length=255, blank=True, null=True)
     reject_link = models.CharField(max_length=255, blank=True, null=True)

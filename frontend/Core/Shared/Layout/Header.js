@@ -83,9 +83,8 @@ class dashHeader extends HTMLElement {
 				fetchNotifications().then(result => {
 					console.log(result);
 					this.notifications = result;
-					localStorage.setItem("id_sender", result.sender);
 					this.render()
-					this.addNotificationListeners(result[0].sender);
+					// this.addNotificationListeners();
 				})
 				
 			})
