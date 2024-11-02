@@ -10,8 +10,7 @@ async function check_auth() {
     });
 
     response = await handleAuthResponse(response, check_auth);
-
-    if (response.ok) {
+    if (response && response.ok) {
         let data = await response.json();
         console.log('User data:', data);
         window.UserData = data;
@@ -23,7 +22,9 @@ async function check_auth() {
 async function handleAuthResponse(response, retryFunction, params = null) {
     try {
         if (response.status === 401) {
-            await refresh_token()
+            await refresh_token().catch(error => {
+                throw new Error("Refresh token error")
+            })
             if (params)
                 response = await retryFunction(params)
             response = await retryFunction();
@@ -31,8 +32,9 @@ async function handleAuthResponse(response, retryFunction, params = null) {
     } catch (e) {
         localStorage.removeItem('access_token');
         localStorage.removeItem('isUserSignedIn');
-        console.error('Error during token refresh:', e);
+        // console.error('Error during token refresh:', e);
         urlRoute('signin');
+        // return response
     }
     return response;
 }
@@ -42,14 +44,11 @@ async function refresh_token() {
         method: 'POST',
         credentials: 'include',
     });
-    console.log('Refresh token status:', response.status);
-
     if (response.status === 200) {
         let data = await response.json();
         console.log('Token refreshed successfully');
         localStorage.setItem('access_token', data.access_token);
     } else {
-        console.log('Failed to refresh token');
         throw new Error('Failed to refresh token');
     }
 }

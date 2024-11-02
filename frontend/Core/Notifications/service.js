@@ -21,9 +21,8 @@ async function fetchNotifications() {
             headers: { 'Authorization': `Bearer ${localStorage.getItem('access_token')}` },
             credentials: 'include'
         })
-    // response = handleAuthResponse(response, fetchNotifications);
 
-
+    response = handleAuthResponse(response, fetchNotifications);
     if (!response.ok) {
         throw new Error('Failed to feach on notifications')
     }
@@ -59,7 +58,21 @@ async function sendNotification(data) {
             body: data
         })
 
-    response = handleAuthResponse(response, fetchNotifications);
+    response = handleAuthResponse(response, sendNotification, data);
+
+    if (!response.ok) {
+        throw new Error('Failed to feach on notifications')
+    }
+    return response.json()
+}
+
+async function deleteNotification(id) {
+    let response = await fetch(`http://localhost:8000/api/notification/?token=${localStorage.getItem('access_token')}`,
+        {
+            method: 'DELETE',
+            credentials: 'include'
+        })
+    response = handleAuthResponse(response, deleteNotification, id);
 
     if (!response.ok) {
         throw new Error('Failed to feach on notifications')
