@@ -20,13 +20,10 @@ class JWTAuthMiddleware:
         self.app = app
 
     async def __call__(self, scope, receive, send):
-        """Authenticate the user based on jwt."""
         close_old_connections()
         try:
-            # Decode the query string and get token parameter from it.
             token = parse_qs(scope["query_string"].decode("utf8")).get('token', None)[0]
             
-            # Decode the token to get the user id from it.
             data = jwt_decode(token, settings.SECRET_KEY, algorithms=["HS256"])
             
             scope['user'] = await self.get_user(data['user_id'])

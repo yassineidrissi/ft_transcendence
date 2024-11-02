@@ -271,6 +271,7 @@ def updateUser(request):
         data = UserUpdateSerializer(user).data
         return Response({'message': 'User updated successfully','data':data}, status=status.HTTP_200_OK)
     print('errors::',serializer.errors)
+    
     return Response({'message': 'User not updated'}, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['POST'])
@@ -290,6 +291,7 @@ def validate2fa(request):
             value=token['refresh'],
             httponly=True,
             secure=True,
+            samesite='none',
         )
         response.data = {
             'message': 'success',

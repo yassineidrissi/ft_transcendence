@@ -158,7 +158,9 @@ class UserUpdateSerializer(serializers.ModelSerializer):
             qr_image.save(qr_io, format='PNG')
             qr_io.seek(0)
             instance.img_qr.save(f'{instance.email}_qr.png', qr_io)
-            print(instance.img_qr)
+            print('instance.otp_secret',instance.otp_secret)
+            print('instance.totp',instance.totp)
+            print('uri:', uri)
         else:
             if instance.img_qr:
                 instance.img_qr.delete()
