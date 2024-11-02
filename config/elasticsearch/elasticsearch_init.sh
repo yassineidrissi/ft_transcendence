@@ -47,39 +47,99 @@ until curl -s --cacert config/certs/ca/ca.crt https://elasticsearch:9200 | grep 
 echo "Setting kibana user password";
 until curl -s -X POST --cacert config/certs/ca/ca.crt -u "${ELASTIC_USER}:${ELASTIC_PASSWORD}" -H "Content-Type: application/json" https://elasticsearch:9200/_security/user/${KIBANA_USER}/_password -d "{\"password\":\"${KIBANA_PASSWORD}\"}" | grep -q "^{}"; do sleep 10; done;
 
+# # Apply ILM policy
+# echo "Applying ILM policy"
+# curl --cacert certs/ca/ca.crt -k -u elastic:${ELASTIC_PASSWORD} -X PUT 'https://elasticsearch:9200/_ilm/policy/logs_lifecycle_policy?pretty' -H 'Content-Type: application/json' -d '{
+#   "policy": {
+#     "phases": {
+#       "hot": {
+#         "min_age": "0ms",
+#         "actions": {
+#           "rollover": {
+#             "max_age": "3d",
+#             "max_primary_shard_size": "5gb"
+#           }
+#         }
+#       },
+#       "warm": {
+#         "min_age": "0ms",
+#         "actions": {
+#           "forcemerge": {
+#             "max_num_segments": 1
+#           }
+#         }
+#       },
+#       "delete": {
+#         "min_age": "3d",
+#         "actions": {
+#           "delete": {}
+#         }
+#       }
+#   },
+# }'
+
+# # Apply Index Template
+# echo "Applying Index Template"
+# curl --cacert certs/ca/ca.crt -k -u elastic:${ELASTIC_PASSWORD} -X PUT 'https://elasticsearch:9200/_index_template/logs_template?pretty' -H 'Content-Type: application/json' -d '{
+#   "index_patterns": ["django-logs-*", "nginx-logs-*", "postgres-logs-*"],
+#   "template": {
+#     "settings": {
+#       "index.lifecycle.name": "logs_lifecycle_policy",
+#       "index.lifecycle.rollover_alias": "logs"
+#     }
+#   }
+# }'
+
 # Apply ILM policy
-curl --cacert config/certs/ca/ca.crt -k -u ${ELASTIC_USER}:${ELASTIC_PASSWORD} -X PUT "https://elasticsearch:9200/_ilm/policy/logs_lifecycle_policy" -H 'Content-Type: application/json' -d'{
-    "policy": {
-        "phases": {
-            "hot": {
-                "actions": {
-                    "rollover": {
-                        "max_size": "5GB",
-                        "max_age": "7d"
-                    }
-                }
-            },
-            "delete": {
-                "max_age": "30d",
-                "actions": {
-                    "delete": {}
-                }
-            }
+echo "Applying ILM policy"
+curl --cacert certs/ca/ca.crt -k -u ${ELASTIC_USER}:${ELASTIC_PASSWORD} -X PUT 'https://elasticsearch:9200/_ilm/policy/logs_lifecycle_policy?pretty' -H 'Content-Type: application/json' -d '{
+  "policy": {
+    "phases": {
+      "hot": {
+        "min_age": "0ms",
+        "actions": {
+          "rollover": {
+            "max_age": "3d",
+            "max_primary_shard_size": "5gb"
+          }
         }
+      },
+      "warm": {
+        "min_age": "3d",
+        "actions": {
+          "forcemerge": {
+            "max_num_segments": 1
+          }
+        }
+      },
+      "delete": {
+        "min_age": "30d",
+        "actions": {
+          "delete": {}
+        }
+      }
     }
+  }
 }'
 
-# Apply index template
-curl --cacert config/certs/ca/ca.crt -k -u ${ELASTIC_USER}:${ELASTIC_PASSWORD} -X PUT "https://elasticsearch:9200/_index_template/logs_template" -H 'Content-Type: application/json' -d'{
-  "index_patterns": ["nginx-logs-*", "django-logs-*", "postgres-logs-*"],
-    "template": {
-        "settings": {
-            "number_of_shards": 1,
-            "number_of_replicas": 1,
-            "index.lifecycle.name": "logs_lifecycle_policy",
-            "index.lifecycle.rollover_alias": "logs"
+# Apply Index Template
+echo "Applying Index Template"
+curl --cacert certs/ca/ca.crt -k -u ${ELASTIC_USER}:${ELASTIC_PASSWORD} -X PUT 'https://elasticsearch:9200/_index_template/logs_template?pretty' -H 'Content-Type: application/json' -d '{
+  "index_patterns": ["django-logs-*", "nginx-logs-*", "postgres-logs-*"],
+  "template": {
+    "settings": {
+      "index.lifecycle.name": "logs_lifecycle_policy",
+      "index.lifecycle.rollover_alias": "logs"
+    },
+    "mappings": {
+      "properties": {
+        "@timestamp": {
+          "type": "date"
         }
+      }
     }
+  }
 }'
+
 
 echo "All done!";

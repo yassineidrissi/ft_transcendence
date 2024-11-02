@@ -14,6 +14,7 @@ async function check_auth() {
         let data = await response.json();
         console.log('User data:', data);
         userStateOnline(data.id);
+        localStorage.setItem("isUserSignedIn", true)
         window.UserData = data;
     } else if (!access_token) {
         urlRoute('signin');
@@ -59,20 +60,20 @@ async function refresh_token() {
 //     await check_auth();
 // })();
 
-async function userStateOnline(id){
-    console.log('id::',id);
+async function userStateOnline(id) {
+    console.log('id::', id);
     access_token = localStorage.getItem('access_token');
     let wsProtocol = window.location.protocol === "https:" ? "wss://" : "ws://";
-    let url = `ws://127.0.0.1:8000/ws/socket-server/?token=${access_token}`;  
+    let url = `ws://127.0.0.1:8000/ws/socket-server/?token=${access_token}`;
     socket = new WebSocket(url);
     console.log(socket);
-    socket.onmessage = function(event){
+    socket.onmessage = function (event) {
         let data = JSON.parse(event.data);
         console.log(data);
     }
 }
 
-async function getFriendOnline(){
+async function getFriendOnline() {
     let access_token = localStorage.getItem('access_token');
     let response = await fetch('http://127.0.0.1:8000/api/getFriendsOnline/', {
 
