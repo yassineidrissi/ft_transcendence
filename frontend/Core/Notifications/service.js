@@ -21,7 +21,7 @@ async function fetchNotifications() {
             headers: { 'Authorization': `Bearer ${localStorage.getItem('access_token')}` },
             credentials: 'include'
         })
-		console.log(response.status);
+    console.log(response.status);
     // response = handleAuthResponse(response, fetchNotifications);
 
 
@@ -31,6 +31,42 @@ async function fetchNotifications() {
     return response.json()
 }
 
+async function sendNotification(data) {
+    // {
+    //     "user": "received_user_id",
+    //     "sender": "sender_user_id",
+    //     "content": "content",
+    //     "fulfill_link": "sucess url action",
+    //     "reject_url": "reject url action"
+    //     "is_invite": "false || true {default = false}"
+    // }
+
+    // data = JSON.stringify({
+    //     "user": 2,
+    //     "sender": 1,
+    //     "content": "Heyllo",
+    //     "fulfill_link": "http:gole",
+    //     "is_invite": true
+
+    // })
+    let response = await fetch('http://localhost:8000/api/notification/add/',
+        {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json",
+                'Authorization': `Bearer ${localStorage.getItem('access_token')}`
+            },
+            credentials: 'include',
+            body: data
+        })
+
+    // response = handleAuthResponse(response, fetchNotifications);
+
+    if (!response.ok) {
+        throw new Error('Failed to feach on notifications')
+    }
+    return response.json()
+}
 // function createNotificationSocket() {
 //     const Socket = new WebSocket(
 //         `ws://localhost:8000/ws/notification/?token=${localStorage.getItem('access_token')}`

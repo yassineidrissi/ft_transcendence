@@ -27,8 +27,8 @@ def delete_notifications(request):
 @api_view(["POST"])
 @permission_classes([IsAuthenticated])
 def add_notification(request):
-    user = request.user
-    request.data.update({"user": user.id})
+    # user = request.user
+    # request.data.update({"user": user.id})
     serialized = NotificationSerializer(data=request.data)
     if serialized.is_valid():
         serialized.save()
