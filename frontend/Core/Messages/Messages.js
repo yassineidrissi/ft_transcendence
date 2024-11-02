@@ -82,6 +82,12 @@ class Messages extends HTMLElement {
 			h1 {
 				font-family: "Orbitron", sans-serif;
 			}
+
+			.main-content {
+				display: block;
+				height: 100%;
+			}
+			
 			.cursor-pointer
 			{
 				cursor: pointer;
@@ -163,7 +169,6 @@ class Messages extends HTMLElement {
 				overflow: hidden;
 				height: 100%;
 				border-right: 1px solid var(--divider-color);
-				opacity: 1;
 				display: none;
 			}
 			
@@ -569,9 +574,8 @@ class Messages extends HTMLElement {
 				margin-right: 3px;
 				margin-top: 6px;
 			}
-			
-			
 		`;
+		
 		this.shadowRoot.append(style);
 		this.shadowRoot.append(container);
 		this.shadowRoot.querySelector(".chat-list div")?.addEventListener('click', function () {

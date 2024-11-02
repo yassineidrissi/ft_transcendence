@@ -1,5 +1,68 @@
 // Game state and constants
 
+
+class OnlineGame extends HTMLElement {
+    constructor() {
+        super();
+        this.attachShadow({ mode: 'open' });
+        this.isMultiplayer = true;
+        this.render();
+    }
+
+    render() {
+        const onlineGame = document.createElement("div");
+        onlineGame.className = "container text-light position-relative";
+        onlineGame.id = "online-game";
+        onlineGame.innerHTML = `
+        <div class="w-100 d-flex justify-content-between align-items-center my-4 text-light">
+            <span id="player1" class="bg-success p-2 px-4 rounded fs-5">Player 1</span>
+            <div id="scoreBoard" class="fs-3">
+                <span id="leftScore" class="fw-sem px-2">0</span> - <span id="rightScore" class="fw-sem px-2">0</span>
+            </div>
+            <span id="player2" class="bg-info p-2 px-4 rounded fs-5">Player 2</span>
+        </div>
+        <div id="trophy" class="trophy-container hidden">
+            <div class="trophy">
+                🏆
+            </div>
+            <div class="winner-text">Congratulations!</div>
+        </div>
+        <canvas id="gameCanvas" height="400" width="800" class="w-100 h-100 border"></canvas>`;
+
+        this.shadowRoot.appendChild(onlineGame);
+        this.addGameLogic();
+    }
+
+    addGameLogic() {
+        const leftScore = this.shadowRoot.getElementById("leftScore");
+        const rightScore = this.shadowRoot.getElementById("rightScore");
+        const trophy = this.shadowRoot.getElementById("trophy");
+        const winnerText = this.shadowRoot.querySelector(".winner-text");
+
+        let leftScoreValue = 0;
+        let rightScoreValue = 0;
+
+        const checkWinner = () => {
+            if (leftScoreValue >= 10 || rightScoreValue >= 10) {
+                trophy.classList.remove("hidden");
+                winnerText.textContent = leftScoreValue >= 10 ? "Player 1 Wins!" : "Player 2 Wins!";
+            }
+        };
+
+        // Dummy example of scoring logic
+        this.shadowRoot.getElementById("gameCanvas").addEventListener("click", () => {
+            leftScoreValue += Math.floor(Math.random() * 2);
+            rightScoreValue += Math.floor(Math.random() * 2);
+            leftScore.textContent = leftScoreValue;
+            rightScore.textContent = rightScoreValue;
+            checkWinner();
+        });
+    }
+}
+
+customElements.define('online-game', OnlineGame);
+
+
 const CANVAS_WIDTH = 800;
 const CANVAS_HEIGHT = 400;
 const PADDLE_WIDTH = 10;

@@ -43,7 +43,6 @@ class ChatHeader extends HTMLElement {
                 </ul>
             </div>
         `
-
         const deleteButton = this.chatHeader.querySelector("#delete-chat-btn")
         deleteButton.addEventListener('click', async () => {
             await deleteChat(this.conversation);
