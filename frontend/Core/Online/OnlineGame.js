@@ -175,6 +175,15 @@ class OnlineGame extends HTMLElement {
       
       this.drawGame();
     };
+
+	// this.gameSocket.onclose = (event) =>
+	// {
+	// 	console.log(event);
+	// 	setTimeout(() => {
+	// 		if (!this.gameStarted)
+	// 			navigateTo("/")
+	// 	}, 3000)
+	// }
   }
 
   handleGameState(gameState) {

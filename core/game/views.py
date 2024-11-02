@@ -128,6 +128,8 @@ def start_match(request, status):
         if match.p1 == user:
             return JsonResponse({
                 'success': False,
+				'id': match.id,
+				'player1': match.p1.username,
                 'message': 'You are already in the match'
             })
         if match.is_invite_only and user.is_invited_from != match.p1:
