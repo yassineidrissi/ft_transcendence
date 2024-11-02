@@ -15,14 +15,14 @@ async function eraseNotifications() {
 }
 
 async function fetchNotifications() {
-    const response = await fetch('http://localhost:8000/api/notification/',
+    let response = await fetch('http://localhost:8000/api/notification/',
         {
             method: 'GET',
             headers: { 'Authorization': `Bearer ${localStorage.getItem('access_token')}` },
             credentials: 'include'
         })
-
-    response = handleAuthResponse(response, fetchNotifications);
+		console.log(response.status);
+    // response = handleAuthResponse(response, fetchNotifications);
 
 
     if (!response.ok) {

@@ -27,7 +27,7 @@ urlpatterns = [
     path('sendRequestFriend/', views.sendRequestFriend),
     path('getFriendRequests/', views.getFriendRequests),
 
-    path('acceptFriendRequest/', views.acceptFriendRequest),
+    path('acceptFriendRequest/<int:sender>/', views.acceptFriendRequest),
     path('rejectFriendRequest/', views.rejectFriendRequest),
     path('unfriend/', views.unfriend),
 

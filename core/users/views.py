@@ -347,9 +347,9 @@ def get_or_create_friend_list(user):
     return user_friend_list
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
-def acceptFriendRequest(request):
+def acceptFriendRequest(request, sender):
     user = request.user
-    id = request.data.get('id')
+    id = sender
     print('id::',id)
     if id is None:
         return Response({'message': 'User ID is required'}, status=status.HTTP_400_BAD_REQUEST)
