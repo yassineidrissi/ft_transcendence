@@ -34,4 +34,5 @@ class MatchSerializer(serializers.ModelSerializer):
             "id": player.id,
             "username": player.username,
             "score": score,
+            "image_url": player.img_url,
         }
