@@ -8,9 +8,9 @@ async function check_auth() {
             'Authorization': `Bearer ${access_token}`,
         }
     });
-    
+
     response = await handleAuthResponse(response, check_auth);
-    
+
     if (response.ok) {
         let data = await response.json();
         console.log('User data:', data);
@@ -20,11 +20,13 @@ async function check_auth() {
     }
 }
 
-async function handleAuthResponse(response, retryFunction) {
+async function handleAuthResponse(response, retryFunction, params = null) {
     try {
         if (response.status === 401) {
-            await refresh_token();
-            return await retryFunction(); // Ensure retryFunction is awaited
+            await refresh_token()
+            if (params)
+                response = await retryFunction(params)
+            response = await retryFunction();
         }
     } catch (e) {
         localStorage.removeItem('access_token');
@@ -41,7 +43,7 @@ async function refresh_token() {
         credentials: 'include',
     });
     console.log('Refresh token status:', response.status);
-    
+
     if (response.status === 200) {
         let data = await response.json();
         console.log('Token refreshed successfully');

@@ -21,7 +21,6 @@ async function fetchNotifications() {
             headers: { 'Authorization': `Bearer ${localStorage.getItem('access_token')}` },
             credentials: 'include'
         })
-    console.log(response.status);
     // response = handleAuthResponse(response, fetchNotifications);
 
 
@@ -60,30 +59,10 @@ async function sendNotification(data) {
             body: data
         })
 
-    // response = handleAuthResponse(response, fetchNotifications);
+    response = handleAuthResponse(response, fetchNotifications);
 
     if (!response.ok) {
         throw new Error('Failed to feach on notifications')
     }
     return response.json()
 }
-// function createNotificationSocket() {
-//     const Socket = new WebSocket(
-//         `ws://localhost:8000/ws/notification/?token=${localStorage.getItem('access_token')}`
-//     )
-
-//     Socket.onmessage = function (e) {
-//         const data = JSON.parse(e.data)
-//         console.log({
-//             "is_read": data.is_read,
-//             "content": data.content,
-//             "timestamp": data.timestamp,
-//             "fulfill_link": data.fulfill_link,
-//             "reject_link": data.reject_link
-//         })
-//     }
-
-//     Socket.onclose = function (e) {
-//         console.error('Chat socket closed unexpectedly');
-//     }
-// }
