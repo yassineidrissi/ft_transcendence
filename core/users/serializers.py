@@ -71,7 +71,10 @@ class UserDataSerializer(serializers.ModelSerializer):
             return FriendUserSerializer(friend_instance.friends.all(), many=True).data
         return []
 
-    
+class FriendOnlineSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['id', 'username', 'img_url', 'is_online']
 class User42Login(serializers.ModelSerializer):
     class Meta:
         model = User  # Make sure User model has the fields 'email', etc.
@@ -172,10 +175,10 @@ class UserUpdateSerializer(serializers.ModelSerializer):
         return data
     
 
-class FriendUserSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        fields = ['id', 'username', 'img_url']
+# class FriendUserSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = User
+#         fields = ['id', 'username', 'img_url']
 # for jwt:
 
 

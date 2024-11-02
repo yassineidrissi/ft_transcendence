@@ -82,10 +82,11 @@ async function LogOut(){
     console.log(result);
     if(response.ok)
     {
+        console.log('socket closedddddddddd',);
+        socket.close();
         localStorage.removeItem('access_token');
         localStorage.removeItem('isUserSignedIn');
         window.UserData = {};
         navigateTo('/signin');
     }
-
 }

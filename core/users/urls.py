@@ -10,7 +10,7 @@ urlpatterns = [
     path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('refresh/', views.refresh_token, name='refresh_token'),
-
+    
     path('register/', views.register),
     path('login/', views.loginView),
     path('logout/', views.logoutView),
@@ -30,6 +30,8 @@ urlpatterns = [
     path('acceptFriendRequest/<int:sender>/', views.acceptFriendRequest),
     path('rejectFriendRequest/', views.rejectFriendRequest),
     path('unfriend/', views.unfriend),
+
+    path('getFriendsOnline/', views.getFriendsOnline),
 
     path('blockFriend/', views.blockFriend),
     # !this need to test bc i dont know how to use it like this localhost:8000/api/Profile/admin/

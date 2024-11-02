@@ -29,10 +29,8 @@ class JWTAuthMiddleware:
             # Decode the token to get the user id from it.
             data = jwt_decode(token, settings.SECRET_KEY, algorithms=["HS256"])
             
-            # Get the user from database based on user id and add it to the scope.
             scope['user'] = await self.get_user(data['user_id'])
         except (TypeError, KeyError, InvalidSignatureError, ExpiredSignatureError, DecodeError):
-            # Set the user to Anonymous if token is not valid or expired.
             scope['user'] = AnonymousUser()
         return await self.app(scope, receive, send)
 

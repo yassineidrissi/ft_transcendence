@@ -47,22 +47,15 @@ from django.contrib.auth import get_user_model
 User = get_user_model()
 class UserOnline(WebsocketConsumer):
     def connect(self):
-        query_params = self.scope['query_string'].decode()
-        params = dict(param.split('=') for param in query_params.split('&'))
-        user_id = params.get('id')
-        
-        try:
-            self.user = User.objects.get(id=user_id)
-            self.timer = None
-            if self.user.is_authenticated:
-                async_to_sync(self.update_user_status)(1)
-                self.accept()
-                print('connected', self.user)
-                self.send(text_data=json.dumps({
-                    'message': 'connected'
-                }))
-        except User.DoesNotExist:
-            self.close()
+        self.user = self.scope['user']
+        print(self.user)
+        if self.user.is_authenticated:
+            async_to_sync(self.update_user_status)(1)
+            self.accept()
+            print('connected', self.user)
+            self.send(text_data=json.dumps({
+                'message': 'connected'
+            }))
 
     def disconnect(self, close_code):
         if self.user.is_authenticated:
@@ -75,3 +68,35 @@ class UserOnline(WebsocketConsumer):
             self.user.is_online = 0
         print('update_user_status', self.user.is_online)
         self.user.save()
+
+# from channels.generic.websocket import WebsocketConsumer
+# from asgiref.sync import async_to_sync
+# from channels.db import database_sync_to_async
+# from django.contrib.auth.models import AnonymousUser
+# import json
+
+# class UserOnline(WebsocketConsumer):
+#     def connect(self):
+#         # Access the user directly from the scope
+#         self.user = self.scope['user']
+        
+#         if self.user.is_authenticated:
+#             async_to_sync(self.update_user_status)(1)
+#             self.accept()
+#             print(f"Connected user: {self.user}")
+#             self.send(text_data=json.dumps({'message': 'connected'}))
+#         else:
+#             # Close the connection if the user is not authenticated
+#             self.close()
+
+#     def disconnect(self, close_code):
+#         # Only update status if the user was authenticated
+#         if self.user.is_authenticated:
+#             async_to_sync(self.update_user_status)(-1)
+
+#     @database_sync_to_async
+#     def update_user_status(self, delta):
+#         # Ensure is_online does not go below zero
+#         self.user.is_online = max(0, self.user.is_online + delta)
+#         print(f"User status updated: {self.user.is_online}")
+#         self.user.save()

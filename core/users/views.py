@@ -3,7 +3,7 @@ from django.http import JsonResponse,HttpResponse,HttpResponseRedirect
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import api_view,authentication_classes, permission_classes
-from .serializers import UserSerializer,LoginUserSerializer,User42Login,UserDataSerializer,UserUpdateSerializer
+from .serializers import UserSerializer,LoginUserSerializer,User42Login,UserDataSerializer,UserUpdateSerializer,FriendOnlineSerializer
 from .models import User,Friend,FriendRequest,BlockFriend
 from .tests import save_user42
 from django.conf import settings
@@ -23,6 +23,15 @@ from rest_framework.permissions import AllowAny
 
 from notifications.serializers import NotificationSerializer
 
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def getFriendsOnline(request):
+    user = request.user
+    friends = Friend.objects.get(user=user).friends.all()
+    online_friends = friends.filter(is_online__gt=0)
+    serialized_friends = FriendOnlineSerializer(online_friends, many=True)
+    return Response({'results': serialized_friends.data}, status=status.HTTP_200_OK)
 
 def generetToekn2fa(user):
     payload = {

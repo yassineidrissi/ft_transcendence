@@ -1,3 +1,4 @@
+let socket = null;
 check_auth();
 
 const app = document.getElementById("app");
@@ -62,6 +63,7 @@ const urlRoutes = {
 
 if (!JSON.parse(localStorage.getItem("isUserSignedIn")))
 	localStorage.setItem("isUserSignedIn", JSON.stringify(false));
+	  
 
 
 const handleLayout = async (route) => {
