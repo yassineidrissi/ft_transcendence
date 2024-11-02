@@ -81,7 +81,7 @@ class dashHeader extends HTMLElement {
 					this.leftOffset = dimensions.left;
 				}
 				fetchNotifications().then(result => {
-					console.log(result);
+					//console.log(result);
 					this.notifications = result;
 					this.render()
 					// this.addNotificationListeners();
@@ -100,13 +100,13 @@ class dashHeader extends HTMLElement {
         			headers: {
             			'Authorization': `Bearer ${this.access_token}`,
         			}});
-				console.log(response);
+				//console.log(response);
 			});
 		});
 		const rejectBtns = this.shadowRoot.querySelectorAll("#reject-friend");
 		rejectBtns.forEach(btn => {
 			btn.addEventListener("click", () => {
-				console.log("Reject button clicked");
+				//console.log("Reject button clicked");
 			});
 		});
 	}

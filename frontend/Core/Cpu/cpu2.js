@@ -22,13 +22,13 @@ class CpuGame extends HTMLElement {
 
 		this.shadowRoot.append(style);
 		this.shadowRoot.append(cpuGame);
-		console.log("hello");
+		//console.log("hello");
 		const canvas = this.shadowRoot.getElementById("gameCanvas")
 		const leftScore = this.shadowRoot.getElementById('leftScore')
 		const rightScore = this.shadowRoot.getElementById('rightScore')
 		if (canvas.getContext) {
 			const ctx = canvas.getContext('2d');
-			console.log(ctx);
+			//console.log(ctx);
 			const paddleWidth = 5, paddleHeight = 70;
 			const ballSize = 7;
 			let ballX = canvas.width / 2, ballY = canvas.height / 2;

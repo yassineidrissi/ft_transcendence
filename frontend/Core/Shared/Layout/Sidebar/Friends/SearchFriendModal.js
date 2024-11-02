@@ -55,7 +55,7 @@ class SearchFriendModal extends HTMLElement {
 
         });
 		this.shadowRoot.querySelector('#submit-search').addEventListener("click", (event) => {
-			SeachUser(this.inputValue).then(result => {this.result = result.results; console.log(this.result); this.render();})
+			SeachUser(this.inputValue).then(result => {this.result = result.results; //console.log(this.result); this.render();})
         });
 		inputField.focus();
 		const valueLength = inputField.value.length;
@@ -69,7 +69,7 @@ class SearchFriendModal extends HTMLElement {
 	handleChange(value)
 	{
 		this.inputValue = value;
-		console.log(this.inputValue);
+		//console.log(this.inputValue);
 	}
 }
 

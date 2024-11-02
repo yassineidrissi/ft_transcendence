@@ -1,5 +1,5 @@
 async function DeleteAccount(){
-    console.log("delete account");
+    //console.log("delete account");
     let access_token = localStorage.getItem('access_token');
     let response = await fetch('http://127.0.0.1:8000/api/deletUser/',{
         method: 'DELETE',
@@ -19,7 +19,7 @@ async function DeleteAccount(){
     }
     else
     {
-        console.log(`ERROR :${result}`);
+        //console.log(`ERROR :${result}`);
     }
 }
 
@@ -29,7 +29,7 @@ async function UpdateUsername(){
     
 
     const formData = new FormData();
-    console.log(username.value);
+    //console.log(username.value);
     formData.append('username', username.value);
     let response = await fetch('http://127.0.0.1:8000/api/updateUser/', {
         method: 'PATCH',
@@ -41,7 +41,7 @@ async function UpdateUsername(){
     });
     response = await handleAuthResponse(response, UpdateUsername);
     let result = await response.json();
-    console.log(result);
+    //console.log(result);
     if(response.ok){
         window.UserData = result['data'];
     }
@@ -62,7 +62,7 @@ async function UpdatePassword(){
     });
     response = await handleAuthResponse(response, UpdateUsername);
     let result = await response.json();
-    console.log(result);
+    //console.log(result);
     if(response.ok)
     {
         window.UserData = result['data'];
@@ -86,7 +86,7 @@ async function UpdateImg() {
     });
     response = await handleAuthResponse(response, UpdateImg);
     let result = await response.json();
-    console.log(result);
+    //console.log(result);
     if(response.ok)
     {
         window.UserData = result['data'];
@@ -94,7 +94,7 @@ async function UpdateImg() {
 }
 
 async function Update2fa(state) {
-    console.log("2fa", state);
+    //console.log("2fa", state);
     let access_token = localStorage.getItem('access_token');
     const formData = new FormData();
     formData.append('state_2fa', state);
@@ -108,7 +108,7 @@ async function Update2fa(state) {
     });
     response = await handleAuthResponse(response, Update2fa);
     let result = await response.json();
-    console.log(result);
+    //console.log(result);
     if(response.ok)
     {
         window.UserData = result['data'];
@@ -116,7 +116,7 @@ async function Update2fa(state) {
 }
 
 async function SeachUser(value) {
-    console.log("search user", value);
+    //console.log("search user", value);
     if (value.trim() == "")
         return;
     let response = await fetch(`http://127.0.0.1:8000/api/searchUsers/?q=${value.trim()}`, {
@@ -128,6 +128,6 @@ async function SeachUser(value) {
     });
     response = await handleAuthResponse(response, SeachUser);
     let result = await response.json();
-    // console.log(result);
+    // //console.log(result);
     return result
 }

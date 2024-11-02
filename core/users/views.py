@@ -97,6 +97,7 @@ def loginView(request):
 def checkAuth(request):
     print('cookies',request.COOKIES)
     user = request.user
+    print('user::',user)
     serializer = UserSerializer(user, context={'request': request})
     return Response(UserDataSerializer(user).data)
 
@@ -112,7 +113,9 @@ def refresh_token(request):
         userId = refresh_token_obj['user_id']
         try:
             user = User.objects.get(id=userId)
+            print('userId::',user.email)
         except User.DoesNotExist:
+            print('User no longer exists')
             return Response({'detail': 'User no longer exists'}, status=status.HTTP_404_NOT_FOUND)
 
 

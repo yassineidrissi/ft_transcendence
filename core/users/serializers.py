@@ -114,22 +114,7 @@ class UserUpdateSerializer(serializers.ModelSerializer):
         fields = ['first_name', 'last_name', 'state_2fa', 'level', 'img_url', 'username', 'password']
     def update(self, instance, validated_data):
         img_file = validated_data.pop('img_url', None)
-        if img_file:
-            # print('base dir', settings.BASE_DIR)
-            # print('instance.img_url:', instance.img_url)
-            # print('full path:', os.path.join(settings.BASE_DIR, instance.img_url.lstrip('/')))
-            if instance.img_url != 'https://w7.pngwing.com/pngs/178/595/png-transparent-user-profile-computer-icons-login-user-avatars-thumbnail.png':
-                if instance.img_url :
-                    # print('media_root:', settings.MEDIA_ROOT)
-                    # print('instance.img_url:', instance.img_url)
-                    # print('deleting:', os.path.join('/app/', instance.img_url.lstrip('/')))
-                    os.remove(os.path.join('/app/', instance.img_url.lstrip('/')))
-            img_url = default_storage.save(f'profile_pics/{img_file.name}', img_file)
-            img_url = default_storage.url(img_url)
-            instance.img_url = img_url
-
-        else:
-            instance.img_url = validated_data.get('img_url', instance.img_url)
+        
 
         # !password
         if 'password' in validated_data:
@@ -148,6 +133,22 @@ class UserUpdateSerializer(serializers.ModelSerializer):
         instance.last_name = validated_data.get('last_name', instance.last_name)
         instance.level = validated_data.get('level', instance.level)
         instance.state_2fa = validated_data.get('state_2fa', instance.state_2fa)
+        if img_file:
+            # print('base dir', settings.BASE_DIR)
+            # print('instance.img_url:', instance.img_url)
+            # print('full path:', os.path.join(settings.BASE_DIR, instance.img_url.lstrip('/')))
+            if not instance.img_url.startswith('http://') and not instance.img_url.startswith('https://'):
+                if instance.img_url :
+                    # print('media_root:', settings.MEDIA_ROOT)
+                    # print('instance.img_url:', instance.img_url)
+                    # print('deleting:', os.path.join('/app/', instance.img_url.lstrip('/')))
+                    os.remove(os.path.join('/app/', instance.img_url.lstrip('/')))
+            img_url = default_storage.save(f'profile_pics/{instance.username}', img_file)
+            img_url = default_storage.url(img_url)
+            instance.img_url = img_url
+
+        else:
+            instance.img_url = validated_data.get('img_url', instance.img_url)
         if(instance.state_2fa == True):
             instance.otp_secret = pyotp.random_base32()
             instance.totp = pyotp.totp.TOTP(instance.otp_secret).now()

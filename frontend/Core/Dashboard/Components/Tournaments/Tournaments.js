@@ -106,14 +106,14 @@ class Tournaments extends HTMLElement {
         `;
         this.shadowRoot.innerHTML = ''
         this.shadowRoot.append(style, tournaments);
-        this.getTournaments().then(data => {console.log(data); this.renderTournaments(data.rooms)});
+        this.getTournaments().then(data => {//console.log(data); this.renderTournaments(data.rooms)});
         // this.renderTournaments(tournamentData)
         this.shadowRoot.querySelectorAll("#join").forEach(btn => {
             btn.addEventListener("click", (e) => {
                 const tournamentId = e.target.dataset.id;
                 this.selectedTournamentId = tournamentId;
                 this.isJoiningTournament = true;
-                console.log(this.selectedTournamentId);
+                //console.log(this.selectedTournamentId);
                 this.render()
             })
         })
@@ -121,7 +121,7 @@ class Tournaments extends HTMLElement {
             this.shadowRoot.querySelectorAll("#close").forEach(btn => {
                 
                 btn.addEventListener("click", () => {
-                    console.log("closing tournament ", this.selectedTournamentId);
+                    //console.log("closing tournament ", this.selectedTournamentId);
                     this.isJoiningTournament = false;
                     this.selectedTournamentId = null;
                     this.render();
@@ -175,7 +175,7 @@ class Tournaments extends HTMLElement {
             // response = await handleAuthResponse(response, getTournaments);
             // if (response.ok) {
             //     const data = await response.json();
-            //     console.log(data.rooms);
+            //     //console.log(data.rooms);
             //     this.renderTournaments(data.rooms);
                 
             //     // updateRooms(data.rooms);

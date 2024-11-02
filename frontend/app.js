@@ -93,7 +93,7 @@ const usersDB = [
 
 // 	Socket.onmessage = function (e) {
 // 		const data = JSON.parse(e.data)
-// 		console.log({
+// 		//console.log({
 // 			"is_read": data.is_read,
 // 			"content": data.content,
 // 			"timestamp": data.timestamp,
@@ -199,7 +199,7 @@ const urlRoute = route => {
 // async function checkAccessToken(route) {
 //     const token = localStorage.getItem('access_token') || '';
 //     if (token === '') {
-//         console.log('No token found. Redirecting to sign-in.');
+//         //console.log('No token found. Redirecting to sign-in.');
 //         localStorage.removeItem('isUserSignedIn');
 //         return false;
 //     }
@@ -210,7 +210,7 @@ const navigateTo = async (route) => {
 	// if (hasToken) {
 	//     urlRoute(route);
 	// } else {
-	// 	console.log(route);
+	// 	//console.log(route);
 	// 	if (route == "signin" || route == "signup")
 	//     	urlRoute(route);
 	// 	else

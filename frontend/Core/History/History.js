@@ -6,9 +6,9 @@ class History extends HTMLElement {
 		const history = document.createElement("div");
 		history.className = "container text-light"
 		history.id = "history-container"
-		console.log(window.UserData.id);
+		//console.log(window.UserData.id);
 		fetchHistory(window.UserData.id).then(data => {this.history = data;
-			console.log(this.history);
+			//console.log(this.history);
 			history.innerHTML = `
 			<h1 class="mb-4">History</h1>
 			<div id="history" class="container">
