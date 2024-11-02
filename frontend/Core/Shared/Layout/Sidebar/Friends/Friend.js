@@ -5,7 +5,7 @@ class Friend extends HTMLElement {
     }
 
     connectedCallback() {
-        // Get the attributes after the element is attached to the DOM
+        
         const name = this.getAttribute("name") || "Unknown";
         const img_url = this.getAttribute("img_url") || "https://w7.pngwing.com/pngs/178/595/png-transparent-user-profile-computer-icons-login-user-avatars-thumbnail.png";
 		const id = this.getAttribute("id") || "0";

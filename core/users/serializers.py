@@ -63,7 +63,7 @@ class UserDataSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['id', 'state_2fa', 'first_name', 'last_name', 'img_url', 'username', 'friends']
+        fields = ['id', 'state_2fa', 'first_name', 'last_name', 'img_url', 'username', 'friends','win_stats', 'loss_stats']
 
     def get_friends(self, obj):
         friend_instance = Friend.objects.filter(user=obj).first()

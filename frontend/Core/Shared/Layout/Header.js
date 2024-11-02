@@ -20,11 +20,11 @@ class dashHeader extends HTMLElement {
 		<div id="notification" class="max-w-100 w-100 d-flex justify-content-between align-items-center px-2 mb-1">
 			<p class="mb-0 fw-medium">${notification.content}</p>
 			<div class="d-flex justify-content-center py-2 h-100">
-				<svg width="32" id="accept-friend" class="me-2 cursor-pointer" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+				<svg width="32" notification_id="${notification.id}" url="${notification.fulfill_link}${notification.sender}/" content="${notification.sender}" id="accept-btn-notification" class="me-2 cursor-pointer" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
 					<rect width="32" height="32" rx="4" fill="#18C064" />
 					<path d="M24 10L13 21L8 16" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
 				</svg>
-				<img id="reject-friend" alt="Free Cross Icon" width="32" class="cursor-pointer" src="https://cdn.iconscout.com/icon/free/png-256/free-cross-icon-download-in-svg-png-gif-file-formats--reject-decline-cancel-close-ui-ux-pack-user-interface-icons-5893356.png?f=webp&amp;w=256" srcset="https://cdn.iconscout.com/icon/free/png-256/free-cross-icon-download-in-svg-png-gif-file-formats--reject-decline-cancel-close-ui-ux-pack-user-interface-icons-5893356.png?f=webp&amp;w=256 1x, https://cdn.iconscout.com/icon/free/png-256/free-cross-icon-download-in-svg-png-gif-file-formats--reject-decline-cancel-close-ui-ux-pack-user-interface-icons-5893356.png?f=webp&amp;w=512 2x">
+				<img id="reject-btn-notification" notification_id="${notification.id}" url="${notification.reject_link}${notification.sender}/" content="${notification.sender}" alt="Free Cross Icon" width="32" class="cursor-pointer" src="https://cdn.iconscout.com/icon/free/png-256/free-cross-icon-download-in-svg-png-gif-file-formats--reject-decline-cancel-close-ui-ux-pack-user-interface-icons-5893356.png?f=webp&amp;w=256" srcset="https://cdn.iconscout.com/icon/free/png-256/free-cross-icon-download-in-svg-png-gif-file-formats--reject-decline-cancel-close-ui-ux-pack-user-interface-icons-5893356.png?f=webp&amp;w=256 1x, https://cdn.iconscout.com/icon/free/png-256/free-cross-icon-download-in-svg-png-gif-file-formats--reject-decline-cancel-close-ui-ux-pack-user-interface-icons-5893356.png?f=webp&amp;w=512 2x">
 			</div>
 		</div>
 	`).join('');
@@ -84,29 +84,41 @@ class dashHeader extends HTMLElement {
 					//console.log(result);
 					this.notifications = result;
 					this.render()
-					// this.addNotificationListeners();
+					this.addNotificationListeners();
 				})
 				
 			})
 		}
 	}
 	addNotificationListeners(sender) {
-		const acceptBtns = this.shadowRoot.querySelectorAll("#accept-friend");
+		const acceptBtns = this.shadowRoot.querySelectorAll("#accept-btn-notification");
+
 		acceptBtns.forEach(btn => {
 			btn.addEventListener("click", async () => {
-				let response = await fetch(`http://127.0.0.1:8000/api/acceptFriendRequest/${sender}/`, {
-        			method: 'POST',
+				let response = await fetch(btn.getAttribute("url"), {
+        			method: 'GET',
         			credentials: 'include',
         			headers: {
             			'Authorization': `Bearer ${this.access_token}`,
         			}});
-				//console.log(response);
+					btn.parentNode.parentNode.remove()
+					await deleteNotification(btn.getAttribute("notification_id"))
+					const data =await response.json()
+					window.UserData = data.data
+					document.querySelector("#app > core-layout").shadowRoot.querySelector("#container > layout-sidebar").shadowRoot.querySelector("#sidebar > friends-section").shadowRoot.querySelector("div > friends-list").update()
 			});
 		});
-		const rejectBtns = this.shadowRoot.querySelectorAll("#reject-friend");
+		const rejectBtns = this.shadowRoot.querySelectorAll("#reject-btn-notification");
 		rejectBtns.forEach(btn => {
-			btn.addEventListener("click", () => {
-				//console.log("Reject button clicked");
+			btn.addEventListener("click", async () => {
+				let response = await fetch(btn.getAttribute("url"), {
+        			method: 'GET',
+        			credentials: 'include',
+        			headers: {
+						'Authorization': `Bearer ${this.access_token}`,
+        			}});
+					btn.parentNode.parentNode.remove()
+					await deleteNotification(btn.getAttribute("notification_id"))
 			});
 		});
 	}

@@ -127,6 +127,7 @@ class Tournaments extends HTMLElement {
                     this.render();
                 });
             })}
+        });
     }
 
     renderTournaments(data) {

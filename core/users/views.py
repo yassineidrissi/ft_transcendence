@@ -22,6 +22,8 @@ import jwt
 from rest_framework.permissions import AllowAny
 
 from notifications.serializers import NotificationSerializer
+from chat.models import Conversation
+from django.db.models import Q
 
 
 @api_view(['GET'])
@@ -323,12 +325,6 @@ def sendRequestFriend(request):
     to_user = User.objects.get(id=id)
     friend =  FriendRequest.objects.create(from_user=user, to_user=to_user)
     friend.save()
-    # notification_data = {
-    #     "user": to_user.id,
-    #     "link": "/friends/requests",  # Adjust link to where requests are viewed
-    #     "content": f"{user.username} sent you a friend request",
-    #     "is_read": False
-    # }
     notification_data = {'user': to_user.id, 'sender' : user.id, 'content': f"{user.username} sent you a friend request",'fulfill_link':"http://127.0.0.1:8000/api/acceptFriendRequest/",'reject_link':"http://127.0.0.1:8000/api/rejectFriendRequest/"}
     notification_serializer = NotificationSerializer(data=notification_data)
     if notification_serializer.is_valid():
@@ -359,35 +355,43 @@ def get_or_create_friend_list(user):
     else:
         user_friend_list = Friend.objects.create(user=user)
     return user_friend_list
-@api_view(['POST'])
+@api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def acceptFriendRequest(request, sender):
+    print('sdfsdfsfsdfsdfsfsdfsdfs')
     user = request.user
     id = sender
     print('id::',id)
+    
     if id is None:
         return Response({'message': 'User ID is required'}, status=status.HTTP_400_BAD_REQUEST)
-    print('helllo')
     if FriendRequest.objects.filter(from_user=id, to_user=user).exists() == False:
         return Response({'message': 'Friend request does not exist'}, status=status.HTTP_400_BAD_REQUEST)
     if Friend.objects.filter(user=user, friends=id).exists():
         print('Friend already added')
         return Response({'message': 'Friend already added'}, status=status.HTTP_400_BAD_REQUEST)
     # Add the user to the friend list
+    to_user = User.objects.get(id=id)
+    print('to_user::',to_user.username)
     user_friend_list = get_or_create_friend_list(user)
     user_friend_list.friends.add(User.objects.get(id=id))
     # Add the friend to the user's friend list
     friend_friend_list = get_or_create_friend_list(User.objects.get(id=id))
     friend_friend_list.friends.add(user)
     FriendRequest.objects.filter(from_user=id, to_user=user).delete()
-    return Response({'message': 'Friend request accepted successfully'}, status=status.HTTP_200_OK)
+    conversation = Conversation.objects.filter(
+        Q(user=user, target=to_user) | Q(user=to_user, target=user)
+    ).first()
+    if not conversation:
+        conversation = Conversation.objects.create(user=user, target=to_user)
+    return Response({'message': 'Friend request accepted successfully','data':UserDataSerializer(user).data}, status=status.HTTP_200_OK)
 
 # !reject friend request
-@api_view(['POST'])
+@api_view(['GET'])
 @permission_classes([IsAuthenticated])
-def rejectFriendRequest(request):
+def rejectFriendRequest(request, sender):
     user = request.user
-    id = request.data.get('id')
+    id = sender
     if id is None:
         return Response({'message': 'User ID is required'}, status=status.HTTP_400_BAD_REQUEST)
     if FriendRequest.objects.filter(from_user=id, to_user=user).exists() == False:

@@ -27,7 +27,7 @@ class ChatListItem extends HTMLElement {
         this.chatListItemElement.className = 'd-flex align-items-center'
         this.chatListItemElement.innerHTML = `
             <div class="flex-shrink-0">
-                <img class="user-img" src="../assets/images/profile.jpg"
+                <img class="user-img" src="${this.target.img_url}"
                     alt="user img">
                 <span class="active"></span>
             </div>

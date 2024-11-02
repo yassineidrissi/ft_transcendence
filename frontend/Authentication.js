@@ -69,9 +69,10 @@ async function LogIn(){
 function LogIn42(){
     console.log('42');
     window.location.href = 'http://127.0.0.1:8000/api/login42/';
-    localStorage.setItem('isUserSignedIn', true)
+    // localStorage.setItem('isUserSignedIn', true)
 }
 async function LogOut(){
+    console.log('logoutsdfsdfsdfsdfsfsdfsfsdf');
     let access_token = localStorage.getItem('access_token');
     let response = await fetch('http://127.0.0.1:8000/api/logout/',{
         method: 'POST',
@@ -80,13 +81,10 @@ async function LogOut(){
     await handleAuthResponse(response, LogOut);
     let result = await response.json();
     console.log(result);
-    if(response.ok)
-    {
-        console.log('socket closedddddddddd',);
-        socket.close();
-        localStorage.removeItem('access_token');
-        localStorage.removeItem('isUserSignedIn');
-        window.UserData = {};
-        navigateTo('/signin');
-    }
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('isUserSignedIn');
+        // console.log('socket closedddddddddd',);
+        // socket.close();
+    window.UserData = {};
+    navigateTo('/signin');
 }

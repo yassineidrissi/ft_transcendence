@@ -15,7 +15,7 @@ class ChatHeader extends HTMLElement {
             <div class="col-8">
                 <div class="d-flex align-items-center">
                     <div class="flex-shrink-0 mt-1">
-                        <img class="user-img" src="../assets/images/profile.jpg"
+                        <img class="user-img" src="${this.conversation.target.img_url}"
                             alt="user img">
                     </div>
                     <div class="flex-grow-1 ms-3">

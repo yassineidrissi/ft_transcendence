@@ -67,9 +67,12 @@ async function sendNotification(data) {
 }
 
 async function deleteNotification(id) {
-    let response = await fetch(`http://localhost:8000/api/notification/?token=${localStorage.getItem('access_token')}`,
+    let response = await fetch(`http://localhost:8000/api/notification/delete/${id}/`,
         {
             method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('access_token')}`
+            },
             credentials: 'include'
         })
     response = await handleAuthResponse(response, deleteNotification, id);
