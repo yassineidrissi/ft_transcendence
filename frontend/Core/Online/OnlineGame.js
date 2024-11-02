@@ -268,6 +268,7 @@ class OnlineGame extends HTMLElement {
       if (this.winner) {
         this.winnerElement.textContent = this.winner;
         this.gameSocket.close();
+		navigateTo('/');
       }
       return;
     }

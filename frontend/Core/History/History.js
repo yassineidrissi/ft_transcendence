@@ -2,37 +2,17 @@ class History extends HTMLElement {
 	constructor() {
         super();
         this.attachShadow({ mode: 'open' });
+		this.history = [];
 		const history = document.createElement("div");
 		history.className = "container text-light"
 		history.id = "history-container"
-		history.innerHTML = `
+		console.log(window.UserData.id);
+		fetchHistory(window.UserData.id).then(data => {this.history = data;
+			console.log(this.history);
+			history.innerHTML = `
 			<h1 class="mb-4">History</h1>
 			<div id="history" class="container">
-				<h2 class="my-4">20 Sep 2024</h2>
-				<win-card></win-card>
-				<win-card></win-card>
-				<loss-card></loss-card>
-				<draw-card></draw-card>
-				<win-card></win-card>
-				<h2 class="my-4">19 Sep 2024</h2>
-				<win-card></win-card>
-				<loss-card></loss-card>
-				<!-- <win-card></win-card>
-				<win-card></win-card>
-				<loss-card></loss-card>
-				<win-card></win-card>
-				<win-card></win-card>
-				<h2 class="my-4">16 Sep 2024</h2>
-				<loss-card></loss-card>
-				<win-card></win-card>
-				<win-card></win-card>
-				<loss-card></loss-card>
-				<win-card></win-card>
-				<win-card></win-card>
-				<loss-card></loss-card>
-				<win-card></win-card>
-				<win-card></win-card>
-				<loss-card></loss-card>-->
+				${this.history.map(result => result.player.score > result.opponent.score ? `<win-card result=${JSON.stringify(result)} ></win-card>` : `<loss-card result=${JSON.stringify(result)} ></loss-card>`).join("")}
 			</div>
 		`
 		const style = document.createElement('style');
@@ -53,6 +33,8 @@ class History extends HTMLElement {
 		`;
 		this.shadowRoot.append(style);
         this.shadowRoot.append(history);
+		})
+		
     }
 }
 
