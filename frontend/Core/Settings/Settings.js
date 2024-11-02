@@ -43,8 +43,8 @@ class Settings extends HTMLElement {
 							: `<h2 class="text-secondary fs-4">Activate 2FA <span class="text-danger fw-light ms-2 fs-6">Disabled</span></h2>`}
 							<p class="fs-6">Enable two-factor authentication (2FA) for enhanced account protection.</p>
 							<!-- <button id="fa-btn" class="fs-6 border fw-medium  border-danger text-light">Disable</button> -->
-							${this.isFaEnabled ? `<button id="disable-fa" class="fs-6 border fw-medium bg-danger  border-danger text-light px-2">Disable</button>` 
-								: `<button id="enable-fa" class="fs-6 border fw-medium bg-success border-success text-light px-2">Enable</button>` }
+							${this.isFaEnabled ? `<button id="disable-fa" onclick='Update2fa(false)' class="fs-6 border fw-medium bg-danger  border-danger text-light px-2">Disable</button>` 
+								: `<button id="enable-fa" onclick='Update2fa(true)' class="fs-6 border fw-medium bg-success border-success text-light px-2">Enable</button>` }
 						</div>
 					</div>
 		`
