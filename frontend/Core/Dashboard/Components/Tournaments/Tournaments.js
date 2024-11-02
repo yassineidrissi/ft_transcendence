@@ -4,6 +4,7 @@ class Tournaments extends HTMLElement {
         this.attachShadow({ mode: 'open' });
         this.isJoiningTournament = false;
         this.selectedTournamentId = null;
+        this.access_token = localStorage.getItem('access_token');
         this.render();
     }
     render ()
@@ -12,22 +13,22 @@ class Tournaments extends HTMLElement {
         tournaments.id = "tournaments";
         tournaments.className = "container rounded p-4";
         
-        const tournamentData = [
-            { id: 1, name: 'First tournament', isFull: false },
-            {id: 2, name: 'Second tournament', isFull: true },
-			{ id: 3, name: '3rd tournament', isFull: false },
-            {id: 4, name: '4th tournament', isFull: true },
-			{ id: 5, name: '5th tournament', isFull: false },
-            {id: 6, name: '6th tournament', isFull: true },
-			{ id: 7, name: '7th tournament', isFull: false },
-            {id: 8, name: '8th tournament', isFull: true },
-			{ id: 9, name: '9th tournament', isFull: false },
-            {id: 10, name: '10th tournament', isFull: true },
-			{ id: 11, name: '11th tournament', isFull: false },
-            {id: 12, name: '12th tournament', isFull: true },
-			// { id: 13, name: '13th tournament', isFull: false },
-            // {id: 14, name: '14th tournament', isFull: true },
-        ];
+        // const tournamentData = [
+        //     { id: 1, name: 'First tournament', isFull: false },
+        //     {id: 2, name: 'Second tournament', isFull: true },
+		// 	{ id: 3, name: '3rd tournament', isFull: false },
+        //     {id: 4, name: '4th tournament', isFull: true },
+		// 	{ id: 5, name: '5th tournament', isFull: false },
+        //     {id: 6, name: '6th tournament', isFull: true },
+		// 	{ id: 7, name: '7th tournament', isFull: false },
+        //     {id: 8, name: '8th tournament', isFull: true },
+		// 	{ id: 9, name: '9th tournament', isFull: false },
+        //     {id: 10, name: '10th tournament', isFull: true },
+		// 	{ id: 11, name: '11th tournament', isFull: false },
+        //     {id: 12, name: '12th tournament', isFull: true },
+		// 	// { id: 13, name: '13th tournament', isFull: false },
+        //     // {id: 14, name: '14th tournament', isFull: true },
+        // ];
         
         tournaments.innerHTML = `
             <div class="position-relative">
@@ -105,7 +106,8 @@ class Tournaments extends HTMLElement {
         `;
         this.shadowRoot.innerHTML = ''
         this.shadowRoot.append(style, tournaments);
-        this.renderTournaments(tournamentData)
+        this.getTournaments().then(data => {console.log(data); this.renderTournaments(data.rooms)});
+        // this.renderTournaments(tournamentData)
         this.shadowRoot.querySelectorAll("#join").forEach(btn => {
             btn.addEventListener("click", (e) => {
                 const tournamentId = e.target.dataset.id;
@@ -142,13 +144,13 @@ class Tournaments extends HTMLElement {
 			</div>` : ``}
             <tr>
                 <td ><span style=" display: inline-block; width:3rem; max-width: 3rem;" class="number me-2 fw-medium">${tournament.id}</span>${tournament.name}</td>
-                <td><img src="./Core/Dashboard/assets/time.svg" ></img> 20 July, 2024 5PM</td>
+                <td><img src="./Core/Dashboard/assets/time.svg" ></img> ${tournament.time}</td>
                 <td class="d-flex align-items-center">
                     <img class="d-inline mb-0 me-2" src="./Core/Dashboard/assets/players.svg"></img>
-                    <span class="mb-0">4</span>
+                    <span class="mb-0">${tournament.count}</span>
                 </td>
                 <td class="py-1">
-                    ${tournament.isFull ? `
+                    ${tournament.is_full ? `
                         <img class="d-inline mb-0 me-2" src="./Core/Dashboard/assets/zap.svg"></img>
                         <span class="mb-0">Playing</span>
                     ` : `
@@ -160,6 +162,30 @@ class Tournaments extends HTMLElement {
                 </td>
             </tr>
         `).join('');
+    }
+    async getTournaments() {
+        // try {
+            let response = await fetch('http://127.0.0.1:8000/api/rooms/rooms-list/', {
+                method: 'GET',
+                credentials: 'include',
+                headers: {
+                    'Authorization': `Bearer ${this.access_token}`,
+                }
+            });
+            // response = await handleAuthResponse(response, getTournaments);
+            // if (response.ok) {
+            //     const data = await response.json();
+            //     console.log(data.rooms);
+            //     this.renderTournaments(data.rooms);
+                
+            //     // updateRooms(data.rooms);
+            //     // this.tournamentData = data.rooms;
+            //     // current_user = data.current_user;
+            // }
+        // } catch (error) {
+        //     window.location.href = 'https://127.0.0.1:443/frontend/signin/signin.html';
+        // }
+        return response.ok && response.json();
     }
 }
 
