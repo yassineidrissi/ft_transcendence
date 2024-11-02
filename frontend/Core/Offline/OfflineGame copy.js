@@ -5,7 +5,7 @@ class OfflineGame extends HTMLElement {
 		this.isMultiplayer = true;
 		this.player1Score = 0;
 		this.player2Score = 0;
-		this.winningScore = 5;
+		this.winningScore = 5; // Adjust the score needed to win
 
 		this.render();
 	}
@@ -26,13 +26,12 @@ class OfflineGame extends HTMLElement {
 			</div>
 			<span id="player2" class="bg-danger p-2 px-4 rounded fs-5">${this.isMultiplayer ? 'player 2' : 'Bot'}</span>
 		</div>
-		<div id="trophy" class="trophy-container hidden">
-			<div class="trophy">
-				🏆
-			</div>
-			<div class="winner-text"></div>
-		</div>
 		<canvas id="gameCanvas" height="400" width="800" class="w-100 h-100 border"></canvas>`;
+		<div id="trophy" class="trophy hidden">
+    		<img src="path/to/trophy.png" alt="Trophy" />
+    		<p id="winnerName">Winner: </p>
+		</div>
+
 		
 		const style = document.createElement('style');
 		style.textContent = `
@@ -48,58 +47,42 @@ class OfflineGame extends HTMLElement {
 				background: #2dab11;
 				border: 1px solid #2dab11;
 			}
-			.trophy-container {
-				position: absolute;
-				top: 50%;
-				left: 50%;
-				transform: translate(-50%, -50%);
-				text-align: center;
-				z-index: 1000;
-				background: rgba(0, 0, 0, 0.8);
-				padding: 2rem;
-				border-radius: 1rem;
-				border: 2px solid #ffd700;
+			.trophy { 
+				display: none; 
+				position: absolute; 
+				top: 20px; 
+				left: 50%; 
+				transform: translateX(-50%); 
+				text-align: center; 
 			}
-			.trophy {
-				font-size: 6rem;
-				margin-bottom: 1rem;
-				animation: bounce 1s infinite;
+			.trophy img { 
+				width: 50px; 
+				height: 50px; 
 			}
-			.winner-text {
-				font-size: 2rem;
-				color: #ffd700;
-				font-weight: bold;
-				font-family: 'Orbitron', sans-serif;
+			.trophy p { 
+				font-size: 1.5em; 
+				color: #FFD700; 
 			}
-			.hidden {
-				display: none;
+			.hidden { 
+				display: none; 
 			}
-			@keyframes bounce {
-				0%, 100% { transform: translateY(0); }
-				50% { transform: translateY(-20px); }
-			}
+
 		`;
 
 		this.shadowRoot.innerHTML = '';
 		this.shadowRoot.append(style);
 		this.shadowRoot.append(cpuGame);
 
-		// Get trophy elements
-		const trophy = this.shadowRoot.getElementById('trophy');
-		const winnerText = trophy.querySelector('.winner-text');
-
 		// BUTTONS
 		const singleplayerButton = this.shadowRoot.getElementById("singleplayerButton");
 		const multiplayerButton = this.shadowRoot.getElementById("multiplayerButton");
 
-		const resetGame = () => {
-			this.player1Score = 0;
-			this.player2Score = 0;
-			trophy.classList.add('hidden');
-			leftPaddle.score = 0;
-			rightPaddle.score = 0;
-			updateScore();
-		};
+        this.resetGame = () => {
+            this.player1Score = 0;
+            this.player2Score = 0;
+            trophy.classList.add('hidden');
+            updateScore();
+        };
 
 		singleplayerButton.addEventListener("click", () => {
 			this.isMultiplayer = false;
@@ -143,22 +126,6 @@ class OfflineGame extends HTMLElement {
 				score: 0
 			};
 
-			function showWinner(winner) {
-				trophy.classList.remove('hidden');
-				winnerText.textContent = `${winner} Wins!`;
-			}
-
-			function checkWinner() {
-				if (leftPaddle.score >= 5) {
-					showWinner('Player 1');
-					return true;
-				} else if (rightPaddle.score >= 5) {
-					showWinner(this.isMultiplayer ? 'Player 2' : 'Bot');
-					return true;
-				}
-				return false;
-			}
-
 			function drawPaddle(paddle) {
 				ctx.fillStyle = 'white';
 				ctx.fillRect(paddle.x, paddle.y, paddleWidth, paddleHeight);
@@ -193,6 +160,7 @@ class OfflineGame extends HTMLElement {
 						rightPaddle.y += rightPaddle.speed;
 					}
 				} else {
+					// Simple AI for the bot
 					if (ballY > rightPaddle.y + paddleHeight / 2 && rightPaddle.y < canvas.height - paddleHeight) {
 						rightPaddle.y += rightPaddle.speed;
 					} else if (ballY < rightPaddle.y + paddleHeight / 2 && rightPaddle.y > 0) {
@@ -240,7 +208,8 @@ class OfflineGame extends HTMLElement {
 				drawPaddle(leftPaddle);
 				drawPaddle(rightPaddle);
 				drawBall();
-				if (checkWinner.call(this)) return;
+				if (leftPaddle.score >= 5 || rightPaddle.score >= 5) 
+					return
 				movePaddles.call(this);
 				moveBall();
 				requestAnimationFrame(gameLoop.bind(this));
