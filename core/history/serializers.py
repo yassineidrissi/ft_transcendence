@@ -12,6 +12,7 @@ class MatchSerializer(serializers.ModelSerializer):
 
     def get_player(self, obj):
         player = obj.p1
+        print(player)
         score = obj.player1_score
         if obj.p2 == self.context.get("user"):
             player = obj.p2
@@ -30,9 +31,16 @@ class MatchSerializer(serializers.ModelSerializer):
             player = obj.p2
             score = obj.player2_score
 
-        return {
-            "id": player.id,
-            "username": player.username,
-            "score": score,
-            "image_url": player.img_url,
-        }
+        if player:
+            return {
+                "id": player.id,
+                "username": player.username,
+                "score": score,
+                "image_url": player.img_url,
+            }
+        else:
+            return {
+                "username": "unknown",
+                "score": 0,
+                "image_url": "https://commons.wikimedia.org/wiki/File:Unknown_person.jpg",
+            }

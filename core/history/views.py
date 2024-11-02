@@ -18,8 +18,10 @@ from .serializers import MatchSerializer
 def get_matches(request, user_id):
     user = User.objects.filter(id=user_id).first()
     matches = MatchGame.objects.filter(Q(p1=user) | Q(p2=user)).order_by("created_at")
-    serialized = MatchSerializer(matches, many=True, context={"user": user})
-    return Response(serialized.data, status=status.HTTP_200_OK)
+    if matches:
+        serialized = MatchSerializer(matches, many=True, context={"user": user})
+        return Response(serialized.data, status=status.HTTP_200_OK)
+    return Response(status=status.HTTP_200_OK)
 
 
 @api_view(["GET"])
@@ -30,5 +32,7 @@ def get_matches_by_date(request, date):
     matches = MatchGame.objects.filter(Q(p1=user) | Q(p2=user)).filter(
         created_at__date=match_date
     )
-    serialized = MatchSerializer(matches, many=True, context={"user": user})
-    return Response(serialized.data, status=status.HTTP_200_OK)
+    if matches:
+        serialized = MatchSerializer(matches, many=True, context={"user": user})
+        return Response(serialized.data, status=status.HTTP_200_OK)
+    return Response(status=status.HTTP_200_OK)
