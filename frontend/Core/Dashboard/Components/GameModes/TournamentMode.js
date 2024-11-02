@@ -3,6 +3,7 @@ class TournamentMode extends HTMLElement {
     constructor() {
         super();
         this.attachShadow({ mode: 'open' });
+        this.access_token = localStorage.getItem('access_token');
         this.isCreatingTournament = false;
         this.tournamentName = ""
         this.nickname = ""
@@ -145,10 +146,32 @@ class TournamentMode extends HTMLElement {
             createTourBtn.addEventListener("click", () => {
                 console.log("Tournament name: ", this.tournamentName);
                 console.log("Nickname: ", this.nickname);
-                this.tournamentName = ""
-                this.nickname = ""
-                this.render()
+                this.createRoom(this.tournamentName).then(roomId => {
+                    this.tournamentName = ""
+                    this.nickname = ""
+                    this.render()
+                });
             })
+        }
+    }
+
+    async createRoom(roomName) {
+        let response = await fetch(`http://localhost:8000/api/rooms/create-room/${roomName}/`, {
+            method: 'POST',
+            credentials: 'include',
+            headers: {
+                'Authorization': `Bearer ${this.access_token}`,
+            }
+        });
+        response = await handleAuthResponse(response, this.createRoom);
+        if (response.ok) {
+            const data = await response.json();
+            if (data.success)
+                return data.room_id;
+            else
+                console.error(data.message);
+        } else if (!this.access_token) {
+            navigateTo('signin');
         }
     }
 }
