@@ -77,7 +77,7 @@ async function LogOut(){
         method: 'POST',
         credentials: 'include',
     })
-    handleAuthResponse(response, LogOut);
+    await handleAuthResponse(response, LogOut);
     let result = await response.json();
     console.log(result);
     if(response.ok)

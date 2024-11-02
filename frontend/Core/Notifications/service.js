@@ -6,7 +6,7 @@ async function eraseNotifications() {
             credentials: 'include'
         })
 
-    response = handleAuthResponse(response, eraseNotifications);
+    response = await handleAuthResponse(response, eraseNotifications);
 
     if (!response.ok) {
         throw new Error('Failed to feach on notifications')
@@ -22,11 +22,11 @@ async function fetchNotifications() {
             credentials: 'include'
         })
 
-    response = handleAuthResponse(response, fetchNotifications);
+    response = await handleAuthResponse(response, fetchNotifications);
     if (!response.ok) {
         throw new Error('Failed to feach on notifications')
     }
-    return response.json()
+    return await response.json()
 }
 
 async function sendNotification(data) {
@@ -58,12 +58,12 @@ async function sendNotification(data) {
             body: data
         })
 
-    response = handleAuthResponse(response, sendNotification, data);
+    response = await handleAuthResponse(response, sendNotification, data);
 
     if (!response.ok) {
         throw new Error('Failed to feach on notifications')
     }
-    return response.json()
+    return await response.json()
 }
 
 async function deleteNotification(id) {
@@ -72,10 +72,10 @@ async function deleteNotification(id) {
             method: 'DELETE',
             credentials: 'include'
         })
-    response = handleAuthResponse(response, deleteNotification, id);
+    response = await handleAuthResponse(response, deleteNotification, id);
 
     if (!response.ok) {
         throw new Error('Failed to feach on notifications')
     }
-    return response.json()
+    return true
 }

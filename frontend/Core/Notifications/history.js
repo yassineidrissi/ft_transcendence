@@ -7,23 +7,26 @@ async function fetchHistory(userId) {
             'Authorization': `Bearer ${access_token}`,
         }
     });
-    response = await handleAuthResponse(response, fetchChat, userId);
+    response = await handleAuthResponse(response, fetchHistory, userId);
 
-    if (response.ok) {
+    if (!response.ok) {
         let data = await response.json();
-		console.log(data);
+        console.log(data);
         return data;
     } else if (!access_token) {
         urlRoute('signin');
+        return null
     }
 }
 
 async function fetchDateHistory(date) {
+    if (!date)
+        return;
     const newDate = new Date(date)
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, '0'); // months are 0-indexed
     const day = String(date.getDate()).padStart(2, '0');
-	let access_token = localStorage.getItem("access_token");
+    let access_token = localStorage.getItem("access_token");
     let response = await fetch(`http://127.0.0.1:8000/api/matches/${year}-${month}-${day}/`, {
         method: 'GET',
         credentials: 'include',
@@ -32,13 +35,14 @@ async function fetchDateHistory(date) {
         }
     });
 
-    response = await handleAuthResponse(response, fetchChat, date);
+    response = await handleAuthResponse(response, fetchDateHistory, date);
 
-    if (response.ok) {
+    if (!response.ok) {
         let data = await response.json();
         return data;
     } else if (!access_token) {
         urlRoute('signin');
+        return null
     }
 }
 
@@ -52,5 +56,5 @@ async function getTodayHistory() {
     const newDate = new Date();
     newDate.setDate(newDate.getDate());
     return await fetchDateHistory(newDate);
-	
+
 }
