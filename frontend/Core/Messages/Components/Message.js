@@ -5,7 +5,6 @@ class Message extends HTMLElement {
     constructor() {
         super()
         this.messageElement = document.createElement('li')
-        this.style =
         this.appendChild(this.messageElement)
 
         this.message = null
