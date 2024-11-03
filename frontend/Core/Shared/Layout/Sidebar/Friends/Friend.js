@@ -21,8 +21,11 @@ class Friend extends HTMLElement {
                     ${name.length > 8 ? name.substring(0, 8) + "..." : name}
                 </span>
             </div>
-            <img id="invite" class='invite ${id} cursor-pointer' src="./Core/Shared/assets/plus.svg" id width="24" height="24"></img>
-        `;
+			<div>
+				
+            	<img id="invite" class='invite ${id} cursor-pointer' src="./Core/Shared/assets/plus.svg" id width="24" height="24"></img>
+			</div>
+			`;
 		// 
         const style = document.createElement('style');
         style.textContent = `
@@ -55,7 +58,14 @@ class Friend extends HTMLElement {
         this.shadowRoot.append(style, friend);
 		this.shadowRoot.getElementById("invite").addEventListener("click", (e) => {
 			console.log(id);
-			sendNotification(id).then(data => console.log(data))
+			sendNotification(JSON.stringify({
+				    "user": id,
+				    "sender": window.UserData.id,
+				    "content": `${window.UserData.username} sent you an invitation to play a game`,
+				    "fulfill_link": "/online-game",
+				    "reject_url": "reject url action",
+				    "is_invite": "true"
+				})).then(data => {console.log(data); navigateTo("online-game")})
 		})
     }
 }

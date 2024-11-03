@@ -193,10 +193,10 @@ class OnlineGame extends HTMLElement {
     this.leftPaddle.score = gameState.left_score;
     this.rightPaddle.score = gameState.right_score;
     
-    setTimeout(() => {
-      if (gameState.players === 1 && !this.gameStarted)
-        this.deleteMatch(localStorage.getItem('matchID'));
-    }, 10000);
+    // setTimeout(() => {
+    //   if (gameState.players === 1 && !this.gameStarted)
+    //     this.deleteMatch(localStorage.getItem('matchID'));
+    // }, 10000);
 
     if (gameState.players === 1) {
       this.isPlayerOne = true;

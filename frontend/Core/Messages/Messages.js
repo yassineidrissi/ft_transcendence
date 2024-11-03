@@ -18,6 +18,7 @@ class Messages extends HTMLElement {
                     </div>
                     <div class="chat-list">
                         <!-- Chat list items will be inserted here -->
+						
                     </div>
                 </div>
                 
@@ -35,11 +36,13 @@ class Messages extends HTMLElement {
                     <div class="chat-header">
                         <div class="chat-header-info">
                             <!-- Chat header will be inserted here -->
+							
                         </div>
                     </div>
                     
                     <div class="messages-container">
                         <div class="messages-list">
+						
                             <!-- Messages will be inserted here -->
                         </div>
                     </div>
@@ -388,7 +391,10 @@ class Messages extends HTMLElement {
         
         // Update header
         this.elements.chatHeaderInfo.innerHTML = `
-            <h3>${conversation.target.username}</h3>
+			<div class=" d-flex justify-content-between align-items-center">
+            	<h3 id="" class="mb-0 fs-4 text-light">${conversation.target.username}</h3>
+				<button id="block-btn" class="text-light bg-danger fw-semibold fs-6 px-4 rounded">Block</button>
+			</div>
         `;
 
         // Clear and load messages
@@ -416,7 +422,7 @@ class Messages extends HTMLElement {
 
     addMessage(message) {
         const messageElement = document.createElement('div');
-        messageElement.className = `message ${message.sender === 'me' ? 'sent' : 'received'}`;
+        messageElement.className = `text-light bg-primary message ${message.sender === 'me' ? 'sent' : 'received'}`;
         messageElement.textContent = message.content;
         this.elements.messagesList.appendChild(messageElement);
     }
