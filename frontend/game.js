@@ -122,12 +122,12 @@ function initializeGame(matchID) {
     gameSocket = new WebSocket(`ws://localhost:8000/ws/game/${matchID}/?token=${access_token}`);
 
     gameSocket.onopen = () => {
-        //console.log('WebSocket connection established');
+        //////console.log('WebSocket connection established');
         drawGame();
     };
 
     gameSocket.onclose = () => {
-        //console.log('WebSocket connection closed');
+        //////console.log('WebSocket connection closed');
     };
 
     gameSocket.onmessage = (event) => {
@@ -159,7 +159,7 @@ function handleGameState(gameState) {
     ball.y = gameState.ball_position.y;
     leftPaddle.score = gameState.left_score;
     rightPaddle.score = gameState.right_score;
-    //console.log(gameState);
+    //////console.log(gameState);
     updateScore();
 
     if (gameState.players === 1) {
@@ -219,7 +219,7 @@ function sendPaddleMove(paddle, side) {
 }
 
 function gameLoop() {
-    //console.log(leftPaddle.score, rightPaddle.score);
+    //////console.log(leftPaddle.score, rightPaddle.score);
     if (!gameStarted || leftPaddle.score >= 5 || rightPaddle.score >= 5) {
         if (leftPaddle.score >= 5)
             winner = player1.textContent;
@@ -413,7 +413,7 @@ async function fetchMatchID() {
         response = await handleAuthResponse(response, fetchMatchID);
         if (response.ok) {
             const data = await response.json();
-            //console.log(data);
+            //////console.log(data);
             // player1.textContent = data.player1;
             // player2.textContent = data.player2;
             startGame(data.id);

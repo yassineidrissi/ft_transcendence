@@ -81,7 +81,7 @@ class dashHeader extends HTMLElement {
 					this.leftOffset = dimensions.left;
 				}
 				fetchNotifications().then(result => {
-					//console.log(result);
+					//////console.log(result);
 					this.notifications = result;
 					this.render()
 					this.addNotificationListeners();

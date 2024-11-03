@@ -144,8 +144,8 @@ class TournamentMode extends HTMLElement {
         if (createTourBtn)
         {
             createTourBtn.addEventListener("click", () => {
-                //console.log("Tournament name: ", this.tournamentName);
-                //console.log("Nickname: ", this.nickname);
+                //////console.log("Tournament name: ", this.tournamentName);
+                //////console.log("Nickname: ", this.nickname);
                 this.createRoom(this.tournamentName).then(roomId => {
                     this.tournamentName = ""
                     this.nickname = ""

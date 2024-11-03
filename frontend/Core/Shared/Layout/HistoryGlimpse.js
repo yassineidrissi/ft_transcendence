@@ -39,7 +39,7 @@ class HistoryGlimpse extends HTMLElement {
 		const inputField = this.shadowRoot.getElementById("input-value")
 		inputField.addEventListener("input", () => {
 			this.inputValue = inputField.value;
-			//console.log(this.inputValue);
+			//////console.log(this.inputValue);
 		})
 	}
 }

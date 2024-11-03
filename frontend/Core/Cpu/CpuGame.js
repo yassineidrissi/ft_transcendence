@@ -211,7 +211,7 @@ class Cpu extends HTMLElement {
 						throw new Error(`HTTP error! status: ${response.status}`);
 					}
 					qTable = await response.json();
-					//console.log("Parsed JSON data:", qTable);
+					//////console.log("Parsed JSON data:", qTable);
 				} catch (error) {
 					console.error("Error fetching or parsing JSON data:", error);
 				}
@@ -248,7 +248,7 @@ class Cpu extends HTMLElement {
 					}
 				}
 				if (closestState) {
-					//console.log('the closeststate is :' + closestState);
+					//////console.log('the closeststate is :' + closestState);
 					return qTable[closestState];
 				} else {
 					return [0, 0, 0];

@@ -603,7 +603,7 @@ class Messages extends HTMLElement {
 
 		fetchChat()
 			.then(conversations => {
-				//console.log(conversations)
+				//////console.log(conversations)
 				if (!conversations?.length) {
 					emptyChatBox.style.display = 'flex'
 					return;
@@ -643,9 +643,9 @@ class Messages extends HTMLElement {
 					chatList.appendChild(chatListItem)
 				}
 				);
-				//console.log("fetch function");
+				//////console.log("fetch function");
 			}).catch(error => {
-				//console.log(error)
+				//////console.log(error)
 			})
 
 		messageInput.onkeyup = function (e) {

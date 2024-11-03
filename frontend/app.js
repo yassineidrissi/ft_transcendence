@@ -1,6 +1,19 @@
+function getToken(){
+	const urlParams = new URLSearchParams(window.location.search);
+	const token = urlParams.get('token');
+	if (token) {
+		localStorage.setItem("token", token);
+	} else {
+		console.log("Token not found in URL.");
+	}
+	
+}
+getToken();
 let socket = null;
 check_auth();
-
+if (!JSON.parse(localStorage.getItem("isUserSignedIn")))
+	localStorage.setItem("isUserSignedIn", JSON.stringify(false));
+	  
 const app = document.getElementById("app");
 const urlRoutes = {
 	404: {
@@ -59,16 +72,19 @@ const urlRoutes = {
 		title: "CPU Game",
 		description: ""
 	},
+	"/2fa": {
+		page: "/pages/fa.html",
+		title: "Two Factor Authentication",
+		description: ""
+	},
 }
 
-if (!JSON.parse(localStorage.getItem("isUserSignedIn")))
-	localStorage.setItem("isUserSignedIn", JSON.stringify(false));
-	  
+
 
 
 const handleLayout = async (route) => {
 	html = await fetch(route.page).then(response => response.text());
-	if (route.title === "Sign up" || route.title === "Sign in")
+	if (route.title === "Sign up" || route.title === "Sign in" || route.title === "Two Factor Authentication")
 		app.innerHTML = `<auth-layout route="${route.title}">${html}</auth-layout>`
 	else if (route.title === "Dashboard" || route.title === "Profile")
 		app.innerHTML = `<core-layout showHistory=${true}>${html}</core-layout>`;
@@ -93,7 +109,7 @@ const usersDB = [
 
 // 	Socket.onmessage = function (e) {
 // 		const data = JSON.parse(e.data)
-// 		//console.log({
+// 		//////console.log({
 // 			"is_read": data.is_read,
 // 			"content": data.content,
 // 			"timestamp": data.timestamp,
@@ -172,11 +188,11 @@ const urlLocationHandler = async () => {
 		window.history.pushState({}, "", location.substring(1));
 	}
 	else {
-		if (JSON.parse(storedUserData) == true && (location == "/" || location == "/signin" || location == "/signup")) {
+		if (JSON.parse(storedUserData) == true && (location == "/" || location == "/signin" || location == "/signup" || location == "/2fa" )) {
 			route = urlRoutes["/dashboard"];
 			window.history.pushState({}, "", "/");
 		}
-		else if (JSON.parse(storedUserData) == false && location != "/signin" && location != "/signup") {
+		else if (JSON.parse(storedUserData) == false && location != "/signin" && location != "/signup" && location != "/2fa") {
 			route = urlRoutes["/signin"];
 			window.history.pushState({}, "", "/signin");
 		}
@@ -199,7 +215,7 @@ const urlRoute = route => {
 // async function checkAccessToken(route) {
 //     const token = localStorage.getItem('access_token') || '';
 //     if (token === '') {
-//         //console.log('No token found. Redirecting to sign-in.');
+//         //////console.log('No token found. Redirecting to sign-in.');
 //         localStorage.removeItem('isUserSignedIn');
 //         return false;
 //     }
@@ -210,7 +226,7 @@ const navigateTo = async (route) => {
 	// if (hasToken) {
 	//     urlRoute(route);
 	// } else {
-	// 	//console.log(route);
+	// 	//////console.log(route);
 	// 	if (route == "signin" || route == "signup")
 	//     	urlRoute(route);
 	// 	else

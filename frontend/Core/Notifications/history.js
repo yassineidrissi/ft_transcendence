@@ -11,7 +11,7 @@ async function fetchHistory(userId) {
 
     if (!response.ok) {
         let data = await response.json();
-        console.log(data);
+        ////console.log(data);
         return data;
     } else if (!access_token) {
         urlRoute('signin');

@@ -34,7 +34,7 @@ class SearchFriend extends HTMLElement {
 		`;
         this.shadowRoot.append(style, friend);
         this.shadowRoot.querySelector('button').addEventListener('click', (e) => {
-            // //console.log(e.target.id);
+            // //////console.log(e.target.id);
             this.sendRequest(e.target.id);
         });
     }
@@ -52,7 +52,7 @@ class SearchFriend extends HTMLElement {
         })
         response = await handleAuthResponse(response, this.sendRequest);
         let data = await response.json();
-        //console.log(data['message']);
+        //////console.log(data['message']);
     }
     
 }

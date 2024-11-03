@@ -4,7 +4,7 @@ class Win extends HTMLElement {
         this.attachShadow({ mode: 'open' });
 		const win = document.createElement("div");
 		this.result = JSON.parse(this.getAttribute("result"))
-		//console.log(this.result);
+		//////console.log(this.result);
 		win.className = "w-100 d-flex align-items-center justify-content-between px-2"
 		win.id = "win"
 		win.innerHTML = `
