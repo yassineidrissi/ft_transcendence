@@ -40,7 +40,15 @@ class HistoryGlimpse extends HTMLElement {
 			}
 		`;
 		this.shadowRoot.append(style, history);
+<<<<<<< HEAD
 		
+=======
+		const inputField = this.shadowRoot.getElementById("input-value")
+		inputField.addEventListener("input", () => {
+			this.inputValue = inputField.value;
+			//////console.log(this.inputValue);
+		})
+>>>>>>> ecfe9079378a4c3362eb3db83b1d33deacfeaab1
 	}
 }
 

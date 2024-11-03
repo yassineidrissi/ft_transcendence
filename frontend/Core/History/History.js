@@ -23,6 +23,7 @@ class History extends HTMLElement {
 				<h2 id="no-history" class="fs-1 w-100  d-flex justify-content-center align-items-center">You Didn't Play any Game</h2>
 				`
 			}
+
 		const style = document.createElement('style');
 		style.textContent = `
     		@import url('https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css');

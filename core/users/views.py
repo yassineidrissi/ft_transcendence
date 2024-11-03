@@ -65,16 +65,19 @@ def register(request):
 def loginView(request):
     email = request.data.get('email')
     password = request.data.get('password')
+    print('email::',email)
     user = User.objects.filter(email=email).first()
     if user is None:
         raise AuthenticationFailed('User not found!')
+    if user.username == 'admin':
+        return Response({'message': 'You are not allowed to login here'}, status=status.HTTP_400_BAD)
     if not user.check_password(password):
         raise AuthenticationFailed('Incorrect password!')
     if user.state_2fa == True:
         
         return Response({'2fa': user.state_2fa, 'token': generetToekn2fa(user)})
     token = get_tokens_for_user(user)
-
+    print('dfgdfgdfgdfgdfg')
     response = Response()
     response.set_cookie(
         key='refresh_token',
@@ -99,8 +102,9 @@ def loginView(request):
 def checkAuth(request):
     print('cookies',request.COOKIES)
     user = request.user
-    print('user::',user)
+    
     serializer = UserSerializer(user, context={'request': request})
+    print('user',UserDataSerializer(user).data)
     return Response(UserDataSerializer(user).data)
 
 @api_view(['POST'])
@@ -147,7 +151,8 @@ def login42(request):
 def redirect42(user):
     if user.state_2fa == False:
         return HttpResponseRedirect('https://127.0.0.1/profile')
-    return HttpResponseRedirect('https://127.0.0.1/profile')
+    response = HttpResponseRedirect(f'https://127.0.0.1/2fa?token={generetToekn2fa(user)}')
+    return response
 @api_view(["GET"])
 @authentication_classes([])
 @permission_classes([AllowAny])
@@ -198,7 +203,7 @@ def callback42(request):
                 
                 response = redirect42(user)
                 if user.state_2fa == True:
-                    return response(data={'2fa': user.state_2fa, 'token': generetToekn2fa(user)})
+                    return response
                 refresh = RefreshToken.for_user(user)
                 access_token = str(refresh.access_token)
                 response.set_cookie(
@@ -274,20 +279,26 @@ def updateUser(request):
     if(serializer.is_valid()):
         serializer.save()
         data = UserUpdateSerializer(user).data
+        print('data update::',data)
         return Response({'message': 'User updated successfully','data':data}, status=status.HTTP_200_OK)
-    print('errors::',serializer.errors)
     
     return Response({'message': 'User not updated'}, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['POST'])
-# @permission_classes([IsAuthenticated])
+@permission_classes([AllowAny])
 def validate2fa(request):
-    print(request.data['token'])
+    code  = request.data['code']
+    if not len(code) == 6 :
+        return Response({'message': 'lenght must be 6 '}, status=status.HTTP_400_BAD_REQUEST)
+    if code.isdigit() == False:
+        return Response({'message': 'only numeriques'}, status=status.HTTP_400_BAD_REQUEST)
     email = jwt.decode(request.data['token'], settings.SECRET_KEY, algorithms=['HS256'])['email']
+    print('request.data::',request.data)
+    print('email::',email)
     user = User.objects.get(email=email)
     totp = pyotp.TOTP(user.otp_secret)
-    print('correct code',totp.now())
-    print('your code',request.data['code'])
+    # print('correct code',totp.now())
+    # print('your code',request.data['code'])
     if totp.verify(request.data['code']):
         token = get_tokens_for_user(user)
         response = Response()
@@ -304,7 +315,6 @@ def validate2fa(request):
         }
         return response
     return Response({'message': 'Invalid 2fa code'}, status=status.HTTP_400_BAD_REQUEST)
-
 # *this for friend part
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])

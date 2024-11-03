@@ -5,7 +5,7 @@ class SidebarHeader extends HTMLElement {
         const sidebarHeader = document.createElement('div');
 		sidebarHeader.className = "d-flex justify-content-between align-items-end";
 		sidebarHeader.id = "sidebar-header"
-		//console.log(window.UserData);
+		//////console.log(window.UserData);
         sidebarHeader.innerHTML = `
 			<div class="d-flex align-items-center">
 				<img src=${window.UserData['img_url']} class="rounded" height='40'></img>

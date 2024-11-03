@@ -15,7 +15,7 @@ class Message extends HTMLElement {
     create() {
         this.messageElement.className = (window.UserData.id == this.message.sender ? 'sender' : 'reply')
         this.messageElement.innerHTML = `
-            <p> ${limitText(this.message.content, this.maxLength)} </p>
+            <p class="text-white"> ${limitText(this.message.content, this.maxLength)} </p>
             <span class="time">${normalizeDate(this.message.timestamp)}</span>
         `
         this.messageElement.onclick = this.expand

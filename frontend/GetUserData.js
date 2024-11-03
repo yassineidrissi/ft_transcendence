@@ -1,5 +1,15 @@
 async function check_auth() {
-    console.log('Starting check_auth...');
+    ////console.log('Starting check_auth...');
+    console.log('sdfsdfsfsdf');
+    if(window.location.pathname === '/2fa')
+    {
+        token = localStorage.getItem('token');
+        if(token)
+            console.log('token', token);
+        else
+            urlRoute('signin');
+        return;
+    }
     let access_token = localStorage.getItem('access_token');
     let response = await fetch('http://127.0.0.1:8000/api/user/', {
         method: 'GET',
@@ -12,7 +22,7 @@ async function check_auth() {
     response = await handleAuthResponse(response, check_auth);
     if (response && response.ok) {
         let data = await response.json();
-        console.log('User data:', data);
+        //console.log('User data:', data);
         // userStateOnline(data.id);
         localStorage.setItem("isUserSignedIn", true)
         window.UserData = data;
@@ -48,7 +58,7 @@ async function refresh_token() {
     });
     if (response.status === 200) {
         let data = await response.json();
-        console.log('Token refreshed successfully');
+        ////console.log('Token refreshed successfully');
         localStorage.setItem('access_token', data.access_token);
     } else {
         throw new Error('Failed to refresh token');
@@ -61,15 +71,15 @@ async function refresh_token() {
 // })();
 
 // async function userStateOnline(id) {
-//     console.log('id::', id);
+//     ////console.log('id::', id);
 //     access_token = localStorage.getItem('access_token');
 //     let wsProtocol = window.location.protocol === "https:" ? "wss://" : "ws://";
 //     let url = `ws://127.0.0.1:8000/ws/socket-server/?token=${access_token}`;
 //     socket = new WebSocket(url);
-//     console.log(socket);
+//     ////console.log(socket);
 //     socket.onmessage = function (event) {
 //         let data = JSON.parse(event.data);
-//         console.log(data);
+//         ////console.log(data);
 //     }
 // }
 
@@ -85,5 +95,5 @@ async function refresh_token() {
 //     });
 //     response = await handleAuthResponse(response, getFriendOnline);
 //     let result = await response.json();
-//     console.log(result);
+//     ////console.log(result);
 // }

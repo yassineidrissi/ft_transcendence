@@ -59,7 +59,6 @@ class Messages extends HTMLElement {
                 </div>
             </div>
         `;
-
         const style = document.createElement('style');
         style.textContent = `
             

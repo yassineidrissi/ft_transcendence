@@ -63,7 +63,7 @@ class UserDataSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['id', 'state_2fa', 'first_name', 'last_name', 'img_url', 'username', 'friends','win_stats', 'loss_stats']
+        fields = ['id', 'state_2fa', 'first_name', 'last_name', 'img_url', 'username', 'friends','win_stats', 'loss_stats','img_qr']
 
     def get_friends(self, obj):
         friend_instance = Friend.objects.filter(user=obj).first()
@@ -173,7 +173,7 @@ class UserUpdateSerializer(serializers.ModelSerializer):
         data = super().to_representation(instance)
         data['img_url'] = instance.img_url
         if instance.img_qr:
-            data['qr_img'] = instance.img_qr.url 
+            data['img_qr'] = instance.img_qr.url 
         print('data:', data)
         return data
     

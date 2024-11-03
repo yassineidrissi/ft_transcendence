@@ -87,6 +87,8 @@ services:
       #   condition: service_healthy
       db:
         condition: service_started
+    env_file:
+      - ./config/secrets/backend.env
     image: backend:latest
     container_name: backend
     ports:

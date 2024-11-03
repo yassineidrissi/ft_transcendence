@@ -2,6 +2,7 @@ class Input extends HTMLElement {
     constructor() {
         super();
         this.attachShadow({ mode: 'open' });
+		
         const input = document.createElement('input');
         input.type = this.getAttribute('type') || 'text';
 		input.placeholder = this.getAttribute('placeholder') || '';

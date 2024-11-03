@@ -66,7 +66,7 @@ class SearchFriendModal extends HTMLElement {
         });
 
         this.shadowRoot.querySelector('#submit-search').addEventListener("click", () => {
-            console.log(this.inputValue);
+            ////console.log(this.inputValue);
             SeachUser(this.inputValue).then(result => {
                 this.result = result.results;
                 this.render();

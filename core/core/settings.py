@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
+import os
 from pathlib import Path
 from datetime import timedelta
 from logging.handlers import SysLogHandler
@@ -22,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-8jeu1m7)5ia!wggcvfq$hm8m6rxgl6l=rb3br9kt18l@j&4ok0"
+SECRET_KEY = os.getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -234,13 +235,9 @@ CORS_ALLOWED_ORIGINS = [
 ]
 
 # for 42 API
-FORTYTWO_CLIENT_ID = (
-    "u-s4t2ud-aa40036aa2286b9ef5f45afc46777f5b35f377c3e85c74ff57de96d1da91bae0"
-)
+FORTYTWO_CLIENT_ID = os.getenv("FORTYTWO_CLIENT_ID") 
+FORTYTWO_CLIENT_SECRET = os.getenv("FORTYTWO_CLIENT_SECRET")
 
-FORTYTWO_CLIENT_SECRET = (
-    "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"
-)
 
 # FORTYTWO_REDIRECT_URI = 'https://api.intra.42.fr/oauth/authorize'
 FORTYTWO_REDIRECT_URI = "http://127.0.0.1:8000/api/callback/"
