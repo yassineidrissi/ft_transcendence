@@ -159,4 +159,16 @@ def start_match(request, status):
         'player1': game.p1.username,
     })
 
-
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def set_inviter(request, user_id):
+	user = request.user
+	user_invited = User.objects.filter(id=user_id)
+	if user_invited:
+		user_invited.is_invited_from = user
+		return JsonResponse({
+			'success': True
+		})
+	return JsonResponse({
+		'success': False
+	})

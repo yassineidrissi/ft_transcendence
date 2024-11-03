@@ -7,7 +7,7 @@ async function check_auth() {
         if(token)
             console.log('token', token);
         else
-            urlRoute('signin');
+            navigateTo('signin');
         return;
     }
     let access_token = localStorage.getItem('access_token');
@@ -27,7 +27,7 @@ async function check_auth() {
         localStorage.setItem("isUserSignedIn", true)
         window.UserData = data;
     } else if (!access_token) {
-        urlRoute('signin');
+        navigateTo('signin');
     }
 }
 
@@ -45,7 +45,7 @@ async function handleAuthResponse(response, retryFunction, params = null) {
         localStorage.removeItem('access_token');
         localStorage.removeItem('isUserSignedIn');
         // console.error('Error during token refresh:', e);
-        urlRoute('signin');
+        navigateTo('signin');
         // return response
     }
     return response;

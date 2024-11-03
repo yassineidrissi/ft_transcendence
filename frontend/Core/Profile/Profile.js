@@ -6,18 +6,6 @@ class Profile extends HTMLElement {
 		this.renderProfile()
 	}
 
-	// connectedCallback() {
-	// 	if (window.UserData) {
-	// 		this.renderProfile();
-	// 	} else {
-	// 		this.userDataInterval = setInterval(() => {
-	// 			if (window.UserData) {
-	// 				clearInterval(this.userDataInterval);
-	// 				this.renderProfile();
-	// 			}
-	// 		}, 100);
-	// 	}
-	// }
 	renderProfile() {
 		if (!this.totalMatches)
 			this.totalMatches = 1;
@@ -26,7 +14,7 @@ class Profile extends HTMLElement {
 		profile.innerHTML = `
 				<img src=${window.UserData['img_url']}  width="120" class="rounded" ></img>
 				<div id"profile-info" class="d-flex flex-column align-items-center mb-4">
-					<h1>${window.UserData.username}</h1>
+					<h1>${window.UserData.username.length > 16 ? window.UserData.username.substring(0, 16) + "..." : window.UserData.username}</h1>
 					<win-loss-draw></win-loss-draw>
 				</div>
 				<div class="general-stats mb-5 d-flex w-100 justify-content-evenly">
@@ -92,13 +80,6 @@ class Profile extends HTMLElement {
 		`;
 		this.shadowRoot.append(style);
 		this.shadowRoot.append(profile);
-	}
-
-	disconnectedCallback() {
-		// Clear the interval when the element is removed from the DOM
-		if (this.userDataInterval) {
-			clearInterval(this.userDataInterval);
-		}
 	}
 }
 

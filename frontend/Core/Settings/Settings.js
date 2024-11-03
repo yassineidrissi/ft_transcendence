@@ -5,7 +5,7 @@ class Settings extends HTMLElement {
 		this.isFaEnabled  = window.UserData.state_2fa;
 		this.editUsernameMode = false;
 		this.editPasswordMode = false;
-		this.username = `NoobMaster69`;
+		this.username = window.UserData.username.length > 8 ? window.UserData.username.substring(0, 8) + "..." : window.UserData.username ;
 		this.password = `chi haja`;
 		this.qr_url = window.UserData.img_qr;
 		this.hashPass();

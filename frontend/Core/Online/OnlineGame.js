@@ -153,18 +153,17 @@ class OnlineGame extends HTMLElement {
   initializeGame(matchID) {
     localStorage.setItem('matchID', matchID);
     const access_token = localStorage.getItem('access_token');
-    this.gameSocket = new WebSocket(`ws://localhost:8000/ws/game/${matchID}/?token=${access_token}`);
-
-    this.gameSocket.onopen = () => {
+    window.gameSocket = new WebSocket(`ws://localhost:8000/ws/game/${matchID}/?token=${access_token}`);
+    window.gameSocket.onopen = () => {
       //////console.log('WebSocket connection established');
       this.drawGame();
     };
 
-    this.gameSocket.onclose = () => {
+    window.gameSocket.onclose = () => {
       //////console.log('WebSocket connection closed');
     };
 
-    this.gameSocket.onmessage = (event) => {
+    window.gameSocket.onmessage = (event) => {
       const data = JSON.parse(event.data);
       
       switch (data.type) {
@@ -202,15 +201,15 @@ class OnlineGame extends HTMLElement {
     if (gameState.players === 1) {
       this.isPlayerOne = true;
       this.waitingMessage.textContent = "You are Player 1 (Left Paddle). Waiting for Player 2...";
-      this.player1.textContent = gameState.nickname_one;
+      this.player1.textContent = gameState.username1;
       this.leftPlayer = true;
     } else if (gameState.players === 2 && !this.gameStarted) {
       this.waitingMessage.style.display = 'none';
       this.isPlayerOne = true;
       this.gameStarted = true;
       const playerMessage = this.leftPlayer ? "You are Player 1 (Left Paddle)" : "You are Player 2 (Right Paddle)";
-      this.player1.textContent = gameState.nickname_one;
-      this.player2.textContent = gameState.nickname_two;
+      this.player1.textContent = gameState.username1;
+      this.player2.textContent = gameState.username2;
       this.roomInfoElement.innerHTML += `<br>${playerMessage}`;
       this.gameLoop();
     }
@@ -265,7 +264,7 @@ class OnlineGame extends HTMLElement {
   }
 
   sendPaddleMove(paddle, side) {
-    this.gameSocket.send(JSON.stringify({
+    window.gameSocket.send(JSON.stringify({
       paddle_move: {
         player: side,
         y: paddle.y
@@ -281,7 +280,7 @@ class OnlineGame extends HTMLElement {
         this.winner = this.player2.textContent;
       if (this.winner) {
         this.winnerElement.textContent = this.winner;
-        this.gameSocket.close();
+        window.gameSocket.close();
       }
       return;
     }
@@ -318,7 +317,7 @@ class OnlineGame extends HTMLElement {
   }
 
   sendBallPosition() {
-    this.gameSocket.send(JSON.stringify({
+    window.gameSocket.send(JSON.stringify({
       ball_position: {
         x: this.ball.x,
         y: this.ball.y,
@@ -329,7 +328,7 @@ class OnlineGame extends HTMLElement {
   }
 
   sendScoreUpdate() {
-    this.gameSocket.send(JSON.stringify({
+    window.gameSocket.send(JSON.stringify({
       score_update: {
         type: 'score_game',
         left_score: this.leftPaddle.score,

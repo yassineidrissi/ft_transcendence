@@ -29,7 +29,7 @@ class dashHeader extends HTMLElement {
 		</div>
 	`).join('');
 		header.innerHTML = `
-            <img onclick="navigateTo('signin')" src="./Core/Shared/assets/logo.svg" class="cursor-pointer" alt="ping pong logo"></img>
+            <img onclick="navigateTo('/')" src="./Core/Shared/assets/logo.svg" class="cursor-pointer" alt="ping pong logo"></img>
             <nav-menu isSettingsModalOpen="${this.isSettingsModalOpen}"></nav-menu>
             <div class="me-4" id="access">
 				<img src="./Core/Shared/assets/message-circle.svg" class="cursor-pointer me-2" onclick="navigateTo('messages')"></img>

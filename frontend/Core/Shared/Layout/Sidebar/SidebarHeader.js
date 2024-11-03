@@ -9,7 +9,7 @@ class SidebarHeader extends HTMLElement {
         sidebarHeader.innerHTML = `
 			<div class="d-flex align-items-center">
 				<img src=${window.UserData['img_url']} class="rounded" height='40'></img>
-				<span class="fs-5 fw-medium ms-2">${window.UserData.username}</span>
+				<span class="fs-5 fw-medium ms-2">${window.UserData.username.length > 10 ? window.UserData.username.substring(0, 10) + "..." : window.UserData.username}</span>
 			</div>
 		`
 		

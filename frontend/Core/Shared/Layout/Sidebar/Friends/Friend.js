@@ -21,7 +21,7 @@ class Friend extends HTMLElement {
                     ${name.length > 8 ? name.substring(0, 8) + "..." : name}
                 </span>
             </div>
-            <img id="invite" class='invite ${id}' src="./Core/Shared/assets/plus.svg" id width="24" height="24" class="cursor-pointer"></img>
+            <img id="invite" class='invite ${id} cursor-pointer' src="./Core/Shared/assets/plus.svg" id width="24" height="24"></img>
         `;
 		// 
         const style = document.createElement('style');
@@ -53,6 +53,10 @@ class Friend extends HTMLElement {
         `;
 
         this.shadowRoot.append(style, friend);
+		const inviteBtn = this.shadowRoot.getElementById("invite").addEventListener("click", (e) => {
+			console.log(id);
+			sendNotification(window.UserData.id).then(data => console.log(data))
+		})
     }
 }
 

@@ -28,6 +28,7 @@ class GameRoomConsumer(AsyncWebsocketConsumer):
                 "left_paddle_y": 250,
                 "right_paddle_y": 250,
                 "nickname_one": self.user.nickname,
+				"username1": self.user.username
             }
 
         self.rooms[self.room_group_name]["players"] += 1
@@ -40,7 +41,7 @@ class GameRoomConsumer(AsyncWebsocketConsumer):
         await self.accept()
         await self.channel_layer.group_send(
             self.room_group_name,
-            {"type": "send_game_state", "nickname_two": self.user.nickname},
+            {"type": "send_game_state", "nickname_two": self.user.nickname, "username2": self.user.username},
         )
 
     async def disconnect(self, close_code):
@@ -140,6 +141,8 @@ class GameRoomConsumer(AsyncWebsocketConsumer):
 
     async def send_game_state(self, event):
         nickname_two = event["nickname_two"]
+        username2 = event["username2"]
+
         await self.send(
             text_data=json.dumps(
                 {
@@ -160,7 +163,9 @@ class GameRoomConsumer(AsyncWebsocketConsumer):
                         "nickname_one": self.rooms[self.room_group_name][
                             "nickname_one"
                         ],
+						"username1": self.rooms[self.room_group_name]["username1"],
                         "nickname_two": nickname_two,
+						"username2": username2
                     },
                 }
             )
