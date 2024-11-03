@@ -168,6 +168,7 @@ function gameLoop() {
         if (winner) {
             document.getElementById('winner').textContent = winner;
             sendWinner();
+            if (gameSocket && )
             gameSocket.close();
             gameSocket = null;
             resetGame();

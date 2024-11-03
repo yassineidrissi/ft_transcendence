@@ -1,6 +1,20 @@
 let socket = null;
 check_auth();
 
+if (localStorage.getItem('isUserSignedIn') == 'true') {
+	console.log('User is signed in');
+	let roomSocket = new WebSocket(`ws://localhost:8000/ws/rooms/?token=${localStorage.getItem('access_token')}`);
+	roomSocket.onopen = () => {
+		console.log('WebSocket connection established');
+		window.roomSocket = roomSocket;
+	};
+	roomSocket.onclose = () => {
+		console.log('WebSocket connection closed');
+	};
+} else {
+	window.roomSocket = null;
+}
+
 const app = document.getElementById("app");
 const urlRoutes = {
 	404: {
