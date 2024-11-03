@@ -10,10 +10,10 @@ class Scores extends HTMLElement {
 	}
 	async render() {
 		let data = await getTodayHistory()
-		this.today = data;
+		this.today = data.slice(0, 3);
 		data = null;
 		data = await getYesterdatHistory()
-		this.yesterday = data;
+		this.yesterday = data.slice(0, 3);
 		const scores = document.createElement("div");
 		scores.innerHTML = `<input type="date" id="input-value" value="${this.inputValue}" class="mb-4 align-self-end " ></input>`
 		scores.id = "scores";
@@ -39,19 +39,19 @@ class Scores extends HTMLElement {
 		})
 		let selectionDate = {};
 		
-			selectionDate = { date: this.inputValue, matches: this.custom }
-			const element = document.createElement("div");
-			element.id = selectionDate.date;
-			element.className = "mb-5";
-			element.innerHTML = `<h3 class="mb-4 rounded fw-light text-dark bg-light px-2 py-1 fw-medium">${this.inputValue}</h3>`;
-			if (selectionDate.matches.length) {
-				selectionDate.matches.forEach(match => {
-					const isWinner = match.player.score > match.opponent.score ? JSON.stringify(true) : JSON.stringify(false);
-					element.innerHTML += `<score-card userScore=${match.player.score}
-								opponentScore=${match.opponent.score} isWinner=${isWinner} opponent_img=${match.opponent.image_url}></score-card>`
-				})
-			}
-			scores.append(element);
+		selectionDate = { date: this.inputValue, matches: this.custom }
+		const element = document.createElement("div");
+		element.id = selectionDate.date;
+		element.className = "mb-5";
+		element.innerHTML = `<h3 class="mb-4 rounded fw-light text-dark bg-light px-2 py-1 fw-medium">${this.inputValue}</h3>`;
+		if (selectionDate.matches.length) {
+			selectionDate.matches.forEach(match => {
+				const isWinner = match.player.score > match.opponent.score ? JSON.stringify(true) : JSON.stringify(false);
+				element.innerHTML += `<score-card userScore=${match.player.score}
+							opponentScore=${match.opponent.score} isWinner=${isWinner} opponent_img=${match.opponent.image_url}></score-card>`
+			})
+		}
+		scores.append(element);
 		
 
 		const style = document.createElement('style');
@@ -93,7 +93,7 @@ class Scores extends HTMLElement {
 		const inputField = this.shadowRoot.getElementById("input-value")
 		inputField.addEventListener("input", () => {
 			this.inputValue = inputField.value;
-			fetchDateHistory(this.inputValue).then(res =>{ this.custom = res; this.render()})
+			fetchDateHistory(this.inputValue).then(res =>{ this.custom = res.slice(0, 3); this.render()})
 		})
 	}
 }

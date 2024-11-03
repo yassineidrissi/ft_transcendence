@@ -3,24 +3,24 @@ class Profile extends HTMLElement {
 		super();
 		this.attachShadow({ mode: 'open' });
 		this.totalMatches = window.UserData.win_stats + window.UserData.loss_stats;
+		this.renderProfile()
 	}
 
-	connectedCallback() {
-		if (window.UserData) {
-			this.renderProfile();
-		} else {
-			this.userDataInterval = setInterval(() => {
-				if (window.UserData) {
-					clearInterval(this.userDataInterval);
-					this.renderProfile();
-				}
-			}, 100);
-		}
-	}
+	// connectedCallback() {
+	// 	if (window.UserData) {
+	// 		this.renderProfile();
+	// 	} else {
+	// 		this.userDataInterval = setInterval(() => {
+	// 			if (window.UserData) {
+	// 				clearInterval(this.userDataInterval);
+	// 				this.renderProfile();
+	// 			}
+	// 		}, 100);
+	// 	}
+	// }
 	renderProfile() {
 		if (!this.totalMatches)
 			this.totalMatches = 1;
-		console.log(window.UserData);
 		const profile = document.createElement("div");
 		profile.className = "container  d-flex flex-column align-items-center text-light"
 		profile.innerHTML = `

@@ -2,19 +2,20 @@ class Friend extends HTMLElement {
     constructor() {
         super();
         this.attachShadow({ mode: 'open' });
+		this.render()
     }
 
-    connectedCallback() {
-        
+    render() {
         const name = this.getAttribute("name") || "Unknown";
         const img_url = this.getAttribute("img_url") || "https://w7.pngwing.com/pngs/178/595/png-transparent-user-profile-computer-icons-login-user-avatars-thumbnail.png";
 		const id = this.getAttribute("id") || "0";
-
+		window.UserData.online = true;
         const friend = document.createElement('div');
         friend.className = "d-flex align-items-center justify-content-between mb-2";
 
         friend.innerHTML = /*html*/ `
-            <div class="d-flex align-items-center">
+            <div class="d-flex align-items-center position-relative">
+				${window.UserData.online ? `<span id="online-status" class=""></span>` : `<span id="offline-status" class=""></span>`}
                 <img src="${img_url}" class="rounded me-2" height='32'></img>
                 <span class="fs-6 fw-medium text-dark-emphasis">
                     ${name.length > 8 ? name.substring(0, 8) + "..." : name}
@@ -36,6 +37,19 @@ class Friend extends HTMLElement {
             #invite:hover {
                 background: #000;
             }
+			#online-status, #offline-status
+			{
+				top: -4px;
+				left: -4px;
+				border-radius: 24px;
+				position: absolute;
+				width: 12px;
+				height: 12px;
+				background: #12d63c;
+			}
+			#offline-status {
+				background: red;
+			}
         `;
 
         this.shadowRoot.append(style, friend);

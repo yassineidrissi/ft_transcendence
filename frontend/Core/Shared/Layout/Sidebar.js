@@ -2,6 +2,7 @@ class Sidebar extends HTMLElement {
     constructor() {
         super();
         this.attachShadow({ mode: 'open' });
+		
         const sidebar = document.createElement('div');
 		sidebar.id = "sidebar"
 		sidebar.className = `${this.getAttribute("class")} p-3 vh-100`;
