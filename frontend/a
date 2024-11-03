@@ -1,0 +1,856 @@
+commit 57d918211cfdd0c157ea368d189b53e2da533ce6
+Author: Ramzi Chahbani <rchahban@c2r4p8.1337.ma>
+Date:   Sun Nov 3 06:45:27 2024 +0100
+
+    added history glimpse input + stats
+
+commit 9570ee56c258126632c86c845f3d37294f608bc2
+Author: Amine <87505961+madebyamine@users.noreply.github.com>
+Date:   Sun Nov 3 02:36:05 2024 +0100
+
+    updating the chat style
+
+commit 2ec80cb12a77bfd97203f17ed1cd92eeb5dd5504
+Author: Amine <87505961+madebyamine@users.noreply.github.com>
+Date:   Sun Nov 3 01:10:14 2024 +0100
+
+    adding new chat frontend
+
+commit 447c54110be37779b1e2ed7b3006633d69ac9190
+Author: Amine <87505961+madebyamine@users.noreply.github.com>
+Date:   Sun Nov 3 00:57:56 2024 +0100
+
+    addign 2fa page
+
+commit d9b51509cbb93928aec91db1e418a58f352273d7
+Author: hamzak99 <kasbaouihamza99@gmail.com>
+Date:   Sun Nov 3 00:17:12 2024 +0100
+
+    add friend and list
+
+commit cad45f8b549e35d991d6adbdda1cc62449eee3b2
+Author: hamzak99 <kasbaouihamza99@gmail.com>
+Date:   Sat Nov 2 20:07:18 2024 +0100
+
+    tswira
+
+commit 9ba9643be2b9233872c84e648084adb7343d33be
+Author: Amine <87505961+madebyamine@users.noreply.github.com>
+Date:   Sat Nov 2 19:24:57 2024 +0100
+
+    fix if oponent has been deleted in game
+
+commit 888859d0fdb56d64b9dab6a0528220b99250def4
+Author: Amine <87505961+madebyamine@users.noreply.github.com>
+Date:   Sat Nov 2 19:15:10 2024 +0100
+
+    fix
+
+commit 8c8a512993a0648f4a22282d71f56635155c0568
+Author: Amine <87505961+madebyamine@users.noreply.github.com>
+Date:   Sat Nov 2 18:51:14 2024 +0100
+
+    update ilm policy
+
+commit 9dfddeec53f6c9d508854460aa91aba666251c29
+Author: hamzak99 <kasbaouihamza99@gmail.com>
+Date:   Sat Nov 2 15:02:49 2024 +0100
+
+    btn 2fa list frined
+
+commit 05136a5c01f9c7d07da9e2020b9184e10c0861dc
+Author: hamzak99 <kasbaouihamza99@gmail.com>
+Date:   Sat Nov 2 14:52:48 2024 +0100
+
+    friend list
+
+commit c615ca11a102e19854f03f9ab245f400bad1718a
+Merge: e72ba6f b917b05
+Author: hamzak99 <kasbaouihamza99@gmail.com>
+Date:   Sat Nov 2 11:26:44 2024 +0100
+
+    Merge branch 'main' of https://github.com/yassineidrissi/ft_transcendence into main
+
+commit e72ba6f0d508c6e8f4014edd1ae140a84a1ccd1a
+Author: hamzak99 <kasbaouihamza99@gmail.com>
+Date:   Sat Nov 2 11:26:22 2024 +0100
+
+    online;
+
+commit b917b052f3ce68c2c1258f861ae9d300c511fd3e
+Merge: 71a5fa8 ebd003d
+Author: Ramzi Chahbani <rchahban@c2r4p10.1337.ma>
+Date:   Sat Nov 2 10:50:03 2024 +0100
+
+    latest updates
+
+commit 71a5fa8e93a0d620464f62ed0d8f9b548ea89125
+Author: Ramzi Chahbani <rchahban@c2r4p10.1337.ma>
+Date:   Sat Nov 2 10:49:26 2024 +0100
+
+    latest updates
+
+commit ebd003d883e51ac2a2c6429ec9d1ce77b2af0a4b
+Author: Amine <87505961+madebyamine@users.noreply.github.com>
+Date:   Sat Nov 2 10:40:22 2024 +0100
+
+    fix refresh token
+
+commit 738859a521377e62a3032b66a6fb203ce30f1616
+Author: Amine <87505961+madebyamine@users.noreply.github.com>
+Date:   Sat Nov 2 10:19:34 2024 +0100
+
+    fix refresh token
+
+commit dab327ffacad98d8ce749c42764d19a4f49319dc
+Merge: a57e8e6 dc49996
+Author: Amine <87505961+madebyamine@users.noreply.github.com>
+Date:   Sat Nov 2 10:05:36 2024 +0100
+
+    Merge branch 'main' of github.com:yassineidrissi/ft_transcendence into main
+
+commit a57e8e6d2405146243b31f5d574e2aa2338d4ccf
+Author: Amine <87505961+madebyamine@users.noreply.github.com>
+Date:   Sat Nov 2 10:05:19 2024 +0100
+
+    adding notification add func with is invite bool in model
+
+commit dc4999622976417cd51be1b9163e42d815aa9316
+Author: Yassine Idrissi <yaidriss@c2r4p8.1337.ma>
+Date:   Sat Nov 2 09:57:37 2024 +0100
+
+    change online game style
+
+commit d1f007f37de342f528c9af31eb5988ad18641754
+Merge: 0be6c19 c55ac0a
+Author: Yassine Idrissi <yaidriss@c2r4p8.1337.ma>
+Date:   Sat Nov 2 09:55:08 2024 +0100
+
+    Merge branch 'main' of https://github.com/yassineidrissi/ft_transcendence into main
+
+commit c55ac0a98d101a288997b003c4c9a4ca4071526c
+Author: Ahmed Yakoubi <ahmedyakoubi913@gmail.com>
+Date:   Sat Nov 2 09:49:41 2024 +0100
+
+    add room list and create room but without socket and invite hta nrja3
+
+commit 0be6c19d9cfd3f9edd1964f12535693113bbbbd3
+Author: Amine <87505961+madebyamine@users.noreply.github.com>
+Date:   Sat Nov 2 08:58:35 2024 +0100
+
+    adding oponent url
+
+commit bf0f511bd4e1cffa20f6c16c7d6ec6262c0c4638
+Author: Ramzi Chahbani <rchahban@c2r2p10.1337.ma>
+Date:   Sat Nov 2 07:06:03 2024 +0100
+
+    hmed pusha
+
+commit bbe79d1defbf37616f7f6576f8466de4f7272482
+Author: Ramzi Chahbani <rchahban@c2r2p10.1337.ma>
+Date:   Sat Nov 2 06:27:39 2024 +0100
+
+    working version of notifications
+
+commit 893167b0b936d270034c6101e7238c951929f523
+Author: Yassine Idrissi <yaidriss@c2r4p8.1337.ma>
+Date:   Sat Nov 2 06:13:24 2024 +0100
+
+    add limits player & trophy & connect online game with backend
+
+commit e38e7d0028c4804199fe64f452e8d1e2f8e20ba6
+Author: Ahmed Yakoubi <ahmedyakoubi913@gmail.com>
+Date:   Sat Nov 2 01:43:50 2024 +0100
+
+    add component of online game
+
+commit b4c3d282196bd099f4f20e33bbbe3f451dea8221
+Author: Ahmed Yakoubi <ahmedyakoubi913@gmail.com>
+Date:   Fri Nov 1 22:42:11 2024 +0100
+
+    fixed matchech invited and normal matches
+
+commit e5927a3d82c6d3d2b02d2866f931d35e16a84f43
+Author: hamzak99 <kasbaouihamza99@gmail.com>
+Date:   Fri Nov 1 21:34:39 2024 +0100
+
+    notifi request friend
+
+commit 05c9574579b403863bb69ca5a2028cd85d67ccb5
+Merge: aa3888e 3705018
+Author: Amine <87505961+madebyamine@users.noreply.github.com>
+Date:   Fri Nov 1 21:12:32 2024 +0100
+
+    Merge branch 'main' of github.com:yassineidrissi/ft_transcendence into main
+
+commit aa3888eb71fbe808ff382da5b73767621faaa2d2
+Author: Amine <87505961+madebyamine@users.noreply.github.com>
+Date:   Fri Nov 1 21:12:18 2024 +0100
+
+    ading sender to notfication
+
+commit 3705018ceec543b53c125d4d8e37470689a7b8bb
+Author: hamzak99 <kasbaouihamza99@gmail.com>
+Date:   Fri Nov 1 20:54:11 2024 +0100
+
+    add deleting user
+
+commit 00799d6d27472cfd04b6417915452f21808e899d
+Author: hamzak99 <kasbaouihamza99@gmail.com>
+Date:   Fri Nov 1 20:47:56 2024 +0100
+
+    friend list
+
+commit 3fc5ffaf1d7726981f09778eca34e1411dc88cc1
+Author: Yassine Idrissi <yaidriss@c2r3p5.1337.ma>
+Date:   Fri Nov 1 20:20:01 2024 +0100
+
+    add Ai work, and fix offline
+
+commit fb6d089c275af549c3ff7bd625a737f90dc1e414
+Author: Amine <87505961+madebyamine@users.noreply.github.com>
+Date:   Fri Nov 1 18:53:59 2024 +0100
+
+    link media to the nginx at /var/www/media/
+
+commit 8a3e236c6bf7898ec9aae6b8c9bb2455a27fff04
+Author: Amine <87505961+madebyamine@users.noreply.github.com>
+Date:   Fri Nov 1 18:43:52 2024 +0100
+
+    making the backend live changing by plug it into volume
+
+commit 7bc56fa171ca9d68cf3f9dbe9ab17ce90ed90d1f
+Author: Amine <87505961+madebyamine@users.noreply.github.com>
+Date:   Fri Nov 1 18:37:36 2024 +0100
+
+    fix notifications add reject, fulfill links
+
+commit 4413717842d9c8dbad4cf37e41446b8d1b5521a1
+Author: Amine <87505961+madebyamine@users.noreply.github.com>
+Date:   Fri Nov 1 16:38:42 2024 +0100
+
+    adding token to the notifications api
+
+commit 7f227e62d63d3f32816729027bc0211cb1fdb4e3
+Author: Amine <87505961+madebyamine@users.noreply.github.com>
+Date:   Fri Nov 1 16:37:47 2024 +0100
+
+    fix chat now messages sent successfully
+
+commit 7acf6fa6194f1e9217019589141ec40485346f52
+Author: Ramzi Chahbani <rchahban@c2r2p6.1337.ma>
+Date:   Fri Nov 1 15:44:59 2024 +0100
+
+    working on chat
+
+commit 2bc215e55ca5b4e1df8776fd42f9b73068192350
+Author: hamzak99 <kasbaouihamza99@gmail.com>
+Date:   Fri Nov 1 11:46:14 2024 +0100
+
+    searc and send request friend
+
+commit b652df5ce8541a7b0dbe282d949e9a6a87e63ebd
+Author: Ramzy842 <54730934+Ramzy842@users.noreply.github.com>
+Date:   Fri Nov 1 05:11:55 2024 +0000
+
+    added create tournament + join
+
+commit 196a627851a5a5faaca1a83e2d53f2ca0852f965
+Author: Ramzy842 <54730934+Ramzy842@users.noreply.github.com>
+Date:   Fri Nov 1 04:51:49 2024 +0000
+
+    creating tournament added
+
+commit 2e62eb76e7468b8da979df1cb519b62f94d8af95
+Author: Amine <87505961+madebyamine@users.noreply.github.com>
+Date:   Thu Oct 31 20:51:46 2024 +0100
+
+    adding history api
+
+commit 88bbf2a7b4adc32059574808e68411971e4881d2
+Author: Amine <87505961+madebyamine@users.noreply.github.com>
+Date:   Thu Oct 31 20:19:44 2024 +0100
+
+    adding apis of matches, chat , notifications [still need reviewed cause the token refresh]
+
+commit a34fecbf17863cef4f30914ec433d9b1dc40579e
+Author: Amine <87505961+madebyamine@users.noreply.github.com>
+Date:   Thu Oct 31 19:15:48 2024 +0100
+
+    adding notification api calling, updating the chatServices.js
+
+commit b9183cf2b25a8741afc1a5b6fd99a6849b4f7efa
+Author: Amine <87505961+madebyamine@users.noreply.github.com>
+Date:   Thu Oct 31 19:08:54 2024 +0100
+
+    more fixing
+
+commit c61f8a2f9af853a1f160626c1679953276cef0a2
+Author: Amine <87505961+madebyamine@users.noreply.github.com>
+Date:   Thu Oct 31 18:12:35 2024 +0100
+
+    fix tournament urls
+
+commit 41287dd9d5846dfda2ce955ed566569a013a4c90
+Author: Amine <87505961+madebyamine@users.noreply.github.com>
+Date:   Thu Oct 31 18:00:41 2024 +0100
+
+    fix missing
+
+commit 441d315f140806f0afdd196156166b0e97d39678
+Author: hamzak99 <kasbaouihamza99@gmail.com>
+Date:   Thu Oct 31 16:01:17 2024 +0100
+
+    amiiiiin
+
+commit 42e44201d9b24b0f5add401b20da2126c3bb893c
+Author: Amine <87505961+benjamine1@users.noreply.github.com>
+Date:   Thu Oct 31 13:56:08 2024 +0000
+
+    just test
+
+commit 10412075b41d68dfe90914d55b2d3ab0dacb1281
+Author: Ramzi Chahbani <rchahban@c2r1p8.1337.ma>
+Date:   Thu Oct 31 14:08:33 2024 +0100
+
+    new structure
+
+commit e4fff0cb8fdaa6023d7990208616262014b96253
+Author: Amine <87505961+madebyamine@users.noreply.github.com>
+Date:   Thu Oct 31 13:16:40 2024 +0100
+
+    stop devops it takes too much time
+
+commit 87576ff3820261533fecaa6230450ec8b90a20e0
+Author: Amine <87505961+madebyamine@users.noreply.github.com>
+Date:   Thu Oct 31 12:57:41 2024 +0100
+
+    adding env
+
+commit 886376f384b159577895b22f9fe3dc35e53b692c
+Author: Amine <87505961+madebyamine@users.noreply.github.com>
+Date:   Thu Oct 31 12:56:18 2024 +0100
+
+    merging
+
+commit a71c2c1ea936e1c80a4eba4bb327ae3bcbd1d6dc
+Author: hamzak99 <kasbaouihamza99@gmail.com>
+Date:   Thu Oct 31 12:48:04 2024 +0100
+
+    fix error deleting user .btn 2fa
+
+commit 59c82e5c6c10ebcf4ab4db40a395ddbb0b9a7722
+Merge: 989044d 7659cc0
+Author: Ramzi Chahbani <rchahban@c2r11p4.1337.ma>
+Date:   Wed Oct 30 11:55:42 2024 +0100
+
+    changed cpu game to component (cpu game working)
+
+commit 989044d1db623b10c0e688ad087df42486da2b01
+Author: Ramzi Chahbani <rchahban@c2r2p8.1337.ma>
+Date:   Tue Oct 29 21:53:19 2024 +0100
+
+    changes
+
+commit 7659cc09c495eeea6c5adb4d2739c731b8c96a3b
+Author: Amine <87505961+madebyamine@users.noreply.github.com>
+Date:   Tue Oct 29 21:43:36 2024 +0100
+
+    2fa page
+
+commit 94715c413ff1273ac04c7086c8da2dec0b10ec15
+Author: hamzak99 <kasbaouihamza99@gmail.com>
+Date:   Tue Oct 29 18:59:33 2024 +0100
+
+    change username
+
+commit 8549d31706137b8bec7ce871e81fc67047cb6d59
+Merge: 5474f2a 419a5a0
+Author: hamzak99 <kasbaouihamza99@gmail.com>
+Date:   Tue Oct 29 18:54:37 2024 +0100
+
+    Merge branch 'main' of https://github.com/yassineidrissi/ft_transcendence into main
+
+commit 5474f2ae287f2a8b04958df6256e10e13db8f92a
+Author: hamzak99 <kasbaouihamza99@gmail.com>
+Date:   Tue Oct 29 18:49:31 2024 +0100
+
+    mmodify redirect backend and refresh token
+
+commit 419a5a044c04592c56d599fd8f1dde3af2f562bf
+Merge: 68e4915 dc96d97
+Author: Ramzi Chahbani <rchahban@c1r6p8.1337.ma>
+Date:   Tue Oct 29 03:44:57 2024 +0100
+
+    Merge branch 'main' of https://github.com/yassineidrissi/ft_transcendence into main
+
+commit 68e49154a0b2692814a0f0d7678fa1d72109bd0d
+Author: Ramzi Chahbani <rchahban@c1r6p8.1337.ma>
+Date:   Tue Oct 29 03:44:48 2024 +0100
+
+    added offline
+
+commit dc96d972c3f5353d905f0b8664b87012e2b38596
+Author: hamzak99 <kasbaouihamza99@gmail.com>
+Date:   Mon Oct 28 18:19:03 2024 +0100
+
+    update
+
+commit 85e3e3bd2ebef8e1373eb7eaabaf6208c7a8d63a
+Author: hamzak99 <kasbaouihamza99@gmail.com>
+Date:   Mon Oct 28 14:51:06 2024 +0100
+
+    forget onclick button
+
+commit 64a2ac66e758dd592711fb0bb1c02f7ad37fb128
+Author: hamzak99 <kasbaouihamza99@gmail.com>
+Date:   Mon Oct 28 13:36:17 2024 +0100
+
+    login delete fetch userdata in first
+
+commit 9e0d2eb6fbb184985522452dec2fb9630e199691
+Author: Amine <87505961+madebyamine@users.noreply.github.com>
+Date:   Mon Oct 28 02:11:31 2024 +0100
+
+    push chat
+
+commit 332a5264a631101b21c3ea721806bf23a70eba13
+Merge: 30db37c 0e98379
+Author: Ramzi Chahbani <rchahban@c1r5p3.1337.ma>
+Date:   Mon Oct 28 02:07:59 2024 +0100
+
+    Merge branch 'main' of https://github.com/yassineidrissi/ft_transcendence into main
+
+commit 30db37c104ba38a5400e9661f7993bee075da63f
+Author: Ramzi Chahbani <rchahban@c1r5p3.1337.ma>
+Date:   Mon Oct 28 01:52:39 2024 +0100
+
+    game style done
+
+commit 0e9837963e1ba65fc049ff3921c6e17d3f20c711
+Author: hamzak99 <kasbaouihamza99@gmail.com>
+Date:   Sun Oct 27 20:20:04 2024 +0100
+
+    nginx fi
+
+commit eef40642308cda6189fc59fe5d4b35b29ac88588
+Author: Ramzi Chahbani <rchahban@c1r6p8.1337.ma>
+Date:   Sun Oct 27 02:51:41 2024 +0100
+
+    working on join tournament modal
+
+commit 91015488fbbd9d8d5da07eb3855f0951724fc84a
+Author: Ramzi Chahbani <rchahban@c1r6p8.1337.ma>
+Date:   Sun Oct 27 02:12:42 2024 +0100
+
+    refined frontend
+
+commit 8fb90db059fc3b39ef5e84b0514818d03576eb0e
+Author: Ramzi Chahbani <rchahban@c1r6p8.1337.ma>
+Date:   Sun Oct 27 01:27:12 2024 +0100
+
+    updated frontend
+
+commit 81d97d713f81059cbc2a5c1c2f2fa0d6eeb109de
+Author: Ahmed Yakoubi <76878092+YKO-01@users.noreply.github.com>
+Date:   Sat Oct 26 22:28:36 2024 +0100
+
+    ad
+    
+    add game.html and game.js
+
+commit 71ea7699251c0b55ac726129c2e6159e399469b4
+Author: Ramzi Chahbani <rchahban@c1r6p8.1337.ma>
+Date:   Sat Oct 26 22:04:20 2024 +0100
+
+    refactored signin + signup pages for easy javascript inclusion
+
+commit 23a25f17978be05e69b403e60c568f826af9f1c1
+Merge: 8c26a03 6f4f38b
+Author: Ramzi Chahbani <rchahban@c1r6p8.1337.ma>
+Date:   Sat Oct 26 21:01:03 2024 +0100
+
+    Merge branch 'main' of https://github.com/yassineidrissi/ft_transcendence into main
+
+commit 8c26a030f1670c95c795fe2981d3e9a1b56b7f94
+Author: Ramzi Chahbani <rchahban@c1r6p8.1337.ma>
+Date:   Sat Oct 26 21:00:55 2024 +0100
+
+    change
+
+commit 6f4f38bfbdc3ce666ad7aa5ff3901bd0e5670fab
+Author: Ramzy842 <ramzychahbani@gmail.com>
+Date:   Sat Oct 26 04:56:27 2024 +0100
+
+    added logout and changed input width in signin
+
+commit 492f99bbcd543688f42addee9153970878cf7b58
+Author: Ramzi Chahbani <rchahban@c1r6p2.1337.ma>
+Date:   Fri Oct 25 22:19:53 2024 +0100
+
+    modified settings
+
+commit a85cea8a5a4207348ff5b8c19215ff937d7535f6
+Author: Ramzi Chahbani <rchahban@c1r6p2.1337.ma>
+Date:   Fri Oct 25 22:00:04 2024 +0100
+
+    added profile pic change to settings
+
+commit 7f7fa1edcf3be044c1de2dbed89bdcadd45c88ba
+Author: Ramzi Chahbani <rchahban@c1r6p2.1337.ma>
+Date:   Fri Oct 25 21:58:02 2024 +0100
+
+    added reactivitiy to settings
+
+commit e80f86ccba09e71717b13914bf9130327a413363
+Author: Ramzi Chahbani <rchahban@c1r7p2.1337.ma>
+Date:   Thu Oct 24 16:52:04 2024 +0100
+
+    added history page
+
+commit 8c1956542d83de07da4b1f4a241a33d8fc281db0
+Author: Ramzi Chahbani <rchahban@c1r7p2.1337.ma>
+Date:   Thu Oct 24 15:45:36 2024 +0100
+
+    added dynamic user profile
+
+commit 9d77c02ee86f57756d63129e867f3f402c93f942
+Author: Ramzi Chahbani <rchahban@c1r7p2.1337.ma>
+Date:   Thu Oct 24 14:43:37 2024 +0100
+
+    modified in app.js
+
+commit d7f754d442be332a996ee9543d69610ebad81d71
+Author: Ramzi Chahbani <rchahban@c1r7p2.1337.ma>
+Date:   Thu Oct 24 13:39:31 2024 +0100
+
+    updated settings
+
+commit 42b96df37036c1b7de47aa88e1560403e8edaed7
+Author: Ramzi Chahbani <rchahban@c1r7p2.1337.ma>
+Date:   Thu Oct 24 13:23:14 2024 +0100
+
+    settings almost done
+
+commit e8d1554f41c744005a81dd4bb578856a564e6b1a
+Author: Ramzi Chahbani <rchahban@c1r7p2.1337.ma>
+Date:   Thu Oct 24 10:55:04 2024 +0100
+
+    change in menu
+
+commit 33087af5d53f3f5215f8b7ef439eacfcbac54ea7
+Author: Ramzi Chahbani <rchahban@c1r7p2.1337.ma>
+Date:   Thu Oct 24 10:48:12 2024 +0100
+
+    completed profile page
+
+commit 8a405b8b5f2eb3c90b007ece700480932ae52cf2
+Author: Ramzi Chahbani <rchahban@c1r7p2.1337.ma>
+Date:   Thu Oct 24 09:58:49 2024 +0100
+
+    update
+
+commit cb2a040f5956aa4afbe309ae6bf0771f4feb1283
+Author: Ramzy842 <ramzychahbani@gmail.com>
+Date:   Wed Oct 23 23:46:28 2024 +0100
+
+    added tournaments section
+
+commit b6295ad64c5b6d5fe4039b36778d28eb0a567621
+Author: Ramzy842 <ramzychahbani@gmail.com>
+Date:   Wed Oct 23 00:51:57 2024 +0100
+
+    added game modes
+
+commit 27803e19e3ba3fec6302c1199142fdf5d8899338
+Author: Ramzy842 <ramzychahbani@gmail.com>
+Date:   Tue Oct 22 20:27:25 2024 +0100
+
+    added menu + changed fonts and scores
+
+commit 60f11e8c8c36c578d31766a9713f4d8ce050b867
+Author: Ramzy842 <ramzychahbani@gmail.com>
+Date:   Mon Oct 21 22:45:02 2024 +0100
+
+    completed add friend section
+
+commit 002c92a710e364bb66f3846e25f8f9ca9b9a0d42
+Author: Ramzi Chahbani <rchahban@c2r5p2.1337.ma>
+Date:   Mon Oct 21 16:55:36 2024 +0100
+
+    updates
+
+commit 925b6e51096f2b701fc42476275be63f6936f781
+Author: Ramzi Chahbani <rchahban@c2r8p6.1337.ma>
+Date:   Sat Oct 19 01:52:15 2024 +0100
+
+    modifications
+
+commit 64fab68d7473b8bd9aa30f17b6bc85eb1f006da2
+Merge: efeaf37 8072a58
+Author: Ramzi Chahbani <rchahban@c1r7p2.1337.ma>
+Date:   Fri Oct 18 22:49:19 2024 +0100
+
+    erge branch 'main' of https://github.com/yassineidrissi/ft_transcendence into main
+
+commit efeaf378b55202101cae2711dcb3c6fd3779eb6c
+Author: Ramzi Chahbani <rchahban@c1r7p2.1337.ma>
+Date:   Fri Oct 18 22:49:11 2024 +0100
+
+    shared layout + sidebar remaining
+
+commit 8072a589236b072615a5597f253d64007fa04622
+Author: Ramzy842 <54730934+Ramzy842@users.noreply.github.com>
+Date:   Thu Oct 17 23:50:27 2024 +0100
+
+    Delete new-frontend/node_modules directory
+
+commit 77848093ef93a9f2f5e97de0a277c8049998e91d
+Merge: aec36dc d80e96c
+Author: Ramzi Chahbani <rchahban@c1r7p5.1337.ma>
+Date:   Thu Oct 17 23:49:10 2024 +0100
+
+    Merge branch 'main' of https://github.com/yassineidrissi/ft_transcendence into main
+
+commit aec36dc33d21c6ed00135d222cc16edc89a18dc4
+Author: Ramzi Chahbani <rchahban@c1r7p5.1337.ma>
+Date:   Thu Oct 17 23:49:03 2024 +0100
+
+    coreLayout in the making
+
+commit 86a5b88b75277105f7d253eee025fa3bad1b72b8
+Author: Ramzi Chahbani <rchahban@c2r4p3.1337.ma>
+Date:   Tue Oct 15 22:17:38 2024 +0100
+
+    signin and signup done
+
+commit d80e96c89b8f2a0497fbb1f963a33c18c5f9b18d
+Author: hamzak99 <kasbaouihamza99@gmail.com>
+Date:   Tue Oct 15 15:34:28 2024 +0100
+
+    friends and blocks
+
+commit 2ef5ce896e9084b714f863a1c8bb7d608f4fcc54
+Author: hamzak99 <kasbaouihamza99@gmail.com>
+Date:   Tue Oct 15 15:32:33 2024 +0100
+
+    friends and blocks
+
+commit 7d5b941affc57f2ee14ecf5eee47c91822290e6f
+Author: Ramzi Chahbani <rchahban@c2r4p3.1337.ma>
+Date:   Tue Oct 15 12:35:21 2024 +0100
+
+    front
+
+commit b5df509b7435887a2e1b0b4d82327ac24ffb7d1b
+Author: Ramzi Chahbani <rchahban@c2r4p3.1337.ma>
+Date:   Mon Oct 14 23:57:21 2024 +0100
+
+    progress front
+
+commit baa7360513599df35fbcd5c819c87412260f56b0
+Author: Ramzi Chahbani <rchahban@c2r4p3.1337.ma>
+Date:   Mon Oct 14 23:55:51 2024 +0100
+
+    new frontend in progress
+
+commit 6908d519c20e9d06ea84f1ba4b7313d2c25d77b3
+Author: Ramzy842 <ramzychahbani@gmail.com>
+Date:   Fri Oct 11 19:07:52 2024 +0100
+
+    profile page done
+
+commit d533fd0637bb4e4296f232dc09c8529c041648b9
+Author: hamzak99 <kasbaouihamza99@gmail.com>
+Date:   Mon Oct 7 18:15:54 2024 +0100
+
+    online
+
+commit b94cb3c332525812bed48ebb7f00f6457745722d
+Author: hamzak99 <kasbaouihamza99@gmail.com>
+Date:   Fri Oct 4 19:37:08 2024 +0100
+
+    nginx for frontend
+
+commit 9d084c25bc7a6792185c44576257192be42ac0bb
+Author: hamzak99 <kasbaouihamza99@gmail.com>
+Date:   Fri Oct 4 19:36:03 2024 +0100
+
+    nginx for frontend
+
+commit 742fc6bfd48dd09344134335957293d4d0a26f53
+Merge: 24381be 5a50eb8
+Author: Ramzi Chahbani <rchahban@c2r8p2.1337.ma>
+Date:   Tue Sep 24 19:42:00 2024 +0100
+
+    Merge branch 'main' of https://github.com/yassineidrissi/ft_transcendence into main
+
+commit 24381bed748e5897585e54aaad4fcfaccf3418fb
+Author: Ramzi Chahbani <rchahban@c2r8p2.1337.ma>
+Date:   Tue Sep 24 19:41:54 2024 +0100
+
+    started tournament page
+
+commit 5a50eb853bb69d9e957928a3d684d23c7f18995c
+Author: hamzak99 <kasbaouihamza99@gmail.com>
+Date:   Tue Sep 17 18:11:38 2024 +0100
+
+    requirements.txt update and change client id
+
+commit 00e8f81e865b7d3f5cbae878c5f68fc2d02048c9
+Author: Ramzi Chahbani <rchahban@c1r3p5.1337.ma>
+Date:   Tue Sep 17 16:27:13 2024 +0100
+
+    progress in profile page
+
+commit 0fe32bae738cee7f59dada49ea54586ee126f4b6
+Author: hamzak99 <97997619+hamzak99@users.noreply.github.com>
+Date:   Tue Sep 17 10:22:00 2024 +0100
+
+    Update requirements.txt
+
+commit 8d7355914e94f5428622f5fe06cad4ace864db18
+Author: Ramzi Chahbani <rchahban@c1r5p6.1337.ma>
+Date:   Sat Sep 14 21:56:14 2024 +0100
+
+    init profile page
+
+commit af1c5063a11c221a266e7e9e83ab89676c6907c4
+Author: Ramzi Chahbani <rchahban@c1r2p2.1337.ma>
+Date:   Fri Sep 13 14:44:20 2024 +0100
+
+    transition added
+
+commit 120883beb0a8acc45e25f129a804bc8e78e99824
+Merge: 7c17153 2abe831
+Author: Ramzi Chahbani <rchahban@c1r2p2.1337.ma>
+Date:   Fri Sep 13 14:17:37 2024 +0100
+
+    dashboar initial concept done
+
+commit 7c17153c8dd7cd7338cd6e21883d8c150d0bfbed
+Author: Ramzi Chahbani <rchahban@c1r2p2.1337.ma>
+Date:   Fri Sep 13 14:16:47 2024 +0100
+
+    dashboard initial concept done
+
+commit 2abe831adc1f2b51e814082486347ac61e284087
+Author: hamzak99 <kasbaouihamza99@gmail.com>
+Date:   Fri Sep 13 10:30:54 2024 +0100
+
+    fix intra login o update profile
+
+commit f483f80797f7958b823b2a86247210778d86f989
+Author: Ramzi Chahbani <rchahban@c1r3p2.1337.ma>
+Date:   Fri Sep 13 01:59:45 2024 +0100
+
+    dashboard 80% complete + sidebar left
+
+commit 9aff88ce539ff4f46b8dfacea87811ebe7849616
+Merge: f51b82b 5e825ea
+Author: Ramzy842 <ramzychahbani@gmail.com>
+Date:   Thu Sep 12 22:35:05 2024 +0100
+
+    Merge branch 'main' of https://github.com/yassineidrissi/ft_transcendence
+
+commit f51b82b696f41b2e51c93cca628d17a8ed11d810
+Author: Ramzy842 <ramzychahbani@gmail.com>
+Date:   Thu Sep 12 22:34:53 2024 +0100
+
+    dashboard page in the making
+
+commit 5e825ea1f5080b0980cebf8f4ac8d39b9e8f5591
+Author: Hamza Kasbaoui <hkasbaou@c1r3p10.1337.ma>
+Date:   Sun Sep 8 11:36:41 2024 +0100
+
+    permission_classes added
+
+commit dfa6f77713dd25cf6d7661f560fdf4313e67f887
+Author: Hamza Kasbaoui <hkasbaou@c1r3p8.1337.ma>
+Date:   Fri Sep 6 10:17:57 2024 +0100
+
+    auth and login 42
+
+commit 6919c9bb57dd56dc49eb17b1f59c362adf6e6660
+Author: yassine idrissi <92880782+yassineidrissi@users.noreply.github.com>
+Date:   Tue Aug 27 21:56:26 2024 +0000
+
+    add button signin and sing out in the game & run two pages in ngnix
+
+commit 7c4292afe9e70cdd8030ef29d4157424925b06cd
+Author: Ramzy842 <ramzychahbani@gmail.com>
+Date:   Sat Aug 24 19:03:22 2024 +0100
+
+    updates to layout
+
+commit c12fcde702189b9cb16ec697937a06e5c1c8a4e9
+Author: Ramzi Chahbani <rchahban@c2r8p2.1337.ma>
+Date:   Fri Aug 23 21:18:01 2024 +0100
+
+    signin and signup pages
+
+commit 36791813bb9bfd58515183df711d94b8059b7918
+Author: yassine idrissi <92880782+yassineidrissi@users.noreply.github.com>
+Date:   Fri Aug 16 13:28:49 2024 +0000
+
+    copy imgs to nginx container
+
+commit e3e024162b6fab8b182ed2680042114d798e1163
+Author: yassine idrissi <92880782+yassineidrissi@users.noreply.github.com>
+Date:   Fri Aug 16 13:15:08 2024 +0000
+
+    add backgroung
+
+commit 5e6f261cfd1f5b29976f3e0b78c3277635576faa
+Author: yassine idrissi <92880782+yassineidrissi@users.noreply.github.com>
+Date:   Fri Aug 16 13:11:54 2024 +0000
+
+    add backgroung
+
+commit 803664dd5216bf4700c52e6172fd2aeedfbe4a50
+Author: yassine idrissi <92880782+yassineidrissi@users.noreply.github.com>
+Date:   Fri Aug 16 12:07:50 2024 +0000
+
+    add single Player mode
+
+commit d23618f05c004bdb142124649c917f6d78a06042
+Author: yassine idrissi <92880782+yassineidrissi@users.noreply.github.com>
+Date:   Fri Aug 16 02:10:18 2024 +0000
+
+    add score
+
+commit cf53ed6e1a17638d0129ff6f20f1907772ee87e6
+Author: yassine idrissi <92880782+yassineidrissi@users.noreply.github.com>
+Date:   Tue Aug 13 18:51:12 2024 +0000
+
+    add 2d game controle with keyboard
+
+commit 2a9029838a34d083bb325138f555b7f1d379fcc5
+Author: yassine idrissi <92880782+yassineidrissi@users.noreply.github.com>
+Date:   Mon Aug 12 20:56:02 2024 +0000
+
+    comment the version in 3.9 to avoid the WARN
+
+commit 8282f20b1e645fffb31dd30d14785e420ef41368
+Author: yassine idrissi <92880782+yassineidrissi@users.noreply.github.com>
+Date:   Mon Aug 12 13:45:38 2024 +0000
+
+    merge project to codespace
+
+commit 35d550d415b33948d76e3a8ff042cfe5a09e6053
+Author: madebyamine <>
+Date:   Sun Aug 11 11:05:24 2024 -0400
+
+    adding mandatory server
+
+commit f74fed746dbb1c80037babcae374711680cbe5fe
+Author: Yassine Idrissi <yaidriss@c1r5p6.1337.ma>
+Date:   Fri Aug 9 18:23:10 2024 +0100
+
+    create nessacery files
+
+commit da0ffae4fc67d4f17fc8452779ba6e7753f54aa9
+Author: yassine idrissi <yassine42idrissi@gmail.com>
+Date:   Fri Aug 9 17:02:06 2024 +0100
+
+    first commit

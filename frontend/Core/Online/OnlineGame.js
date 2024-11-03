@@ -156,12 +156,12 @@ class OnlineGame extends HTMLElement {
     this.gameSocket = new WebSocket(`ws://localhost:8000/ws/game/${matchID}/?token=${access_token}`);
 
     this.gameSocket.onopen = () => {
-      //console.log('WebSocket connection established');
+      //////console.log('WebSocket connection established');
       this.drawGame();
     };
 
     this.gameSocket.onclose = () => {
-      //console.log('WebSocket connection closed');
+      //////console.log('WebSocket connection closed');
     };
 
     this.gameSocket.onmessage = (event) => {
@@ -465,7 +465,7 @@ class OnlineGame extends HTMLElement {
       });
       response = await this.handleAuthResponse(response, this.deleteMatch.bind(this), matchID);
       if (response.ok) {
-        //console.log('Match deleted');
+        //////console.log('Match deleted');
         window.location.href = 'https://127.0.0.1/';
       }
     } catch (error) {

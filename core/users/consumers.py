@@ -58,16 +58,21 @@ class UserOnline(WebsocketConsumer):
             }))
 
     def disconnect(self, close_code):
+        print('disconnect')
         if self.user.is_authenticated:
             async_to_sync(self.update_user_status)(-1) 
 
     @database_sync_to_async
     def update_user_status(self, delta):
-        self.user.is_online += delta
-        if self.user.is_online < 0:
-            self.user.is_online = 0
-        print('update_user_status', self.user.is_online)
-        self.user.save()
+        try:
+            user = User.objects.get(id=self.user.id)  # Ensure the user still exists
+            user.is_online += delta
+            if user.is_online < 0:
+                user.is_online = 0
+            print('update_user_status', user.is_online)
+            user.save()
+        except User.DoesNotExist:
+            print('User does not exist, cannot update status.')
 
 # from channels.generic.websocket import WebsocketConsumer
 # from asgiref.sync import async_to_sync

@@ -2,16 +2,23 @@ class Settings extends HTMLElement {
 	constructor() {
         super();
         this.attachShadow({ mode: 'open' });
-		this.isFaEnabled  = false;
+		this.isFaEnabled  = window.UserData.state_2fa;
 		this.editUsernameMode = false;
 		this.editPasswordMode = false;
 		this.username = `NoobMaster69`;
 		this.password = `chi haja`;
-		this.render()
+		this.qr_url = window.UserData.img_qr;
 		this.hashPass();
+		this.render()
     }
 	render ()
 	{
+		// ////console.log("2fa state: ", this.isFaEnabled);
+		// ////console.log("QR URL:", this.qr_url);
+		// //console.log("Window QR URL:", window.UserData);
+		// this.qr_url = window.UserData.qr_img;
+
+		// ////console.log(window.UserData.qr_img);
 		const settings = document.createElement("div");
 		settings.className = "z-3 position-absolute top-0 start-0 end-0 bottom-0 d-flex justify-content-center align-items-center text-light"
 		settings.id = "overlay"
@@ -43,8 +50,9 @@ class Settings extends HTMLElement {
 							: `<h2 class="text-secondary fs-4">Activate 2FA <span class="text-danger fw-light ms-2 fs-6">Disabled</span></h2>`}
 							<p class="fs-6">Enable two-factor authentication (2FA) for enhanced account protection.</p>
 							<!-- <button id="fa-btn" class="fs-6 border fw-medium  border-danger text-light">Disable</button> -->
-							${this.isFaEnabled ? `<button id="disable-fa" onclick='Update2fa(false)' class="fs-6 border fw-medium bg-danger  border-danger text-light px-2">Disable</button>` 
-								: `<button id="enable-fa" onclick='Update2fa(true)' class="fs-6 border fw-medium bg-success border-success text-light px-2">Enable</button>` }
+							${this.isFaEnabled ? `<button id="disable-fa" class="fs-6 border fw-medium bg-danger  border-danger text-light px-2">Disable</button>` 
+								: `<button id="enable-fa"  class="fs-6 border fw-medium bg-success border-success text-light px-2">Enable</button>` }
+							${this.isFaEnabled ? `<img src="${this.qr_url}" height="120" width="120" ></img>` : ''}
 						</div>
 					</div>
 		`
@@ -126,15 +134,24 @@ class Settings extends HTMLElement {
 		}
 		if (this.shadowRoot.getElementById("disable-fa"))
 		{
-			this.shadowRoot.getElementById("disable-fa").addEventListener("click", () => {
+			this.shadowRoot.getElementById("disable-fa").addEventListener("click",async () => {
+				await Update2fa(false);
 				this.isFaEnabled = false;
+				//console.log('enabel',window.UserData)
+				this.qr_url = window.UserData.img_qr;
 				this.render()
 			})
 		}
 		if (this.shadowRoot.getElementById("enable-fa"))
 		{
-			this.shadowRoot.getElementById("enable-fa").addEventListener("click", () => {
+			this.shadowRoot.getElementById("enable-fa").addEventListener("click",async () => {
+				await Update2fa(true);
 				this.isFaEnabled = true;
+				//console.log('denabel',window.UserData)
+				this.qr_url = window.UserData.img_qr;
+				//console.log('denabel',window.UserData)
+
+				////console.log(window.UserData)
 				this.render()
 			})
 		}

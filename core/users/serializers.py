@@ -11,6 +11,7 @@ from io import BytesIO
 import os
 from django.conf import settings
 from django.db import models
+from .tests import generate_new_username
 from .models import Friend
 
 
@@ -63,7 +64,7 @@ class UserDataSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['id', 'state_2fa', 'first_name', 'last_name', 'img_url', 'username', 'friends','win_stats', 'loss_stats']
+        fields = ['id', 'state_2fa', 'first_name', 'last_name', 'img_url', 'username', 'friends','win_stats', 'loss_stats','img_qr']
 
     def get_friends(self, obj):
         friend_instance = Friend.objects.filter(user=obj).first()
@@ -88,6 +89,11 @@ class User42Login(serializers.ModelSerializer):
             full_name= validated_data['full_name']
         )
         return user
+    def validate_username(self, username):
+        if User.objects.filter(username=username).exists():
+            username = generate_new_username(username)
+        return username
+
 
 
 class LoginUserSerializer(serializers.ModelSerializer):
@@ -125,6 +131,7 @@ class UserUpdateSerializer(serializers.ModelSerializer):
             # except serializers.ValidationError as e:
             #     raise serializers.ValidationError({"password": list(e.messages)})
         if 'username' in validated_data:
+            username = validated_data['username']
             if User.objects.filter(username=validated_data['username']).exists():
                 raise serializers.ValidationError({"username": "username is already taken"})
             instance.username = validated_data.get('username', instance.username)
@@ -173,7 +180,7 @@ class UserUpdateSerializer(serializers.ModelSerializer):
         data = super().to_representation(instance)
         data['img_url'] = instance.img_url
         if instance.img_qr:
-            data['qr_img'] = instance.img_qr.url 
+            data['img_qr'] = instance.img_qr.url 
         print('data:', data)
         return data
     

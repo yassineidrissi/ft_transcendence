@@ -10,19 +10,18 @@ async function fetchHistory(userId) {
     response = await handleAuthResponse(response, fetchHistory, userId);
 
     if (!response.ok) {
-        let data = await response.json();
-        console.log(data);
-        return data;
-    } else if (!access_token) {
-        urlRoute('signin');
+		urlRoute('signin');
         return null
-    }
+	}
+	let data = await response.json();
+	return data;
 }
 
 async function fetchDateHistory(date) {
     if (!date)
         return;
-    const newDate = new Date(date)
+	const newDate = new Date(date)
+	date = newDate
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, '0'); // months are 0-indexed
     const day = String(date.getDate()).padStart(2, '0');
@@ -36,14 +35,12 @@ async function fetchDateHistory(date) {
     });
 
     response = await handleAuthResponse(response, fetchDateHistory, date);
-
-    if (!response.ok) {
-        let data = await response.json();
-        return data;
-    } else if (!access_token) {
-        urlRoute('signin');
+    if (!response.ok || !access_token) {
+		urlRoute('signin');
         return null
     }
+	let data = await response.json();
+	return data;
 }
 
 async function getYesterdatHistory() {

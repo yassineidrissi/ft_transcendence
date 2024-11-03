@@ -11,6 +11,7 @@ def generate_new_username(username):
     while User.objects.filter(username=username).exists():
         rand = random.randint(0, 36)
         username += strting[rand]
+    print('generate_new_username',username)
     return username
 
 

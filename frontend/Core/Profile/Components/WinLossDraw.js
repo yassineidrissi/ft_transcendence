@@ -7,16 +7,12 @@ class WinLossDraw extends HTMLElement {
 		stats.innerHTML = `
 				<div class="stat win-stat mx-4">
 					<p class="label mb-0 fs-4 fw-medium fs-5 text-success">W</p>
-					<p class="value fs-4">15</p>
+					<p class="value fs-4">${window.UserData.win_stats}</p>
 				</div>
 				<div class="stat loss-stat mx-4">
 					<p class="label mb-0 fs-4 fw-medium fs-5 text-danger">L</p>
-					<p class="value fs-4">2</p>
+					<p class="value fs-4">${window.UserData.loss_stats}</p>
 				</div>
-				<!-- <div class="stat draw-stat mx-4">
-					<p class="label mb-0 fs-4 fw-medium fs-5 text-info">D</p>
-					<p class="value fs-4">1</p>
-				</div> -->
 		`
 		const style = document.createElement('style');
 		style.textContent = `
