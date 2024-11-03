@@ -9,7 +9,7 @@ class Win extends HTMLElement {
 		win.id = "win"
 		win.innerHTML = `
 				<div class="d-flex align-items-center">
-					<img src="./Core/Shared/assets/avatar.jpg" class="mb-0 me-2	rounded" width="56" ></img>
+					<img src=${this.result.opponent.image_url} class="mb-0 me-2	rounded" width="56" ></img>
 					<p class="mb-0 fs-5 fw-medium">${this.result.opponent.username}</p>
 				</div>
 				<div class="mb-0 d-flex align-items-center fw-bold fs-3 w-25 justify-content-between px-4"> <span class="d-inline-block fs-3">${this.result.opponent.score}</span> -  <span class="d-inline-block fs-3">${this.result.player.score}</span></div>

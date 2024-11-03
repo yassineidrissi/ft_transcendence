@@ -2,13 +2,17 @@ class HistoryGlimpse extends HTMLElement {
 	constructor() {
 		super();
 		this.attachShadow({ mode: 'open' });
+		
+		this.render()
+	}
+	render ()
+	{
 		const history = document.createElement("div");
-		this.inputValue = ""
 		const showHistory = JSON.parse(this.getAttribute("showHistory"));
 		history.className = `history ${this.getAttribute("class")} w-100 h-100 ${!showHistory && "invisible"} p-2`;
 		history.innerHTML = `<history-header></history-header>`
-		history.innerHTML += `<input type="date" id="input-value" value="${this.inputValue}" class="mb-4 align-self-end " ></input>`
-		history.innerHTML += `<scores-list customeDate=${JSON.stringify(this.inputValue)} ></scores-list>`
+		// history.innerHTML += `<input type="date" id="input-value" value="${this.inputValue}" class="mb-4 align-self-end " ></input>`
+		history.innerHTML += `<scores-list  ></scores-list>`
 		const style = document.createElement('style');
 		style.textContent = `
 			@import url('https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css');
@@ -36,11 +40,7 @@ class HistoryGlimpse extends HTMLElement {
 			}
 		`;
 		this.shadowRoot.append(style, history);
-		const inputField = this.shadowRoot.getElementById("input-value")
-		inputField.addEventListener("input", () => {
-			this.inputValue = inputField.value;
-			//console.log(this.inputValue);
-		})
+		
 	}
 }
 
