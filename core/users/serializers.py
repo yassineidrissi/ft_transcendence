@@ -75,7 +75,7 @@ class UserDataSerializer(serializers.ModelSerializer):
 class FriendOnlineSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['id', 'username', 'img_url', 'is_online']
+        fields = ['id', 'username', 'img_url']
 class User42Login(serializers.ModelSerializer):
     class Meta:
         model = User  # Make sure User model has the fields 'email', etc.
