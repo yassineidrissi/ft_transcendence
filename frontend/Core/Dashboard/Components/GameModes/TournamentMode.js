@@ -8,13 +8,15 @@ class TournamentMode extends HTMLElement {
         this.tournamentName = ""
         this.nickname = ""
         this.render()
+        this.roomSocket = null;
+        // this.initSocket()
     }
     render()
     {
         
         const tournamentMode = document.createElement('div');
-        tournamentMode.id = "tournament-mode"
-        tournamentMode.className = "position-relative rounded ";
+        // tournamentMode.id = "tournament-mode"
+        tournamentMode.className = "rounded ";
         tournamentMode.innerHTML = `
         ${this.isCreatingTournament ? `<div id="overlay" class=" z-2 position-absolute top-0 bottom-0 start-0 end-0 p-4">
             <img id="close" src="./Core/Shared/assets/exit.svg" height="44" width="44" class="position-absolute top-0 end-0 cursor-pointer	" ></img>
@@ -24,7 +26,7 @@ class TournamentMode extends HTMLElement {
                 <button id="create-tournament" class=" border border-light fw-semibold fs-6 px-2 py-1 position-absolute bottom-0 end-0">Create</button>
             </div> 
         </div>` : ``}
-        <div class="d-flex">
+        <div class="d-flex mb-4 position-relative " id="tournament-mode">
                 <game-mode color="#18be7f" title="Tournament"></game-mode>
                 <div class="d-flex justify-content-between w-100 ms-4 p-2">
                     <p class="text-light fw-bold fs-3">Prove your ping pong prowess in thrilling tournaments!<p>
@@ -70,10 +72,12 @@ class TournamentMode extends HTMLElement {
                         </defs>
                     </svg>
                 </div>
-                <button id="start" class="start px-4 py-1 border border-light fw-bold fs-5">Start</button>	
-            </div>
-            					
+                <button id="start" class="start px-4 py-1 border border-light fw-bold fs-5">Start</button>
+               
+                </div>
+            <tournament-game></tournament-game>
         `
+
 
         const style = document.createElement('style');
         style.textContent = `@import url('https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css');
@@ -174,6 +178,22 @@ class TournamentMode extends HTMLElement {
             navigateTo('signin');
         }
     }
+
+    initSocket(){
+		this.roomSocket = new WebSocket(`ws://localhost:8000/ws/rooms/?token=${this.access_token}`);
+		this.roomSocket.onclose = function(event){
+			console.log("Connected to the room socket")
+			// localStorage.setItem("roomSocket", this.roomSocket)
+		}
+        this.roomSocket.onmessage = function(event){
+            const data = JSON.parse(event.data);
+            // console.log("Received message: ", data);
+            if (data.type === 'room_update') {
+                console.log("Room update: ", data);
+                // document.querySelector("#app > core-layout").shadowRoot.querySelector("#container > div > dashboard-page").shadowRoot.querySelector("div > tournaments-section").render;
+            }
+        }
+	}
 }
 
 customElements.define('tournament-mode', TournamentMode);

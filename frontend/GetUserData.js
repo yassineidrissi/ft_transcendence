@@ -14,6 +14,7 @@ async function check_auth() {
         let data = await response.json();
         console.log('User data:', data);
         // userStateOnline(data.id);
+        
         localStorage.setItem("isUserSignedIn", true)
         window.UserData = data;
     } else if (!access_token) {

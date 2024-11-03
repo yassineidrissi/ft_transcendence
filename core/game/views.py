@@ -26,8 +26,8 @@ def startgame(request, match_id):
         'message': 'Game not started'
     })
 
-@api_view(['POST'])
-@permission_classes([IsAuthenticated])
+# @api_view(['POST'])
+# @permission_classes([IsAuthenticated])
 # def startmatch(request, status):
 #     user = request.user
 #     print('im here', flush=True)
@@ -132,7 +132,7 @@ def start_match(request, status):
 				'player1': match.p1.username,
                 'message': 'You are already in the match'
             })
-        if match.is_invite_only and user.is_invited_from != match.p1:
+        if match.is_invite_only and user.is_invited_from.username != match.p1.username:
             # return JsonResponse({
             #     'success': False,
             #     'message': 'You are not invited'
