@@ -8,12 +8,13 @@ class Messages extends HTMLElement {
     }
 
     init() {
-        const container = document.createElement('section');
+        const container = document.createElement('div');
+        container.className = "container"
         container.innerHTML = `
             <div class="chat-container">
                 <div class="sidebar">
                     <div class="sidebar-header">
-                        <h2>Messages</h2>
+                        <h2 class="text-dark">Messages</h2>
                     </div>
                     <div class="chat-list">
                         <!-- Chat list items will be inserted here -->
@@ -61,38 +62,22 @@ class Messages extends HTMLElement {
 
         const style = document.createElement('style');
         style.textContent = `
-            :host {
-                --primary-color: #0084ff;
-                --secondary-color: #f0f2f5;
-                --text-primary: #050505;
-                --text-secondary: #65676b;
-                --background-white: #ffffff;
-                --divider-color: #e4e6eb;
-                --message-received: #e4e6eb;
-                --message-sent: #0084ff;
-                --hover-color: #f2f2f2;
-                --border-radius: 10px;
-                
-                display: block;
-                height: 100vh;
-                width: 100%;
-                font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            }
-
+            
+        @import url('https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css');
             .chat-container {
+                background: #020D14 !important;
                 display: flex;
-                height: 100%;
-                background: var(--background-white);
+                height: 80vh;
                 position: relative;
             }
 
             /* Sidebar Styles */
             .sidebar {
                 width: 320px;
-                border-right: 1px solid var(--divider-color);
+                border-right: 1px solid #fff;
                 display: flex;
                 flex-direction: column;
-                background: var(--background-white);
+                background: #E0EDF2;
             }
 
             .sidebar-header {
@@ -104,7 +89,6 @@ class Messages extends HTMLElement {
                 margin: 0;
                 font-size: 24px;
                 font-weight: 600;
-                color: var(--text-primary);
             }
 
             .chat-list {
