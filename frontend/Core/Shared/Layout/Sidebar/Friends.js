@@ -6,6 +6,8 @@ class Friends extends HTMLElement {
         this.render();
 	}
 	render() {
+		// console.log(JSON.parse(this.getAttribute("data")));
+		console.log(window.UserData);
 		const friends = document.createElement('div');
 		friends.className = "mt-4";
 		const modalVisibility = this.isModalOpen ? "" : "d-none";
@@ -15,7 +17,7 @@ class Friends extends HTMLElement {
 				<p class="fs-5 fw-semibold mb-0">Friends <span class="text-light-emphasis fw-medium">1/4</span></p>
 				<img src="./Core/Shared/assets/add-user.svg" class="rounded cursor-pointer" id="add-friend" />
 			</div>
-			<friends-list></friends-list>
+			<friends-list data=${JSON.stringify(window.UserData)} ></friends-list>
 		`;
 
 		const style = document.createElement('style');

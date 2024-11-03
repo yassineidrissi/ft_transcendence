@@ -6,9 +6,9 @@ class Friend extends HTMLElement {
     }
 
     render() {
-        const name = this.getAttribute("name") || "Unknown";
-        const img_url = this.getAttribute("img_url") || "https://w7.pngwing.com/pngs/178/595/png-transparent-user-profile-computer-icons-login-user-avatars-thumbnail.png";
-		const id = this.getAttribute("id") || "0";
+        const name = this.getAttribute("name");
+        const img_url = this.getAttribute("img_url") 
+		const id = this.getAttribute("id");
 		window.UserData.online = true;
         const friend = document.createElement('div');
         friend.className = "d-flex align-items-center justify-content-between mb-2";
@@ -53,9 +53,9 @@ class Friend extends HTMLElement {
         `;
 
         this.shadowRoot.append(style, friend);
-		const inviteBtn = this.shadowRoot.getElementById("invite").addEventListener("click", (e) => {
+		this.shadowRoot.getElementById("invite").addEventListener("click", (e) => {
 			console.log(id);
-			sendNotification(window.UserData.id).then(data => console.log(data))
+			sendNotification(id).then(data => console.log(data))
 		})
     }
 }

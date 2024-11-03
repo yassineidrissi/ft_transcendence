@@ -3,6 +3,7 @@ class OfflineGame extends HTMLElement {
 		super();
 		this.attachShadow({ mode: 'open' });
 		this.isMultiplayer = true;
+		this.ChangeStatus = false;
 		this.player1Score = 0;
 		this.player2Score = 0;
 		this.winningScore = 5;
@@ -92,24 +93,22 @@ class OfflineGame extends HTMLElement {
 		const singleplayerButton = this.shadowRoot.getElementById("singleplayerButton");
 		const multiplayerButton = this.shadowRoot.getElementById("multiplayerButton");
 
-		const resetGame = () => {
-			this.player1Score = 0;
-			this.player2Score = 0;
-			trophy.classList.add('hidden');
-			leftPaddle.score = 0;
-			rightPaddle.score = 0;
-			updateScore();
-		};
+		// function resetGame(){
+		// 	trophy.classList.add('hidden');
+		// 	// updateScore();
+		// 	this.render();
+		// };
 
-		singleplayerButton.addEventListener("click", () => {
+		singleplayerButton.addEventListener('click', () => {
 			this.isMultiplayer = false;
-			resetGame();
+			// resetGame();
 			this.render();
 		});
-
-		multiplayerButton.addEventListener("click", () => {
+		
+		multiplayerButton.addEventListener('click', () => {
 			this.isMultiplayer = true;
-			resetGame();
+			console.log('multi_player :' );
+			// resetGame();
 			this.render();
 		});
 
@@ -117,7 +116,7 @@ class OfflineGame extends HTMLElement {
 		const canvas = this.shadowRoot.getElementById("gameCanvas");
 		const leftScore = this.shadowRoot.getElementById('leftScore');
 		const rightScore = this.shadowRoot.getElementById('rightScore');
-		
+
 		if (canvas.getContext) {
 			const ctx = canvas.getContext('2d');
 			const paddleWidth = 5, paddleHeight = 70;
@@ -236,6 +235,13 @@ class OfflineGame extends HTMLElement {
 			}
 
 			function gameLoop() {
+				if(this.ChangeStatus)
+				{
+					leftPaddle.score = 0;
+					rightPaddle.score = 0;
+					this.ChangeStatus = false;
+					// resetGame();
+				}
 				ctx.clearRect(0, 0, canvas.width, canvas.height);
 				drawPaddle(leftPaddle);
 				drawPaddle(rightPaddle);

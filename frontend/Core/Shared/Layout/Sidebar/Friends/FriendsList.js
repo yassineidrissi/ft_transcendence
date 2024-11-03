@@ -2,16 +2,18 @@ class FriendsList extends HTMLElement {
     constructor() {
         super();
         this.attachShadow({ mode: 'open' });
-        this.friendsList = document.createElement('div');
-		this.friendsList.className = "mt-4";
-        // friendsList.innerHTML = `
-		// 	<single-friend name="" img_url='https://w7.pngwing.com/pngs/178/595/png-transparent-user-profile-computer-icons-login-user-avatars-thumbnail.png'></single-friend>
-		// 	<single-friend name="Yassine idrissi" img_url='https://w7.pngwing.com/pngs/178/595/png-transparent-user-profile-computer-icons-login-user-avatars-thumbnail.png'></single-friend>
-		// 	<single-friend name="Amine l7atba" img_url='https://w7.pngwing.com/pngs/178/595/png-transparent-user-profile-computer-icons-login-user-avatars-thumbnail.png'></single-friend>
-		// `
-		
-		this.update()
-		
+		// this.data = (this.getAttribute("data"))
+		this.render()
+	}
+	render ()
+	{
+		console.log((window.UserData.friends));
+		// console.log(this.data);
+		const friendsList = document.createElement('div');
+		friendsList.className = "mt-4";
+		window.UserData.friends.forEach(element => {
+			friendsList.innerHTML += `<single-friend name=${element.username} img_url=${element.img_url} id=${element.id} ></single-friend>`
+		});
 		
 		// ///s/df/sd/f/sd/f/s/df/s/df/
 		const style = document.createElement('style');
@@ -26,19 +28,21 @@ class FriendsList extends HTMLElement {
 			}
 		`;
 			
-        this.shadowRoot.append(style, this.friendsList);
-    }
-	update(){
-		Array.from(this.friendsList.children).forEach(child => child.remove());
-
-		window.UserData.friends.forEach(friend => {
-			const singleFriend = document.createElement('single-friend');
-			singleFriend.setAttribute("name", friend.username);
-			singleFriend.setAttribute("img_url", friend.img_url);
-			singleFriend.setAttribute("id", friend.id);
-			this.friendsList.append(singleFriend);
-		});
+        this.shadowRoot.append(style, friendsList);
 	}
+        
+    
+	// update(){
+	// 	Array.from(this.friendsList.children).forEach(child => child.remove());
+
+	// 	window.UserData.friends.forEach(friend => {
+	// 		const singleFriend = document.createElement('single-friend');
+	// 		singleFriend.setAttribute("name", friend.username);
+	// 		singleFriend.setAttribute("img_url", friend.img_url);
+	// 		singleFriend.setAttribute("id", friend.id);
+	// 		this.friendsList.append(singleFriend);
+	// 	});
+	// }
 }
 
 customElements.define('friends-list', FriendsList);
