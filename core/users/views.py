@@ -33,6 +33,7 @@ def getFriendsOnline(request):
     friends = Friend.objects.get(user=user).friends.all()
     online_friends = friends.filter(is_online__gt=0)
     serialized_friends = FriendOnlineSerializer(online_friends, many=True)
+    print('serialized_friends::',serialized_friends.data)
     return Response({'results': serialized_friends.data}, status=status.HTTP_200_OK)
 
 def generetToekn2fa(user):

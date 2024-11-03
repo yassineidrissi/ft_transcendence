@@ -14,6 +14,7 @@ async function Register(){
             body: data
     })
     let result = await response.json();
+    console.log(result);
     return result;
 }
 async function LogIn(){
@@ -117,7 +118,7 @@ async function LogOut(){
     localStorage.removeItem('access_token');
     localStorage.removeItem('isUserSignedIn');
         // ////console.log('socket closedddddddddd',);
-        // socket.close();
+    socket.close();
     window.UserData = {};
     navigateTo('/signin');
 }
