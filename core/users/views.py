@@ -315,7 +315,6 @@ def validate2fa(request):
         }
         return response
     return Response({'message': 'Invalid 2fa code'}, status=status.HTTP_400_BAD_REQUEST)
-
 # *this for friend part
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])

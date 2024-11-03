@@ -6,7 +6,6 @@ function getToken(){
 	} else {
 		console.log("Token not found in URL.");
 	}
-	
 }
 getToken();
 let socket = null;

@@ -46,6 +46,7 @@ class Confirm2FA extends HTMLElement {
                 {
                     console.log(result);
                     navigateTo('/')
+                    check_auth();
                 }
                 else
                 {
