@@ -80,9 +80,10 @@ const urlRoutes = {
 
 if (!JSON.parse(localStorage.getItem("isUserSignedIn")))
 	localStorage.setItem("isUserSignedIn", JSON.stringify(false));
+	  
 
 const handleLayout = async (route) => {
-	html = await fetch(route.page).then(response => response.text());
+	const html = await fetch(route.page).then(response => response.text());
 	if (route.title === "Sign up" || route.title === "Sign in" || route.title === "Two Factor Authentication")
 		app.innerHTML = `<auth-layout route="${route.title}">${html}</auth-layout>`
 	else if (route.title === "Dashboard" || route.title === "Profile")
@@ -100,29 +101,6 @@ const usersDB = [
 	"testuser",
 	"NoobMaster69"
 ]
-
-// function createNotificationSocket() {
-// 	const Socket = new WebSocket(
-// 		`ws://localhost:8000/ws/notification/?token=${localStorage.getItem('access_token')}`
-// 	)
-
-// 	Socket.onmessage = function (e) {
-// 		const data = JSON.parse(e.data)
-// 		//console.log({
-// 			"is_read": data.is_read,
-// 			"content": data.content,
-// 			"timestamp": data.timestamp,
-// 			"fulfill_link": data.fulfill_link,
-// 			"reject_link": data.reject_link
-// 		})
-// 	}
-
-// 	Socket.onclose = function (e) {
-// 		console.error('Chat socket closed unexpectedly');
-// 	}
-// }
-
-// createNotificationSocket()
 
 const isUser = arg => {
 	const target = usersDB.find(user => user.toLowerCase() == arg);
@@ -210,26 +188,7 @@ const urlRoute = route => {
 	urlLocationHandler();
 }
 
-// !---------------------------------
-// async function checkAccessToken(route) {
-//     const token = localStorage.getItem('access_token') || '';
-//     if (token === '') {
-//         //console.log('No token found. Redirecting to sign-in.');
-//         localStorage.removeItem('isUserSignedIn');
-//         return false;
-//     }
-//     return true;
-// }
+
 const navigateTo = async (route) => {
-	// const hasToken = await checkAccessToken(route);
-	// if (hasToken) {
-	//     urlRoute(route);
-	// } else {
-	// 	//console.log(route);
-	// 	if (route == "signin" || route == "signup")
-	//     	urlRoute(route);
-	// 	else
-	// 		urlRoute("signin");
-	// }
 	urlRoute(route)
 };

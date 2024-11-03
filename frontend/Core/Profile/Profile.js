@@ -23,10 +23,6 @@ class Profile extends HTMLElement {
 		console.log(window.UserData);
 		const profile = document.createElement("div");
 		profile.className = "container  d-flex flex-column align-items-center text-light"
-<<<<<<< HEAD
-=======
-		//////console.log(window.UserData);
->>>>>>> ecfe9079378a4c3362eb3db83b1d33deacfeaab1
 		profile.innerHTML = `
 				<img src=${window.UserData['img_url']}  width="120" class="rounded" ></img>
 				<div id"profile-info" class="d-flex flex-column align-items-center mb-4">
