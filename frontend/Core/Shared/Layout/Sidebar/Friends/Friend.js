@@ -39,8 +39,8 @@ class Friend extends HTMLElement {
             }
 			#online-status, #offline-status
 			{
-				top: -4px;
-				left: -4px;
+				top: -2px;
+				left: -2px;
 				border-radius: 24px;
 				position: absolute;
 				width: 12px;
