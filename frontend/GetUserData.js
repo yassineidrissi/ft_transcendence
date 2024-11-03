@@ -76,7 +76,17 @@ async function userStateOnline(id) {
     let wsProtocol = window.location.protocol === "https:" ? "wss://" : "ws://";
     let url = `ws://127.0.0.1:8000/ws/socket-server/?token=${access_token}`;
     socket = new WebSocket(url);
-    ////console.log(socket);
+    socket.onopen = function (event) {
+        console.log('WebSocket connection established');
+
+        // Send a heartbeat every 25 seconds
+        setInterval(() => {
+            if (socket.readyState === WebSocket.OPEN) {
+                socket.send(JSON.stringify({ type: 'heartbeat' }));
+            }
+        }, 25000);
+
+    }
     socket.onmessage = function (event) {
         let data = JSON.parse(event.data);
         ////console.log(data);

@@ -141,16 +141,17 @@ class UserUpdateSerializer(serializers.ModelSerializer):
         instance.level = validated_data.get('level', instance.level)
         instance.state_2fa = validated_data.get('state_2fa', instance.state_2fa)
         if img_file:
-            # print('base dir', settings.BASE_DIR)
-            # print('instance.img_url:', instance.img_url)
-            # print('full path:', os.path.join(settings.BASE_DIR, instance.img_url.lstrip('/')))
+            # #print('base dir', settings.BASE_DIR)
+            # #print('instance.img_url:', instance.img_url)
+            # #print('full path:', os.path.join(settings.BASE_DIR, instance.img_url.lstrip('/')))
             if not instance.img_url.startswith('http://') and not instance.img_url.startswith('https://'):
                 if instance.img_url :
-                    # print('media_root:', settings.MEDIA_ROOT)
-                    # print('instance.img_url:', instance.img_url)
-                    # print('deleting:', os.path.join('/app/', instance.img_url.lstrip('/')))
-                    os.remove(os.path.join('/app/', instance.img_url.lstrip('/')))
+                    #  print('instance.img_url:', instance.img_url)
+                    #  print('os.path.join:',os.path.join('/main/core/', instance.img_url.lstrip('/'))
+                    os.remove(os.path.join('/main/core/', instance.img_url.lstrip('/'))
+)
             img_url = default_storage.save(f'profile_pics/{instance.username}', img_file)
+            print('img_url:', img_url)
             img_url = default_storage.url(img_url)
             instance.img_url = img_url
 
@@ -166,9 +167,9 @@ class UserUpdateSerializer(serializers.ModelSerializer):
             qr_image.save(qr_io, format='PNG')
             qr_io.seek(0)
             instance.img_qr.save(f'{instance.email}_qr.png', qr_io)
-            print('instance.otp_secret',instance.otp_secret)
-            print('instance.totp',instance.totp)
-            print('uri:', uri)
+            #print('instance.otp_secret',instance.otp_secret)
+            #print('instance.totp',instance.totp)
+            #print('uri:', uri)
         else:
             if instance.img_qr:
                 instance.img_qr.delete()
@@ -181,9 +182,8 @@ class UserUpdateSerializer(serializers.ModelSerializer):
         data['img_url'] = instance.img_url
         if instance.img_qr:
             data['img_qr'] = instance.img_qr.url 
-        print('data:', data)
+        #print('data:', data)
         return data
-    
 
 # class FriendUserSerializer(serializers.ModelSerializer):
 #     class Meta:

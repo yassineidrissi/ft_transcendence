@@ -5,8 +5,8 @@ async function Register(){
     let password1 = document.querySelector("#app > auth-layout").shadowRoot.querySelector("#form-container > signup-page").shadowRoot.querySelector("#confirm-password").shadowRoot.querySelector("#confirm-password")
 
     let data = new FormData();
-    data.append("username", Rusername.value);
-    data.append("email", Remail.value);
+    data.append("username", escapeHTML(Rusername.value));
+    data.append("email", escapeHTML(Remail.value));
     data.append("password", Rpassword.value);
     data.append("password1", password1.value);
     let response = await fetch('http://127.0.0.1:8000/api/register/', {
@@ -22,7 +22,7 @@ async function LogIn(){
     let Spassword = document.querySelector("#app > auth-layout").shadowRoot.querySelector("#form-container > signin-page").shadowRoot.querySelector("#password").shadowRoot.querySelector("#password")
 
     let data = new FormData();
-    data.append("email", Semail.value);
+    data.append("email", escapeHTML(Semail.value));
     data.append("password", Spassword.value);
     let request = await fetch('http://127.0.0.1:8000/api/login/', {
         method: 'POST',
@@ -49,6 +49,9 @@ async function LogIn(){
     }
 }
 
+function isNumeric(input) {
+    return /^\d+$/.test(input);
+}
 async function validate2fa(input){
     let token = localStorage.getItem('token');
     if(!token)
@@ -56,6 +59,12 @@ async function validate2fa(input){
         urlRoute('signin');
         return;
     }
+    if(!input)
+        return;
+    if(input.length !== 6)
+        return;
+    if(!isNumeric(input))
+        return;
     let response = await fetch('http://127.0.0.1:8000/api/verify2fa/',{
         method: 'POST',
         credentials: 'include',
@@ -64,7 +73,7 @@ async function validate2fa(input){
         },
         body: JSON.stringify({
             token: token,
-            code: input,
+            code: (input),
           }),
     });
     let result = await response.json();

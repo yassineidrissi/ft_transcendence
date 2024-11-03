@@ -30,7 +30,7 @@ async function UpdateUsername(){
 
     const formData = new FormData();
     //////console.log(username.value);
-    formData.append('username', username.value);
+    formData.append('username', escapeHTML(username.value));
     let response = await fetch('http://127.0.0.1:8000/api/updateUser/', {
         method: 'PATCH',
         credentials: 'include',
