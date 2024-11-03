@@ -222,7 +222,7 @@ def callback42(request):
                 return response
             user_serializer = User42Login(data=user_profile)
             if user_serializer.is_valid():
-                response = HttpResponseRedirect('https://127.0.0.1/profile/')
+                response = HttpResponseRedirect('https://127.0.0.1/profile')
                 user = user_serializer.save()
                 refresh = RefreshToken.for_user(user)
                 access_token = str(refresh.access_token)
@@ -287,7 +287,11 @@ def updateUser(request):
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def validate2fa(request):
-    print('fsdfsdf')
+    code  = request.data['code']
+    if not len(code) == 6 :
+        return Response({'message': 'lenght must be 6 '}, status=status.HTTP_400_BAD_REQUEST)
+    if code.isdigit() == False:
+        return Response({'message': 'only numeriques'}, status=status.HTTP_400_BAD_REQUEST)
     email = jwt.decode(request.data['token'], settings.SECRET_KEY, algorithms=['HS256'])['email']
     print('request.data::',request.data)
     print('email::',email)

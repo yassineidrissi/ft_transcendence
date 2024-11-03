@@ -38,7 +38,7 @@ async function LogIn(){
         console.log(result);
         if(result['2fa'] === true)
         {
-            localStorage.setItem('access_token', result.token);
+            localStorage.setItem('token', result.token);
             navigateTo('/2fa');
             return;
         }
@@ -73,7 +73,7 @@ async function validate2fa(input){
         localStorage.setItem('access_token',result.access_token);
         localStorage.setItem('isUserSignedIn', true);
     }
-    return result;
+    return response;
 }
 // async function check_auth()
 // {
