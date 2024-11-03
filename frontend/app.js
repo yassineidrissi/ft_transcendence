@@ -10,9 +10,7 @@ function getToken(){
 getToken();
 let socket = null;
 check_auth();
-if (!JSON.parse(localStorage.getItem("isUserSignedIn")))
-	localStorage.setItem("isUserSignedIn", JSON.stringify(false));
-	  
+
 const app = document.getElementById("app");
 const urlRoutes = {
 	404: {

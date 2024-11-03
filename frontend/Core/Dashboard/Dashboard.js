@@ -11,7 +11,7 @@ class Dashboard extends HTMLElement {
             </div>
 			<game-modes><game-modes>
 		`
-		dashboard.innerHTML += `<tournaments-section></tournaments-section>`
+		// dashboard.innerHTML += `<tournaments-section></tournaments-section>`
 		const style = document.createElement('style');
 		style.textContent = `
     		@import url('https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css');

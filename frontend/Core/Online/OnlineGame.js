@@ -429,7 +429,7 @@ class OnlineGame extends HTMLElement {
   }
 
   async fetchMatchID() {
-    const status = "normal";
+    const status = localStorage.getItem('status');
     const token_access = localStorage.getItem('access_token');
     try {
       let response = await fetch(`http://localhost:8000/api/game/${status}/`, {
@@ -442,8 +442,11 @@ class OnlineGame extends HTMLElement {
       response = await this.handleAuthResponse(response, this.fetchMatchID.bind(this));
       if (response.ok) {
         const data = await response.json();
-        //////console.log(data);
-        this.startGame(data.id);
+        //console.log(data);
+        if (data.success)
+          this.startGame(data.id);
+        else
+          this.deleteMatch(data.id);
       }
     } catch (error) {
       console.error(error);
