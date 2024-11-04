@@ -30,6 +30,8 @@ from django.db.models import Q
 @permission_classes([IsAuthenticated])
 def getFriendsOnline(request):
     user = request.user
+    if not Friend.objects.all().count():
+        return Response([], status=status.HTTP_200_OK)
     friends = Friend.objects.get(user=user).friends.all()
     online_friends = friends.filter(is_online__gt=0)
     serialized_friends = FriendOnlineSerializer(online_friends, many=True)
