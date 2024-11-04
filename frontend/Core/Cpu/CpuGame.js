@@ -13,7 +13,7 @@ class Cpu extends HTMLElement {
 		cpuGame.id = "cpu-game";
 		cpuGame.innerHTML = `
 		<div class="w-100 d-flex justify-content-between align-items-center my-4 text-light">
-			<span id="player1" class="bg-primary p-2 px-4 rounded fs-5">player 1</span>
+			<span id="player1" class="bg-primary p-2 px-4 rounded fs-5">${window.UserData.username}</span>
 			<div id="scoreBoard" class="fs-3">
 				<span id="leftScore" class="fw-sem px-2">0</span> - <span id="rightScore" class="fw-sem px-2">0</span>
 			</div>
@@ -300,7 +300,7 @@ class Cpu extends HTMLElement {
 				// Only update AI if more than 1000ms (1 second) has passed since last update
 				if (currentTime - this.lastUpdateTime >= 1000) {
 					let action = get_action();                
-					let epsilone = getState();
+					let epsilone = 0;
 					let stat = "(" + action + ", " + epsilone + ")";
 					getAction(stat);
 					

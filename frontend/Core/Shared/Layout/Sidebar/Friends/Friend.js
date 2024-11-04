@@ -66,6 +66,7 @@ class Friend extends HTMLElement {
 				"reject_url": "reject url action",
 				"is_invite": "true"
 			})).then(data => {//console.log(data); navigateTo("online-game")})
+				navigateTo("online-game")
 			})
 		})
 	}

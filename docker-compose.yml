@@ -105,7 +105,7 @@ services:
       - nginx
     image: nginx/nginx-prometheus-exporter:latest
     container_name: nginx-exporter
-    command: "--nginx.scrape-uri=http://nginx:80/stub_status"
+    command: "--nginx.scrape-uri=https://nginx/stub_status"
     networks:
       - monitoring
     restart: unless-stopped
@@ -187,8 +187,6 @@ services:
     volumes:
       - certs:/usr/share/elasticsearch/config/certs
       - ./config/elasticsearch/elasticsearch_init.sh:/usr/share/elasticsearch/elasticsearch_init.sh
-      - ./config/elasticsearch/ilm_policy.json:/usr/share/elasticsearch/config/ilm_policy.json
-      - ./config/elasticsearch/index_template.json:/usr/share/elasticsearch/config/index_template.json
     networks:
       - elastic
     env_file:
@@ -287,8 +285,6 @@ services:
       - logstashdata:/usr/share/logstash/data
       - certs:/usr/share/logstash/certs
       - ./config/logstash/logstash.conf:/usr/share/logstash/pipeline/logstash.conf:ro
-    #   - ./config/kibana/kibana_init.sh:/usr/share/kibana/kibana_init.sh
-    # command: [ "bash", "/usr/share/kibana/kibana_init.sh" ]
     networks:
       - elastic
     ports:

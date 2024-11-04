@@ -72,6 +72,7 @@ SIMPLE_JWT = {
 
 
 MIDDLEWARE = [
+    'django_prometheus.middleware.PrometheusBeforeMiddleware',
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -80,6 +81,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "corsheaders.middleware.CorsMiddleware",
+    'django_prometheus.middleware.PrometheusAfterMiddleware',
 ]
 
 ROOT_URLCONF = "core.urls"
@@ -147,25 +149,25 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Logging
 
-# LOGGING = {
-#     'version': 1,
-#     'disable_existing_loggers': False,
-#     'handlers': {
-#         'syslog': {
-#             'level': 'DEBUG',
-#             'class': 'logging.handlers.SysLogHandler',
-#             'address': ('logstash', 5045),
-#             'facility': SysLogHandler.LOG_LOCAL0,
-#         },
-#     },
-#     'loggers': {
-#         'django': {
-#             'handlers': ['syslog'],
-#             'level': 'DEBUG',
-#             'propagate': True,
-#         },
-#     },
-# }
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'syslog': {
+            'level': 'DEBUG',
+            'class': 'logging.handlers.SysLogHandler',
+            'address': ('logstash', 5045),
+            'facility': SysLogHandler.LOG_LOCAL0,
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['syslog'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+    },
+}
 
 
 AUTH_USER_MODEL = "users.User"

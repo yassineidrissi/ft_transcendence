@@ -95,23 +95,6 @@ echo "Applying ILM policy"
 curl --cacert certs/ca/ca.crt -k -u ${ELASTIC_USER}:${ELASTIC_PASSWORD} -X PUT 'https://elasticsearch:9200/_ilm/policy/logs_lifecycle_policy?pretty' -H 'Content-Type: application/json' -d '{
   "policy": {
     "phases": {
-      "hot": {
-        "min_age": "0ms",
-        "actions": {
-          "rollover": {
-            "max_age": "3d",
-            "max_primary_shard_size": "5gb"
-          }
-        }
-      },
-      "warm": {
-        "min_age": "3d",
-        "actions": {
-          "forcemerge": {
-            "max_num_segments": 1
-          }
-        }
-      },
       "delete": {
         "min_age": "30d",
         "actions": {

@@ -17,7 +17,7 @@ class TournamentGame extends HTMLElement {
 	}
 
 	render() {
-        console.log('this.tournamentStatus', this.tournamentStatus);
+        // console.log('this.tournamentStatus', this.tournamentStatus);
         const container = document.createElement('div');
         container.className = 'container text-light position-relative';
 
