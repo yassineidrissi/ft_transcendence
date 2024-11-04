@@ -107,7 +107,7 @@ class OfflineGame extends HTMLElement {
 		
 		multiplayerButton.addEventListener('click', () => {
 			this.isMultiplayer = true;
-			console.log('multi_player :' );
+			//console.log('multi_player :' );
 			// resetGame();
 			this.render();
 		});

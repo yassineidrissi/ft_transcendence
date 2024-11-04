@@ -26,20 +26,20 @@ function connectSocket() {
     socket = new WebSocket(`ws://localhost:8000/ws/rooms/?token=${access_token}`);
     socket.onmessage = (event) => {
         const data = JSON.parse(event.data);
-        //////console.log(data.type);
+        ////////console.log(data.type);
         if (data.type === 'room_update') {
             updateRooms(data.rooms);
         }
         else if (data.type === 'final_update') {
-            //////console.log(data.winners);
+            ////////console.log(data.winners);
             if (data.winners[1])
             {
                 final.textContent = data.winners[0].nickname + " vs " + data.winners[1].nickname;
-                //////console.log(data.winners[0].nickname + " vs " + data.winners[1].nickname);
+                ////////console.log(data.winners[0].nickname + " vs " + data.winners[1].nickname);
                 roomstate = 'final';
                 if (data.winners[0].username === current_user || data.winners[1].username === current_user)
                 {
-                    //////console.log('march_id', data.match_id);
+                    ////////console.log('march_id', data.match_id);
                     game.style.display = 'flex';
                     collecgraph.style.display = 'none';
                     window.type_game = 'final_match';
@@ -49,7 +49,7 @@ function connectSocket() {
             else
             {
                 final.textContent = data.winners[0].nickname + " vs ...";
-                //////console.log(data.winners[0].nickname + " vs ...");
+                ////////console.log(data.winners[0].nickname + " vs ...");
             }
         }
         else if (data.type === 'error') {
@@ -199,7 +199,7 @@ async function deleteRoom(roomID) {
         response = await handleAuthResponse(response, deleteRoom);
         if (response.ok) {
             const data = await response.json();
-            //////console.log(data);
+            ////////console.log(data);
         }
     } catch (error) {
         window.location.href = 'https://127.0.0.1/';
@@ -248,7 +248,7 @@ async function getMatchs(room) {
 }
 
 function updateMatches(matches, matchID) {
-    //////console.log(matches);
+    ////////console.log(matches);
     let i = 0;
     matches.forEach(match => {
         players[i].textContent = match.player1;
@@ -267,7 +267,7 @@ function updateMatches(matches, matchID) {
     // if (winner){
     //     collecgraph.style.display = 'block';
     //     container.style.display = 'none';
-    //     //////console.log(winner);
+    //     ////////console.log(winner);
     // }
 }
 
@@ -283,7 +283,7 @@ async function fetchMatches(matchID) {
         response = await handleAuthResponse(response, fetchMatches);
         if (response.ok) {
             const data = await response.json();
-            //////console.log(data);
+            ////////console.log(data);
         }
     } catch (error) {
         window.location.href = 'https://127.0.0.1/frontend/signin/signin.html';
@@ -336,7 +336,7 @@ document.addEventListener('DOMContentLoaded', () => {
 //         this.socket = new WebSocket(`ws://localhost:8000/ws/rooms/?token=${this.access_token}`);
 //         this.socket.onmessage = (event) => {
 //             const data = JSON.parse(event.data);
-//             //////console.log(data.type);
+//             ////////console.log(data.type);
 //             if (data.type === 'room_update') {
 //                 this.updateRooms(data.rooms);
 //             }
@@ -401,7 +401,7 @@ document.addEventListener('DOMContentLoaded', () => {
 //         {
 //             this.getMatchs(room);
 //             startGame(localStorage.getItem('matchID'));
-//             //////console.log('im here');
+//             ////////console.log('im here');
 //             game.style.display = 'none';
 //             collecgraph.style.display = 'block';
 //             container.style.display = 'none';
@@ -511,7 +511,7 @@ document.addEventListener('DOMContentLoaded', () => {
 //             if (response.ok) {
 //                 const data = await response.json();
 //                 localStorage.setItem('roomID', room.id);
-//                 this.updateMatches(data.matches, data.match_id).then(result => //////console.log(result));
+//                 this.updateMatches(data.matches, data.match_id).then(result => ////////console.log(result));
 //                 // this.sendSocketMessage({
 //                 //     action: 'final',
 //                 //     room_id: localStorage.getItem('roomID'),
@@ -524,7 +524,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 //     async updateMatches(matches, matchID) {
 //         return new Promise((resolve, reject) => {
-//             //////console.log(matches);
+//             ////////console.log(matches);
 //             let i = 0;
 //             matches.forEach(match => {
 //                 players[i].textContent = match.player1;
@@ -535,7 +535,7 @@ document.addEventListener('DOMContentLoaded', () => {
 //             game.style.display = 'flex';
 //             collecgraph.style.display = 'none';
 //             localStorage.setItem('matchID', matchID);
-//             //////console.log(matchID);
+//             ////////console.log(matchID);
 //             // // await StartGame(matchID);
 //             // // let gamestart = new ManageGameAttachment(matchID);
 //             // initializeGame(matchID);
@@ -568,7 +568,7 @@ document.addEventListener('DOMContentLoaded', () => {
 //             response = await handleAuthResponse(response, this.fetchMatches);
 //             if (response.ok) {
 //                 const data = await response.json();
-//                 //////console.log(data);
+//                 ////////console.log(data);
 //                 // new ManageGameAttachment(data.match);
 //             }
 //         } catch (error) {
@@ -602,7 +602,7 @@ document.addEventListener('DOMContentLoaded', () => {
 // class ManageGameAttachment {
 //     constructor(matchID) {
 //         this.access_token = localStorage.getItem('access_token');
-//         //////console.log(matchID);
+//         ////////console.log(matchID);
 //         this.matchID = matchID;
 //         this.canvas = document.getElementById('gameCanvas');
 //         this.ctx = this.canvas.getContext('2d');
@@ -686,12 +686,12 @@ document.addEventListener('DOMContentLoaded', () => {
 //                 this.socket = new WebSocket(`ws://localhost:8000/ws/game/${this.matchID}/?token=${this.access_token}`);
 
 //                 this.socket.onopen = () => {
-//                     //////console.log('WebSocket connection established');
+//                     ////////console.log('WebSocket connection established');
 //                     this.drawGame();
 //                 };
 
 //                 this.socket.onclose = () => {
-//                     //////console.log('WebSocket connection closed');
+//                     ////////console.log('WebSocket connection closed');
 //                     reject('hna WebSocket connection closed');
 //                 };
 
@@ -798,7 +798,7 @@ document.addEventListener('DOMContentLoaded', () => {
 //     }
 
 //     gameLoop() {
-//         //////console.log(this.leftPaddle.score, this.rightPaddle.score);
+//         ////////console.log(this.leftPaddle.score, this.rightPaddle.score);
 //         if (!this.gameStarted || this.leftPaddle.score >= 5 || this.rightPaddle.score >= 5) {
 //             if (this.leftPaddle.score >= 5)
 //                 this.winner = this.player1.textContent;

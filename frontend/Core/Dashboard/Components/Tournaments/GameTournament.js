@@ -159,12 +159,12 @@
 //       this.gameSocket = new WebSocket(`ws://localhost:8000/ws/game/${matchID}/?token=${access_token}`);
   
 //       this.gameSocket.onopen = () => {
-//         console.log('WebSocket connection established for game');
+//         //console.log('WebSocket connection established for game');
 //         this.drawGame();
 //       };
   
 //       this.gameSocket.onclose = () => {
-//         //console.log('WebSocket connection closed');
+//         ////console.log('WebSocket connection closed');
 //       };
   
 //       this.gameSocket.onmessage = (event) => {
@@ -451,7 +451,7 @@
   
 //     startGame(matchID) {
 //       localStorage.setItem('matchID', matchID);
-//       console.log(matchID);
+//       //console.log(matchID);
 //       this.initializeGame(matchID);
 //     }
 
@@ -610,12 +610,12 @@ class GameTournament extends HTMLElement {
       this.gameSocket = new WebSocket(`ws://localhost:8000/ws/game/${matchID}/?token=${access_token}`);
   
       this.gameSocket.onopen = () => {
-        console.log('WebSocket connection established');
+        //console.log('WebSocket connection established');
         this.drawGame();
       };
   
       this.gameSocket.onclose = () => {
-        console.log('WebSocket connection closed');
+        //console.log('WebSocket connection closed');
       };
   
       this.gameSocket.onmessage = (event) => {

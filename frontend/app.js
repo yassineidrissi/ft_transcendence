@@ -4,7 +4,7 @@ function getToken(){
 	if (token) {
 		localStorage.setItem("token", token);
 	} else {
-		console.log("Token not found in URL.");
+		//console.log("Token not found in URL.");
 	}
 }
 getToken();
@@ -29,14 +29,14 @@ const isUser = arg => {
 }
 
 if (localStorage.getItem('isUserSignedIn') == 'true') {
-	console.log('User is signed in');
+	//console.log('User is signed in');
 	let roomSocket = new WebSocket(`ws://localhost:8000/ws/rooms/?token=${localStorage.getItem('access_token')}`);
 	roomSocket.onopen = () => {
-		console.log('WebSocket connection established');
+		//console.log('WebSocket connection established');
 		window.roomSocket = roomSocket;
 	};
 	roomSocket.onclose = () => {
-		console.log('WebSocket connection closed');
+		//console.log('WebSocket connection closed');
 	};
 } else {
 	window.roomSocket = null;

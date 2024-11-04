@@ -81,7 +81,7 @@ class dashHeader extends HTMLElement {
 					this.leftOffset = dimensions.left;
 				}
 				fetchNotifications().then(result => {
-					console.log(result);
+					//console.log(result);
 					this.notifications = result;
 					this.render()
 					this.addNotificationListeners();
@@ -109,7 +109,7 @@ class dashHeader extends HTMLElement {
 					btn.parentNode.parentNode.remove()
 					const data = await response.json()
 					window.UserData = data.data
-					document.querySelector("#app > core-layout").shadowRoot.querySelector("#container > layout-sidebar").shadowRoot.querySelector("#sidebar > friends-section").shadowRoot.querySelector("div > friends-list").update()
+					// document.querySelector("#app > core-layout").shadowRoot.querySelector("#container > layout-sidebar").shadowRoot.querySelector("#sidebar > friends-section").shadowRoot.querySelector("div > friends-list").update()
 				}
 				await deleteNotification(btn.getAttribute("notification_id"))
 			});

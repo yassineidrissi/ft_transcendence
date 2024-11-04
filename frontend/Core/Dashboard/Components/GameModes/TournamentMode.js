@@ -148,8 +148,8 @@ class TournamentMode extends HTMLElement {
         if (createTourBtn)
         {
             createTourBtn.addEventListener("click", () => {
-                //////console.log("Tournament name: ", this.tournamentName);
-                //////console.log("Nickname: ", this.nickname);
+                ////////console.log("Tournament name: ", this.tournamentName);
+                ////////console.log("Nickname: ", this.nickname);
                 this.createRoom(this.tournamentName).then(roomId => {
                     this.tournamentName = ""
                     this.nickname = ""
@@ -183,14 +183,14 @@ class TournamentMode extends HTMLElement {
     initSocket(){
 		this.roomSocket = new WebSocket(`ws://localhost:8000/ws/rooms/?token=${this.access_token}`);
 		this.roomSocket.onclose = function(event){
-			console.log("Connected to the room socket")
+			//console.log("Connected to the room socket")
 			// localStorage.setItem("roomSocket", this.roomSocket)
 		}
         this.roomSocket.onmessage = function(event){
             const data = JSON.parse(event.data);
-            // console.log("Received message: ", data);
+            // //console.log("Received message: ", data);
             if (data.type === 'room_update') {
-                console.log("Room update: ", data);
+                //console.log("Room update: ", data);
                 // document.querySelector("#app > core-layout").shadowRoot.querySelector("#container > div > dashboard-page").shadowRoot.querySelector("div > tournaments-section").render;
             }
         }

@@ -4,15 +4,10 @@ async function check_auth() {
     {
         token = localStorage.getItem('token');
         if(token)
-        {
             console.log('token', token);
-            return;
-        }
-        // else{
-            
-        //     console.log('sdfsdfsdfsd');
-        //     navigateTo('signin');
-        // }
+        else
+            navigateTo('signin');
+        return;
     }
     let access_token = localStorage.getItem('access_token');
     let response = await fetch('http://127.0.0.1:8000/api/user/', {
@@ -24,19 +19,17 @@ async function check_auth() {
     });
 
     response = await handleAuthResponse(response, check_auth);
-    let data = await response.json();
     if (response && response.ok) {
+        let data = await response.json();
         //console.log('User data:', data);
-        console.log('data:', data);
         userStateOnline(data.id);
         localStorage.setItem("isUserSignedIn", true)
         window.UserData = data;
-        console.log('sdfsdfsdfsdfs');
-
     } else if (!access_token) {
         navigateTo('signin');
     }
 }
+
 
 async function handleAuthResponse(response, retryFunction, params = null) {
     try {
@@ -65,7 +58,7 @@ async function refresh_token() {
     });
     if (response.status === 200) {
         let data = await response.json();
-        ////console.log('Token refreshed successfully');
+        //////console.log('Token refreshed successfully');
         localStorage.setItem('access_token', data.access_token);
     } else {
         throw new Error('Failed to refresh token');
@@ -78,13 +71,13 @@ async function refresh_token() {
 // })();
 
 async function userStateOnline(id) {
-    ////console.log('id::', id);
+    //////console.log('id::', id);
     access_token = localStorage.getItem('access_token');
     let wsProtocol = window.location.protocol === "https:" ? "wss://" : "ws://";
     let url = `ws://127.0.0.1:8000/ws/socket-server/?token=${access_token}`;
     socket = new WebSocket(url);
     socket.onopen = function (event) {
-        console.log('WebSocket connection established');
+        //console.log('WebSocket connection established');
 
         // Send a heartbeat every 25 seconds
         setInterval(() => {
@@ -96,7 +89,7 @@ async function userStateOnline(id) {
     }
     socket.onmessage = function (event) {
         let data = JSON.parse(event.data);
-        ////console.log(data);
+        //////console.log(data);
     }
 }
 
@@ -112,7 +105,7 @@ async function getFriendOnline() {
     });
     response = await handleAuthResponse(response, getFriendOnline);
     let result = await response.json();
-    // console.log(result);
-    console.log('Friends online:', result);
+    // //console.log(result);
+    //console.log('Friends online:', result);
 	return result
 }
