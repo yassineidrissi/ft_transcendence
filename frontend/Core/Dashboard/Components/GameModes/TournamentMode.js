@@ -75,7 +75,6 @@ class TournamentMode extends HTMLElement {
                 <button id="start" class="start px-4 py-1 border border-light fw-bold fs-5">Start</button>
                
                 </div>
-            <tournament-game></tournament-game>
         `
 
 
@@ -122,8 +121,9 @@ class TournamentMode extends HTMLElement {
         this.shadowRoot.innerHTML = ''
         this.shadowRoot.append(style, tournamentMode);
         this.shadowRoot.getElementById("start").addEventListener("click", () => {
-            this.isCreatingTournament = true;
-            this.render()
+            // this.isCreatingTournament = true;
+            // this.render()
+            navigateTo('tournament')
         })
         const closeBtn = this.shadowRoot.getElementById("close");
         if (closeBtn)
@@ -154,6 +154,7 @@ class TournamentMode extends HTMLElement {
                     this.tournamentName = ""
                     this.nickname = ""
                     this.render()
+                    
                 });
             })
         }
