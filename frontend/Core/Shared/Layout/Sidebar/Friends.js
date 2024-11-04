@@ -6,15 +6,15 @@ class Friends extends HTMLElement {
         this.render();
 	}
 	render() {
-		// console.log(JSON.parse(this.getAttribute("data")));
-		console.log(window.UserData);
+		// //console.log(JSON.parse(this.getAttribute("data")));
+		//console.log(window.UserData);
 		const friends = document.createElement('div');
 		friends.className = "mt-4";
 		const modalVisibility = this.isModalOpen ? "" : "d-none";
 		friends.innerHTML = `
 			<search-friend-modal class="${modalVisibility}"></search-friend-modal>
 			<div class="d-flex align-items-center justify-content-between mb-2">
-				<p class="fs-5 fw-semibold mb-0">Friends <span class="text-light-emphasis fw-medium">1/4</span></p>
+				<p class="fs-5 fw-semibold mb-0">Friends</p>
 				<img src="./Core/Shared/assets/add-user.svg" class="rounded cursor-pointer" id="add-friend" />
 			</div>
 			<friends-list data=${JSON.stringify(window.UserData)} ></friends-list>

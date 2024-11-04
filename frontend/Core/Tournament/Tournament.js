@@ -3,73 +3,29 @@ class TournamentGame extends HTMLElement {
         super();
         this.attachShadow({ mode: 'open' });
         this.players = [
-            { name: 'Player 1', score: 0 },
-            { name: 'Player 2', score: 0 },
-            { name: 'Player 3', score: 0 },
-            { name: 'Player 4', score: 0 }
+            { name: 'Player 1', score: 0, nickname: '' },
+            { name: 'Player 2', score: 0, nickname: '' },
+            { name: 'Player 3', score: 0, nickname: '' },
+            { name: 'Player 4', score: 0, nickname: '' }
         ];
         this.currentMatch = { player1: 0, player2: 1 };
-        this.tournamentStage = 'semifinals'; 
+        // this.tournamentStatus = 'semifinals'; // semifinals or finals
         this.winners = [];
         this.winningScore = 5;
+        this.tournamentStatus = 'setup';
 		this.render();
 	}
 
 	render() {
+        console.log('this.tournamentStatus', this.tournamentStatus);
         const container = document.createElement('div');
         container.className = 'container text-light position-relative';
-        container.innerHTML = `
-            <div class="tournament-info mb-4">
-                <h2 class="text-center mb-3">Pong Tournament</h2>
-                <div class="bracket-display p-3 mb-4">
-                    <div class="semifinals">
-                        <div class="match match1">
-                            <span class="player ${this.isCurrentMatch(0, 1) ? 'active' : ''}">${this.players[0].name}</span>
-                            vs
-                            <span class="player ${this.isCurrentMatch(0, 1) ? 'active' : ''}">${this.players[1].name}</span>
-                        </div>
-                        <div class="match match2">
-                            <span class="player ${this.isCurrentMatch(2, 3) ? 'active' : ''}">${this.players[2].name}</span>
-                            vs
-                            <span class="player ${this.isCurrentMatch(2, 3) ? 'active' : ''}">${this.players[3].name}</span>
-                        </div>
-                    </div>
-                    ${this.winners.length >= 2 ? `
-                        <div class="finals">
-                            <div class="match final-match">
-                                <span class="player ${this.tournamentStage === 'finals' ? 'active' : ''}">${this.winners[0]}</span>
-                                vs
-                                <span class="player ${this.tournamentStage === 'finals' ? 'active' : ''}">${this.winners[1]}</span>
-                            </div>
-                        </div>
-                    ` : ''}
-                </div>
-                <div class="current-match-info text-center mb-3">
-                    <h3>${this.tournamentStage === 'semifinals' ? 'Semifinals' : 'Finals'}</h3>
-                    <p class="fs-5">${this.players[this.currentMatch.player1].name} vs ${this.players[this.currentMatch.player2].name}</p>
-                </div>
-            </div>
-            <div class="w-100 d-flex justify-content-between align-items-center my-4 text-light">
-                <span id="player1" class="bg-primary p-2 px-4 rounded fs-5">
-                    ${this.players[this.currentMatch.player1].name}
-                </span>
-                <div id="scoreBoard" class="fs-3">
-                    <span id="leftScore" class="fw-sem px-2">0</span> - 
-                    <span id="rightScore" class="fw-sem px-2">0</span>
-                </div>
-                <span id="player2" class="bg-danger p-2 px-4 rounded fs-5">
-                    ${this.players[this.currentMatch.player2].name}
-                </span>
-            </div>
-            <div id="trophy" class="trophy-container hidden">
-                <div class="trophy">🏆</div>
-                <div class="winner-text"></div>
-                ${this.tournamentStage === 'semifinals' ? 
-                    '<button id="nextMatch" class="btn btn-success mt-3">Next Match</button>' : 
-                    '<button id="restartTournament" class="btn btn-primary mt-3">New Tournament</button>'}
-            </div>
-            <canvas id="gameCanvas" height="400" width="800" class="w-100 h-100 border"></canvas>
-        `;
+
+        if (this.tournamentStatus === 'setup') {
+            container.innerHTML = this.renderSetup();
+        } else {
+            container.innerHTML = this.renderTournament();
+        }
 
         const style = document.createElement('style');
         style.textContent = `
@@ -140,13 +96,86 @@ class TournamentGame extends HTMLElement {
                 50% { transform: translateY(-20px); }
             }
         `;
+        
 
         this.shadowRoot.innerHTML = '';
         this.shadowRoot.append(style);
         this.shadowRoot.append(container);
-
-        this.initializeGame();
+        if (this.tournamentStatus !== 'setup')
+            this.initializeGame();
         this.setupEventListeners();
+    }
+
+    renderSetup() {
+      return `
+        <div class="setup-container p-4">
+          <h2 class="text-center mb-4">Enter Player Nicknames</h2>
+          <form id="nicknameForm">
+            ${this.players.map((player, index) => `
+              <div class="mb-3">
+                <label for="player${index + 1}" class="form-label">${player.name}</label>
+                <input type="text" class="form-control" id="player${index + 1}" placeholder="Enter nickname" required>
+              </div>
+            `).join('')}
+            <button type="submit" class="btn btn-primary w-100">Start Tournament</button>
+          </form>
+        </div>
+      `;
+    }
+
+    renderTournament() {
+        return `
+            <div class="tournament-info mb-4">
+                <h2 class="text-center mb-3">Pong Tournament</h2>
+                <div class="bracket-display p-3 mb-4">
+                    <div class="semifinals">
+                        <div class="match match1">
+                            <span class="player ${this.isCurrentMatch(0, 1) ? 'active' : ''}">${this.players[0].nickname}</span>
+                            vs
+                            <span class="player ${this.isCurrentMatch(0, 1) ? 'active' : ''}">${this.players[1].nickname}</span>
+                        </div>
+                        <div class="match match2">
+                            <span class="player ${this.isCurrentMatch(2, 3) ? 'active' : ''}">${this.players[2].nickname}</span>
+                            vs
+                            <span class="player ${this.isCurrentMatch(2, 3) ? 'active' : ''}">${this.players[3].nickname}</span>
+                        </div>
+                    </div>
+                    ${this.winners.length >= 2 ? `
+                        <div class="finals">
+                            <div class="match final-match">
+                                <span class="player ${this.tournamentStatus === 'finals' ? 'active' : ''}">${this.winners[0]}</span>
+                                vs
+                                <span class="player ${this.tournamentStatus === 'finals' ? 'active' : ''}">${this.winners[1]}</span>
+                            </div>
+                        </div>
+                    ` : ''}
+                </div>
+                <div class="current-match-info text-center mb-3">
+                    <h3>${this.tournamentStatus === 'semifinals' ? 'Semifinals' : 'Finals'}</h3>
+                    <p class="fs-5">${this.players[this.currentMatch.player1].nickname} vs ${this.players[this.currentMatch.player2].nickname}</p>
+                </div>
+            </div>
+            <div class="w-100 d-flex justify-content-between align-items-center my-4 text-light">
+                <span id="player1" class="bg-primary p-2 px-4 rounded fs-5">
+                    ${this.players[this.currentMatch.player1].nickname}
+                </span>
+                <div id="scoreBoard" class="fs-3">
+                    <span id="leftScore" class="fw-sem px-2">0</span> - 
+                    <span id="rightScore" class="fw-sem px-2">0</span>
+                </div>
+                <span id="player2" class="bg-danger p-2 px-4 rounded fs-5">
+                    ${this.players[this.currentMatch.player2].nickname}
+                </span>
+            </div>
+            <div id="trophy" class="trophy-container hidden">
+                <div class="trophy">🏆</div>
+                <div class="winner-text"></div>
+                ${this.tournamentStatus === 'semifinals' ? 
+                    '<button id="nextMatch" class="btn btn-success mt-3">Next Match</button>' : 
+                    '<button id="restartTournament" class="btn btn-primary mt-3">New Tournament</button>'}
+            </div>
+            <canvas id="gameCanvas" height="400" width="800" class="w-100 h-100 border"></canvas>
+        `;
     }
 
     isCurrentMatch(player1, player2) {
@@ -201,8 +230,8 @@ class TournamentGame extends HTMLElement {
         const checkWinner = () => {
             if (leftPaddle.score >= this.winningScore || rightPaddle.score >= this.winningScore) {
                 const winner = leftPaddle.score >= this.winningScore ? 
-                    this.players[this.currentMatch.player1].name : 
-                    this.players[this.currentMatch.player2].name;
+                    this.players[this.currentMatch.player1].nickname : 
+                    this.players[this.currentMatch.player2].nickname;
                 
                 this.handleMatchWinner(winner);
                 return true;
@@ -293,17 +322,32 @@ class TournamentGame extends HTMLElement {
     }
 
     setupEventListeners() {
-        const nextMatchBtn = this.shadowRoot.getElementById('nextMatch');
-        const restartTournamentBtn = this.shadowRoot.getElementById('restartTournament');
-        
-        if (nextMatchBtn) {
-            nextMatchBtn.addEventListener('click', () => this.setupNextMatch());
-        }
-        
-        if (restartTournamentBtn) {
-            restartTournamentBtn.addEventListener('click', () => this.restartTournament());
+        if (this.tournamentStatus === 'setup') {
+            const form = this.shadowRoot.getElementById('nicknameForm');
+            form.addEventListener('submit', (e) => this.handleNicknameSubmit(e));
+        } else {
+            const nextMatchBtn = this.shadowRoot.getElementById('nextMatch');
+            const restartTournamentBtn = this.shadowRoot.getElementById('restartTournament');
+            
+            if (nextMatchBtn) {
+                nextMatchBtn.addEventListener('click', () => this.setupNextMatch());
+            }
+            
+            if (restartTournamentBtn) {
+                restartTournamentBtn.addEventListener('click', () => this.restartTournament());
+            }
         }
     }
+
+    handleNicknameSubmit(e) {
+        e.preventDefault();
+        this.players.forEach((player, index) => {
+          const input = this.shadowRoot.getElementById(`player${index + 1}`);
+          player.nickname = input.value || player.name;
+        });
+        this.tournamentStatus = 'semifinals';
+        this.render();
+      }
 
     handleMatchWinner(winner) {
         const trophy = this.shadowRoot.getElementById('trophy');
@@ -311,19 +355,19 @@ class TournamentGame extends HTMLElement {
         trophy.classList.remove('hidden');
         winnerText.textContent = `${winner} Wins!`;
 
-        if (this.tournamentStage === 'semifinals') {
+        if (this.tournamentStatus === 'semifinals') {
             this.winners.push(winner);
         }
     }
 
     setupNextMatch() {
-        if (this.tournamentStage === 'semifinals' && this.winners.length === 1) {
+        if (this.tournamentStatus === 'semifinals' && this.winners.length === 1) {
             // Continue semifinals
             this.currentMatch = { player1: 2, player2: 3 };
-        } else if (this.tournamentStage === 'semifinals' && this.winners.length === 2) {
+        } else if (this.tournamentStatus === 'semifinals' && this.winners.length === 2) {
             // Move to finals
-            this.tournamentStage = 'finals';
-            this.currentMatch = { player1: 0, player2: 1 }; 
+            this.tournamentStatus = 'finals';
+            this.currentMatch = { player1: 0, player2: 1 }; // Winners will be displayed in order
         }
         
         this.render();
@@ -331,7 +375,7 @@ class TournamentGame extends HTMLElement {
 
     restartTournament() {
         this.winners = [];
-        this.tournamentStage = 'semifinals';
+        this.tournamentStatus = 'semifinals';
         this.currentMatch = { player1: 0, player2: 1 };
         this.render();
     }

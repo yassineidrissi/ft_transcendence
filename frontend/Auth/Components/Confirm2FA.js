@@ -39,20 +39,20 @@ class Confirm2FA extends HTMLElement {
         this.shadowRoot.append(style, container);
         this.shadowRoot.getElementById("verify").addEventListener("click",  (e)=> {
             e.preventDefault()
-            console.log(this.shadowRoot.querySelector("#authCode").value)
+            //console.log(this.shadowRoot.querySelector("#authCode").value)
             validate2fa(this.shadowRoot.querySelector("#authCode").value).then(result => {
-                console.log(result.status);
+                //console.log(result.status);
                 if(result.status === 200)
                 {
-                    console.log(result);
+                    //console.log(result);
                     navigateTo('/')
                     check_auth();
                 }
                 else
                 {
-                    console.log(result.json());
+                    //console.log(result.json());
                 }
-                // console.log(result)
+                // //console.log(result)
                 // navigateTo('/')
                 // check_auth();
             });

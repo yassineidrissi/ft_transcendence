@@ -13,8 +13,10 @@ async function Register(){
             method: 'POST',
             body: data
     })
+	if (response.ok)
+		navigateTo("signin")
     let result = await response.json();
-    console.log(result);
+    //console.log(result);
     return result;
 }
 async function LogIn(){
@@ -30,13 +32,13 @@ async function LogIn(){
         body: data
     });
     let result = await request.json();
-    ////console.log(result);
+    //////console.log(result);
     if (!request.ok) {
-        ////console.log(`Error : ${result.detail}`);
+        //////console.log(`Error : ${result.detail}`);
 
     }
     else{
-        console.log(result);
+        //console.log(result);
         if(result['2fa'] === true)
         {
             localStorage.setItem('token', result.token);
@@ -77,7 +79,7 @@ async function validate2fa(input){
           }),
     });
     let result = await response.json();
-    console.log(result);
+    //console.log(result);
     if(response.status === 200)
     {
         localStorage.setItem('access_token',result.access_token);
@@ -87,7 +89,7 @@ async function validate2fa(input){
 }
 // async function check_auth()
 // {
-//     ////console.log('lolololololololololo');
+//     //////console.log('lolololololololololo');
 //     let access_token = localStorage.getItem('access_token');
 //     let response = await fetch('http://127.0.0.1:8000/api/user/',{
 //         method: 'GET',
@@ -100,7 +102,7 @@ async function validate2fa(input){
 //     if(response.ok)
 //     {
 //         let data = await response.json();
-//         ////console.log(data);
+//         //////console.log(data);
 //         window.UserData = data;
 //     }   
 //     if(!access_token)
@@ -110,12 +112,12 @@ async function validate2fa(input){
 //     }
 // }
 function LogIn42(){
-    ////console.log('42');
+    //////console.log('42');
     window.location.href = 'http://127.0.0.1:8000/api/login42/';
     // localStorage.setItem('isUserSignedIn', true)
 }
 async function LogOut(){
-    ////console.log('logoutsdfsdfsdfsdfsfsdfsfsdf');
+    //////console.log('logoutsdfsdfsdfsdfsfsdfsfsdf');
     let access_token = localStorage.getItem('access_token');
     let response = await fetch('http://127.0.0.1:8000/api/logout/',{
         method: 'POST',
@@ -123,10 +125,10 @@ async function LogOut(){
     })
     await handleAuthResponse(response, LogOut);
     let result = await response.json();
-    ////console.log(result);
+    //////console.log(result);
     localStorage.removeItem('access_token');
     localStorage.removeItem('isUserSignedIn');
-        // ////console.log('socket closedddddddddd',);
+        // //////console.log('socket closedddddddddd',);
     socket.close();
     window.UserData = {};
     navigateTo('/signin');

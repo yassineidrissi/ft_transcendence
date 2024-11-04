@@ -163,14 +163,14 @@ class TournamentGame extends HTMLElement {
     }
   
     connectSocket() {
-        console.log('connect socket', window.roomSocket);
+        //console.log('connect socket', window.roomSocket);
     //   window.roomSocket = new WebSocket(`ws://localhost:8000/ws/rooms/?token=${this.access_token}`);
     //   window.roomSocket.onopen = () => {
-    //     console.log('WebSocket connection established');
+    //     //console.log('WebSocket connection established');
     //   };
       window.roomSocket.onmessage = (event) => {
         const data = JSON.parse(event.data);
-        console.log(data);
+        //console.log(data);
         if (data.type === 'room_update') {
           this.updateRooms(data.rooms);
         } else if (data.type === 'final_update') {
@@ -203,7 +203,7 @@ class TournamentGame extends HTMLElement {
     }
   
     updateRooms(updatedRooms) {
-        console.log('update rooms ======= > ');
+        //console.log('update rooms ======= > ');
       this.rooms = updatedRooms;
       const roomContent = this.shadowRoot.getElementById('rooms-container');
       roomContent.innerHTML = '';
@@ -213,7 +213,7 @@ class TournamentGame extends HTMLElement {
     }
   
     createRoomElement(room, roomContent) {
-        console.log('create room element');
+        //console.log('create room element');
       const roomDiv = document.createElement('div');
       roomDiv.classList.add('room');
       roomDiv.innerHTML = `
@@ -229,13 +229,13 @@ class TournamentGame extends HTMLElement {
       `;
       const is_current_user = room.players.some(player => player.is_current_user);
         if (room.is_full && is_current_user && !this.winner) {
-            console.log('get matchs');
+            //console.log('get matchs');
             this.getMatchs(room);
             // this.shadowRoot.querySelector('.container').style.display = 'none';
         } else if (!this.winner) {
             // this.shadowRoot.getElementById('game-container').style.display = 'none';
         } 
-        console.log('room div', roomDiv);
+        //console.log('room div', roomDiv);
       roomContent.appendChild(roomDiv);
     }
   
@@ -337,7 +337,7 @@ class TournamentGame extends HTMLElement {
         // response = await this.handleAuthResponse(response, this.getMatchs.bind(this));
         if (response.ok) {
           const data = await response.json();
-          console.log(data);
+          //console.log(data);
           localStorage.setItem('roomID', room.id);
           if (data.success) {
             this.updateMatches(data.matches, data.match_id);
@@ -352,7 +352,7 @@ class TournamentGame extends HTMLElement {
       const players = this.shadowRoot.querySelectorAll('.player');
       let i = 0;
       matches.forEach(match => {
-        console.log(match.player1 + ' vs ' + match.player2);
+        //console.log(match.player1 + ' vs ' + match.player2);
         // players[i].textContent = match.player1;
         // players[i+1].textContent = match.player2;
         i+=2;
@@ -375,12 +375,12 @@ class TournamentGame extends HTMLElement {
     //   const gameSocket = new WebSocket(`ws://localhost:8000/ws/game/${matchID}/?token=${this.access_token}`);
   
     //   gameSocket.onopen = () => {
-    //     console.log('WebSocket connection established');
+    //     //console.log('WebSocket connection established');
     //     this.drawGame();
     //   };
   
     //   gameSocket.onclose = () => {
-    //     console.log('WebSocket connection closed');
+    //     //console.log('WebSocket connection closed');
     //   };
   
     //   gameSocket.onmessage = (event) => {
