@@ -3,6 +3,7 @@ class Cpu extends HTMLElement {
 		super();
 		this.attachShadow({ mode: 'open' });
 		this.isMultiplayer = true;
+		this.lastUpdateTime = 0;
 		this.render();
 	}
 
@@ -288,17 +289,23 @@ class Cpu extends HTMLElement {
 				ballSpeedX = -ballSpeedX;
 			}
 
-			function getState() {
+			function getEpsilone() {
 				const ballPosY = Math.floor(ballY/ 5);
 				const leftPaddlePosY = Math.floor(leftPaddle.y);
 				return `(${ballPosY}, ${leftPaddlePosY})`;
 			}
 
-			function updateAI() {
-				let action_a = 0;
-				let action = get_action();                
-				let stat = "(" + action + ", " + action_a + ")";
-				getAction(stat);
+			const updateAI = () => { 
+				const currentTime = Date.now();
+
+				if (currentTime - this.lastUpdateTime >= 1000) {
+					let action = get_action();                
+					let epsilone = getEpsilone();
+					let stat = "(" + action + ", " + epsilone + ")";
+					getAction(stat);
+					
+					this.lastUpdateTime = currentTime;
+				}
 			}
 
 			function gameLoop() {
