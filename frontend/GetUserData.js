@@ -114,4 +114,5 @@ async function getFriendOnline() {
     let result = await response.json();
     // console.log(result);
     console.log('Friends online:', result);
+	return result
 }

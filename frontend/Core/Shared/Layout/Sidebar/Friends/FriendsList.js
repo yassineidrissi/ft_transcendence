@@ -11,9 +11,15 @@ class FriendsList extends HTMLElement {
 		// console.log(this.data);
 		const friendsList = document.createElement('div');
 		friendsList.className = "mt-4";
-		window.UserData.friends.forEach(element => {
-			friendsList.innerHTML += `<single-friend name=${element.username} img_url=${element.img_url} id=${element.id} ></single-friend>`
-		});
+		// getFriendOnline().then(result => console.log(result))
+		getFriendOnline().then(results => {
+			results.results.forEach(element => {
+				friendsList.innerHTML += `<single-friend name=${element.username} img_url=${element.img_url} id=${element.id} ></single-friend>`
+			});
+		})
+		// window.UserData.friends.forEach(element => {
+		// 	friendsList.innerHTML += `<single-friend name=${element.username} img_url=${element.img_url} id=${element.id} ></single-friend>`
+		// });
 		
 		// ///s/df/sd/f/sd/f/s/df/s/df/
 		const style = document.createElement('style');
