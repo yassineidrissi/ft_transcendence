@@ -32,10 +32,10 @@ class UserSerializer(serializers.ModelSerializer):
         if User.objects.filter(email=email).exists():
             raise serializers.ValidationError({"email": "email is already taken"})
         # !to check if password is valid(mean password is not too common)
-        # try:
-        #     validate_password(attrs['password'])
-        # except serializers.ValidationError as e:
-        #     raise serializers.ValidationError({"password": list(e.messages)})
+        try:
+            validate_password(attrs['password'])
+        except serializers.ValidationError as e:
+            raise serializers.ValidationError({"password": list(e.messages)})
 
         if attrs['password'] != attrs['password1']:
             raise serializers.ValidationError({"password": "Password fields didn't match"})
@@ -111,6 +111,7 @@ class LoginUserSerializer(serializers.ModelSerializer):
 
     
 
+from django.core.exceptions import ValidationError as DjangoValidationError
 
 class UserUpdateSerializer(serializers.ModelSerializer):
     img_url = serializers.ImageField(required=False)  # Add this to handle file uploads
@@ -118,18 +119,27 @@ class UserUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['first_name', 'last_name', 'state_2fa', 'level', 'img_url', 'username', 'password']
+    def validate_password(self, value):
+        if value:
+            try:
+                validate_password(value)
+            except DjangoValidationError as e:
+                raise serializers.ValidationError(list(e.messages))
+        return value
+
     def update(self, instance, validated_data):
         img_file = validated_data.pop('img_url', None)
         
-
+        password = validated_data.pop('password', None)
+        if password:
+            instance.set_password(password)
         # !password
-        if 'password' in validated_data:
-            instance.set_password(validated_data['password'])
-            # !to check if password is valid(mean password is not too common)
-            # try:
-            #     validate_password(validated_data['password'])
-            # except serializers.ValidationError as e:
-            #     raise serializers.ValidationError({"password": list(e.messages)})
+        # if 'password' in validated_data:
+        #     try:
+        #         validate_password(validated_data['password'])
+        #         instance.set_password(validated_data['password'])
+        #     except serializers.ValidationError as e:
+        #         raise serializers.ValidationError({"password": 'password is weak'})
         if 'username' in validated_data:
             username = validated_data['username']
             if User.objects.filter(username=validated_data['username']).exists():
@@ -141,16 +151,17 @@ class UserUpdateSerializer(serializers.ModelSerializer):
         instance.level = validated_data.get('level', instance.level)
         instance.state_2fa = validated_data.get('state_2fa', instance.state_2fa)
         if img_file:
-            # print('base dir', settings.BASE_DIR)
-            # print('instance.img_url:', instance.img_url)
-            # print('full path:', os.path.join(settings.BASE_DIR, instance.img_url.lstrip('/')))
+            # #print('base dir', settings.BASE_DIR)
+            # #print('instance.img_url:', instance.img_url)
+            # #print('full path:', os.path.join(settings.BASE_DIR, instance.img_url.lstrip('/')))
             if not instance.img_url.startswith('http://') and not instance.img_url.startswith('https://'):
                 if instance.img_url :
-                    # print('media_root:', settings.MEDIA_ROOT)
-                    # print('instance.img_url:', instance.img_url)
-                    # print('deleting:', os.path.join('/app/', instance.img_url.lstrip('/')))
-                    os.remove(os.path.join('/app/', instance.img_url.lstrip('/')))
+                    #  print('instance.img_url:', instance.img_url)
+                    #  print('os.path.join:',os.path.join('/main/core/', instance.img_url.lstrip('/'))
+                    os.remove(os.path.join('/main/core/', instance.img_url.lstrip('/'))
+)
             img_url = default_storage.save(f'profile_pics/{instance.username}', img_file)
+            print('img_url:', img_url)
             img_url = default_storage.url(img_url)
             instance.img_url = img_url
 
@@ -166,9 +177,9 @@ class UserUpdateSerializer(serializers.ModelSerializer):
             qr_image.save(qr_io, format='PNG')
             qr_io.seek(0)
             instance.img_qr.save(f'{instance.email}_qr.png', qr_io)
-            print('instance.otp_secret',instance.otp_secret)
-            print('instance.totp',instance.totp)
-            print('uri:', uri)
+            #print('instance.otp_secret',instance.otp_secret)
+            #print('instance.totp',instance.totp)
+            #print('uri:', uri)
         else:
             if instance.img_qr:
                 instance.img_qr.delete()
@@ -181,9 +192,8 @@ class UserUpdateSerializer(serializers.ModelSerializer):
         data['img_url'] = instance.img_url
         if instance.img_qr:
             data['img_qr'] = instance.img_qr.url 
-        print('data:', data)
+        #print('data:', data)
         return data
-    
 
 # class FriendUserSerializer(serializers.ModelSerializer):
 #     class Meta:

@@ -1,19 +1,19 @@
 class Friend extends HTMLElement {
-    constructor() {
-        super();
-        this.attachShadow({ mode: 'open' });
+	constructor() {
+		super();
+		this.attachShadow({ mode: 'open' });
 		this.render()
-    }
+	}
 
-    render() {
-        const name = this.getAttribute("name");
-        const img_url = this.getAttribute("img_url") 
+	render() {
+		const name = this.getAttribute("name");
+		const img_url = this.getAttribute("img_url")
 		const id = this.getAttribute("id");
 		window.UserData.online = true;
-        const friend = document.createElement('div');
-        friend.className = "d-flex align-items-center justify-content-between mb-2";
+		const friend = document.createElement('div');
+		friend.className = "d-flex align-items-center justify-content-between mb-2";
 
-        friend.innerHTML = /*html*/ `
+		friend.innerHTML = /*html*/ `
             <div class="d-flex align-items-center position-relative">
 				${window.UserData.online ? `<span id="online-status" class=""></span>` : `<span id="offline-status" class=""></span>`}
                 <img src="${img_url}" class="rounded me-2" height='32'></img>
@@ -27,8 +27,8 @@ class Friend extends HTMLElement {
 			</div>
 			`;
 		// 
-        const style = document.createElement('style');
-        style.textContent = `
+		const style = document.createElement('style');
+		style.textContent = `
             @import url('https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css');
             .cursor-pointer {
                 cursor: pointer;
@@ -55,19 +55,20 @@ class Friend extends HTMLElement {
 			}
         `;
 
-        this.shadowRoot.append(style, friend);
+		this.shadowRoot.append(style, friend);
 		this.shadowRoot.getElementById("invite").addEventListener("click", (e) => {
-			console.log(id);
+			//console.log(id);
 			sendNotification(JSON.stringify({
-				    "user": id,
-				    "sender": window.UserData.id,
-				    "content": `${window.UserData.username} sent you an invitation to play a game`,
-				    "fulfill_link": "/online-game",
-				    "reject_url": "reject url action",
-				    "is_invite": "true"
-				})).then(data => {console.log(data); navigateTo("online-game")})
+				"user": id,
+				"sender": window.UserData.id,
+				"content": `${window.UserData.username} sent you an invitation to play a game`,
+				"fulfill_link": "/online-game",
+				"reject_url": "reject url action",
+				"is_invite": "true"
+			})).then(data => {//console.log(data); navigateTo("online-game")})
+			})
 		})
-    }
+	}
 }
 
 // Define the custom element

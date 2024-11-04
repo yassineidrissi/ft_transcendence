@@ -155,12 +155,12 @@ class OnlineGame extends HTMLElement {
     const access_token = localStorage.getItem('access_token');
     window.gameSocket = new WebSocket(`ws://localhost:8000/ws/game/${matchID}/?token=${access_token}`);
     window.gameSocket.onopen = () => {
-      //////console.log('WebSocket connection established');
+      ////////console.log('WebSocket connection established');
       this.drawGame();
     };
 
     window.gameSocket.onclose = () => {
-      //////console.log('WebSocket connection closed');
+      ////////console.log('WebSocket connection closed');
     };
 
     window.gameSocket.onmessage = (event) => {
@@ -441,7 +441,7 @@ class OnlineGame extends HTMLElement {
       response = await this.handleAuthResponse(response, this.fetchMatchID.bind(this));
       if (response.ok) {
         const data = await response.json();
-        //console.log(data);
+        ////console.log(data);
         if (data.success)
           this.startGame(data.id);
         else
@@ -464,7 +464,7 @@ class OnlineGame extends HTMLElement {
       });
       response = await this.handleAuthResponse(response, this.deleteMatch.bind(this), matchID);
       if (response.ok) {
-        //////console.log('Match deleted');
+        ////////console.log('Match deleted');
         window.location.href = 'https://127.0.0.1/';
       }
     } catch (error) {

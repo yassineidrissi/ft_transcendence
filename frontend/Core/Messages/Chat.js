@@ -189,7 +189,7 @@ function Chat() {
                 chatList.appendChild(chatListItem)
             });
         }).catch(error => {
-            //////console.log(error)
+            ////////console.log(error)
         })
 
     messageInput.onkeyup = function (e) {

@@ -1,6 +1,5 @@
 async function check_auth() {
     ////console.log('Starting check_auth...');
-    console.log('sdfsdfsfsdf');
     if(window.location.pathname === '/2fa')
     {
         token = localStorage.getItem('token');
@@ -31,6 +30,7 @@ async function check_auth() {
     }
 }
 
+
 async function handleAuthResponse(response, retryFunction, params = null) {
     try {
         if (response.status === 401) {
@@ -58,7 +58,7 @@ async function refresh_token() {
     });
     if (response.status === 200) {
         let data = await response.json();
-        ////console.log('Token refreshed successfully');
+        //////console.log('Token refreshed successfully');
         localStorage.setItem('access_token', data.access_token);
     } else {
         throw new Error('Failed to refresh token');
@@ -71,15 +71,25 @@ async function refresh_token() {
 // })();
 
 async function userStateOnline(id) {
-    ////console.log('id::', id);
+    //////console.log('id::', id);
     access_token = localStorage.getItem('access_token');
     let wsProtocol = window.location.protocol === "https:" ? "wss://" : "ws://";
     let url = `ws://127.0.0.1:8000/ws/socket-server/?token=${access_token}`;
     socket = new WebSocket(url);
-    ////console.log(socket);
+    socket.onopen = function (event) {
+        //console.log('WebSocket connection established');
+
+        // Send a heartbeat every 25 seconds
+        setInterval(() => {
+            if (socket.readyState === WebSocket.OPEN) {
+                socket.send(JSON.stringify({ type: 'heartbeat' }));
+            }
+        }, 25000);
+
+    }
     socket.onmessage = function (event) {
         let data = JSON.parse(event.data);
-        ////console.log(data);
+        //////console.log(data);
     }
 }
 
@@ -95,5 +105,7 @@ async function getFriendOnline() {
     });
     response = await handleAuthResponse(response, getFriendOnline);
     let result = await response.json();
-    console.log(result);
+    // //console.log(result);
+    //console.log('Friends online:', result);
+	return result
 }

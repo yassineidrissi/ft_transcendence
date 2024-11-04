@@ -6,19 +6,19 @@ class Settings extends HTMLElement {
 		this.editUsernameMode = false;
 		this.editPasswordMode = false;
 		this.username = window.UserData.username.length > 8 ? window.UserData.username.substring(0, 8) + "..." : window.UserData.username ;
-		this.password = `chi haja`;
+		this.password = ``;
 		this.qr_url = window.UserData.img_qr;
 		this.hashPass();
 		this.render()
     }
 	render ()
 	{
-		// ////console.log("2fa state: ", this.isFaEnabled);
-		// ////console.log("QR URL:", this.qr_url);
-		// //console.log("Window QR URL:", window.UserData);
+		// //////console.log("2fa state: ", this.isFaEnabled);
+		// //////console.log("QR URL:", this.qr_url);
+		// ////console.log("Window QR URL:", window.UserData);
 		// this.qr_url = window.UserData.qr_img;
 
-		// ////console.log(window.UserData.qr_img);
+		// //////console.log(window.UserData.qr_img);
 		const settings = document.createElement("div");
 		settings.className = "z-3 position-absolute top-0 start-0 end-0 bottom-0 d-flex justify-content-center align-items-center text-light"
 		settings.id = "overlay"
@@ -137,7 +137,7 @@ class Settings extends HTMLElement {
 			this.shadowRoot.getElementById("disable-fa").addEventListener("click",async () => {
 				await Update2fa(false);
 				this.isFaEnabled = false;
-				//console.log('enabel',window.UserData)
+				////console.log('enabel',window.UserData)
 				this.qr_url = window.UserData.img_qr;
 				this.render()
 			})
@@ -147,11 +147,11 @@ class Settings extends HTMLElement {
 			this.shadowRoot.getElementById("enable-fa").addEventListener("click",async () => {
 				await Update2fa(true);
 				this.isFaEnabled = true;
-				//console.log('denabel',window.UserData)
+				////console.log('denabel',window.UserData)
 				this.qr_url = window.UserData.img_qr;
-				//console.log('denabel',window.UserData)
+				////console.log('denabel',window.UserData)
 
-				////console.log(window.UserData)
+				//////console.log(window.UserData)
 				this.render()
 			})
 		}

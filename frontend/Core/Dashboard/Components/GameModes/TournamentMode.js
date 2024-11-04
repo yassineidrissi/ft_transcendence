@@ -75,7 +75,6 @@ class TournamentMode extends HTMLElement {
                 <button id="start" class="start px-4 py-1 border border-light fw-bold fs-5">Start</button>
                
                 </div>
-            <tournament-game></tournament-game>
         `
 
 
@@ -122,8 +121,9 @@ class TournamentMode extends HTMLElement {
         this.shadowRoot.innerHTML = ''
         this.shadowRoot.append(style, tournamentMode);
         this.shadowRoot.getElementById("start").addEventListener("click", () => {
-            this.isCreatingTournament = true;
-            this.render()
+            // this.isCreatingTournament = true;
+            // this.render()
+            navigateTo('tournament')
         })
         const closeBtn = this.shadowRoot.getElementById("close");
         if (closeBtn)
@@ -148,12 +148,13 @@ class TournamentMode extends HTMLElement {
         if (createTourBtn)
         {
             createTourBtn.addEventListener("click", () => {
-                //////console.log("Tournament name: ", this.tournamentName);
-                //////console.log("Nickname: ", this.nickname);
+                ////////console.log("Tournament name: ", this.tournamentName);
+                ////////console.log("Nickname: ", this.nickname);
                 this.createRoom(this.tournamentName).then(roomId => {
                     this.tournamentName = ""
                     this.nickname = ""
                     this.render()
+                    
                 });
             })
         }
@@ -182,14 +183,14 @@ class TournamentMode extends HTMLElement {
     initSocket(){
 		this.roomSocket = new WebSocket(`ws://localhost:8000/ws/rooms/?token=${this.access_token}`);
 		this.roomSocket.onclose = function(event){
-			console.log("Connected to the room socket")
+			//console.log("Connected to the room socket")
 			// localStorage.setItem("roomSocket", this.roomSocket)
 		}
         this.roomSocket.onmessage = function(event){
             const data = JSON.parse(event.data);
-            // console.log("Received message: ", data);
+            // //console.log("Received message: ", data);
             if (data.type === 'room_update') {
-                console.log("Room update: ", data);
+                //console.log("Room update: ", data);
                 // document.querySelector("#app > core-layout").shadowRoot.querySelector("#container > div > dashboard-page").shadowRoot.querySelector("div > tournaments-section").render;
             }
         }

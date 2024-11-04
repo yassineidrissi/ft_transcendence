@@ -34,7 +34,7 @@ class Signup extends HTMLElement {
 		registerBtn.addEventListener("click", (e) => {
 			e.preventDefault();
 			Register().then(result => {
-				////console.log(result);
+				//////console.log(result);
 				if (result.status === 400) {
 					result.json().then(res => {this.msgError = res.message; this.render()});
 				}

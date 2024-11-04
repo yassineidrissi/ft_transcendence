@@ -10,7 +10,7 @@ async function fetchChat() {
         }
     });
     // response = await handleAuthResponse(response, fetchChat);
-	//////console.log(response)
+	////////console.log(response)
     if (response.ok) {
         let data = await response.json();
         return data;
