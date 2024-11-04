@@ -1,14 +1,18 @@
 async function check_auth() {
     ////console.log('Starting check_auth...');
-    console.log('sdfsdfsfsdf');
     if(window.location.pathname === '/2fa')
     {
         token = localStorage.getItem('token');
         if(token)
+        {
             console.log('token', token);
-        else
-            navigateTo('signin');
-        return;
+            return;
+        }
+        // else{
+            
+        //     console.log('sdfsdfsdfsd');
+        //     navigateTo('signin');
+        // }
     }
     let access_token = localStorage.getItem('access_token');
     let response = await fetch('http://127.0.0.1:8000/api/user/', {
@@ -20,12 +24,15 @@ async function check_auth() {
     });
 
     response = await handleAuthResponse(response, check_auth);
+    let data = await response.json();
     if (response && response.ok) {
-        let data = await response.json();
         //console.log('User data:', data);
+        console.log('data:', data);
         userStateOnline(data.id);
         localStorage.setItem("isUserSignedIn", true)
         window.UserData = data;
+        console.log('sdfsdfsdfsdfs');
+
     } else if (!access_token) {
         navigateTo('signin');
     }
@@ -105,5 +112,6 @@ async function getFriendOnline() {
     });
     response = await handleAuthResponse(response, getFriendOnline);
     let result = await response.json();
-    console.log(result);
+    // console.log(result);
+    console.log('Friends online:', result);
 }

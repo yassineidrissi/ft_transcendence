@@ -32,10 +32,10 @@ class UserSerializer(serializers.ModelSerializer):
         if User.objects.filter(email=email).exists():
             raise serializers.ValidationError({"email": "email is already taken"})
         # !to check if password is valid(mean password is not too common)
-        # try:
-        #     validate_password(attrs['password'])
-        # except serializers.ValidationError as e:
-        #     raise serializers.ValidationError({"password": list(e.messages)})
+        try:
+            validate_password(attrs['password'])
+        except serializers.ValidationError as e:
+            raise serializers.ValidationError({"password": list(e.messages)})
 
         if attrs['password'] != attrs['password1']:
             raise serializers.ValidationError({"password": "Password fields didn't match"})
@@ -75,7 +75,7 @@ class UserDataSerializer(serializers.ModelSerializer):
 class FriendOnlineSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['id', 'username', 'img_url']
+        fields = ['id', 'username', 'img_url', 'is_online']
 class User42Login(serializers.ModelSerializer):
     class Meta:
         model = User  # Make sure User model has the fields 'email', etc.
@@ -111,6 +111,7 @@ class LoginUserSerializer(serializers.ModelSerializer):
 
     
 
+from django.core.exceptions import ValidationError as DjangoValidationError
 
 class UserUpdateSerializer(serializers.ModelSerializer):
     img_url = serializers.ImageField(required=False)  # Add this to handle file uploads
@@ -118,18 +119,27 @@ class UserUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['first_name', 'last_name', 'state_2fa', 'level', 'img_url', 'username', 'password']
+    def validate_password(self, value):
+        if value:
+            try:
+                validate_password(value)
+            except DjangoValidationError as e:
+                raise serializers.ValidationError(list(e.messages))
+        return value
+
     def update(self, instance, validated_data):
         img_file = validated_data.pop('img_url', None)
         
-
+        password = validated_data.pop('password', None)
+        if password:
+            instance.set_password(password)
         # !password
-        if 'password' in validated_data:
-            instance.set_password(validated_data['password'])
-            # !to check if password is valid(mean password is not too common)
-            # try:
-            #     validate_password(validated_data['password'])
-            # except serializers.ValidationError as e:
-            #     raise serializers.ValidationError({"password": list(e.messages)})
+        # if 'password' in validated_data:
+        #     try:
+        #         validate_password(validated_data['password'])
+        #         instance.set_password(validated_data['password'])
+        #     except serializers.ValidationError as e:
+        #         raise serializers.ValidationError({"password": 'password is weak'})
         if 'username' in validated_data:
             username = validated_data['username']
             if User.objects.filter(username=validated_data['username']).exists():
