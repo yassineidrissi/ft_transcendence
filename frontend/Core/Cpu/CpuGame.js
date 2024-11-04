@@ -198,7 +198,6 @@ class Cpu extends HTMLElement {
 			}
 
 			function parseState(stateStr) {
-				const match = stateStr.match(/\((\d+),\s*(\d+)\)/);
 				if (match) {
 					return [parseInt(match[1]), parseInt(match[2])];
 				}
@@ -212,7 +211,7 @@ class Cpu extends HTMLElement {
 						throw new Error(`HTTP error! status: ${response.status}`);
 					}
 					qTable = await response.json();
-					//////console.log("Parsed JSON data:", qTable);
+					console.log("Parsed JSON data:", qTable);
 				} catch (error) {
 					console.error("Error fetching or parsing JSON data:", error);
 				}

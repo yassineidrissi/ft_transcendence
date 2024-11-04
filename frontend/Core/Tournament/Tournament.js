@@ -9,7 +9,7 @@ class TournamentGame extends HTMLElement {
             { name: 'Player 4', score: 0 }
         ];
         this.currentMatch = { player1: 0, player2: 1 };
-        this.tournamentStage = 'semifinals'; // semifinals or finals
+        this.tournamentStage = 'semifinals'; 
         this.winners = [];
         this.winningScore = 5;
 		this.render();
@@ -323,7 +323,7 @@ class TournamentGame extends HTMLElement {
         } else if (this.tournamentStage === 'semifinals' && this.winners.length === 2) {
             // Move to finals
             this.tournamentStage = 'finals';
-            this.currentMatch = { player1: 0, player2: 1 }; // Winners will be displayed in order
+            this.currentMatch = { player1: 0, player2: 1 }; 
         }
         
         this.render();
