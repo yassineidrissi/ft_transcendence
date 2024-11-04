@@ -464,8 +464,9 @@ class OnlineGame extends HTMLElement {
       });
       response = await this.handleAuthResponse(response, this.deleteMatch.bind(this), matchID);
       if (response.ok) {
-        ////////console.log('Match deleted');
-        window.location.href = 'https://127.0.0.1/';
+        //////console.log('Match deleted');
+        // window.location.href = 'https://127.0.0.1/';
+        this.fetchMatchID();
       }
     } catch (error) {
       console.error(error);

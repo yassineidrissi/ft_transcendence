@@ -3,6 +3,7 @@ class Cpu extends HTMLElement {
 		super();
 		this.attachShadow({ mode: 'open' });
 		this.isMultiplayer = true;
+		this.lastUpdateTime = 0;
 		this.render();
 	}
 
@@ -16,7 +17,7 @@ class Cpu extends HTMLElement {
 			<div id="scoreBoard" class="fs-3">
 				<span id="leftScore" class="fw-sem px-2">0</span> - <span id="rightScore" class="fw-sem px-2">0</span>
 			</div>
-			<span id="player2" class="bg-danger p-2 px-4 rounded fs-5">${this.isMultiplayer ? 'player 2' : 'Bot'}</span>
+			<span id="player2" class="bg-danger p-2 px-4 rounded fs-5">CPU</span>
 		</div>
 		<div id="trophy" class="trophy-container hidden">
 			<div class="trophy">
@@ -211,7 +212,7 @@ class Cpu extends HTMLElement {
 						throw new Error(`HTTP error! status: ${response.status}`);
 					}
 					qTable = await response.json();
-					////////console.log("Parsed JSON data:", qTable);
+					// console.log("Parsed JSON data:", qTable);
 				} catch (error) {
 					console.error("Error fetching or parsing JSON data:", error);
 				}
@@ -248,7 +249,7 @@ class Cpu extends HTMLElement {
 					}
 				}
 				if (closestState) {
-					////////console.log('the closeststate is :' + closestState);
+					//////console.log('the closeststate is :' + closestState);
 					return qTable[closestState];
 				} else {
 					return [0, 0, 0];
@@ -294,11 +295,18 @@ class Cpu extends HTMLElement {
 				return `(${ballPosY}, ${leftPaddlePosY})`;
 			}
 
-			function updateAI() {
-				let action_a = 0;
-				let action = get_action();                
-				let stat = "(" + action + ", " + action_a + ")";
-				getAction(stat);
+			const updateAI = () => {  // Changed to arrow function
+				const currentTime = Date.now();
+				// Only update AI if more than 1000ms (1 second) has passed since last update
+				if (currentTime - this.lastUpdateTime >= 1000) {
+					let action = get_action();                
+					let epsilone = getState();
+					let stat = "(" + action + ", " + epsilone + ")";
+					getAction(stat);
+					
+					// Update the timestamp
+					this.lastUpdateTime = currentTime;
+				}
 			}
 
 			function gameLoop() {
