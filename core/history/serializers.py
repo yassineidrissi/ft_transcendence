@@ -42,5 +42,5 @@ class MatchSerializer(serializers.ModelSerializer):
             return {
                 "username": "unknown",
                 "score": 0,
-                "image_url": "https://commons.wikimedia.org/wiki/File:Unknown_person.jpg",
+                "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Unknown_person.jpg/434px-Unknown_person.jpg",
             }

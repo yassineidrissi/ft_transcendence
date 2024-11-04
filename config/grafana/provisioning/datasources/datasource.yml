@@ -22,7 +22,7 @@ datasources:
   - name: 'django'
     type: 'prometheus'
     access: 'proxy'
-    url: 'http://django:8000'
+    url: 'http://backend:8000'
     isDefault: false
     editable: true
   - name: 'node'
